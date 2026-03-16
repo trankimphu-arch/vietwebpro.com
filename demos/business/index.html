@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVision Corp | Demo Doanh Nghiệp</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0B0D17;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* === NAV === */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            transition: .3s;
+        }
+
+        .nav.scrolled {
+            background: rgba(11, 13, 23, .95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, .3);
+        }
+
+        .nav .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .nav .logo span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .7);
+            font-weight: 500;
+            transition: .2s;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links .cta {
+            padding: .6rem 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 999px;
+            color: #fff !important;
+        }
+
+        .nav-links .cta:hover {
+            box-shadow: 0 0 25px rgba(102, 126, 234, .4);
+        }
+
+        /* === HERO === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -30%;
+            width: 160%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, .15) 0%, transparent 50%);
+            animation: drift 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate(0, 0)
+            }
+
+            100% {
+                transform: translate(5%, -5%)
+            }
+        }
+
+        .hero .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, .65);
+            max-width: 560px;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-fill {
+            padding: .9rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            transition: .3s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn-fill:hover {
+            box-shadow: 0 0 40px rgba(102, 126, 234, .5);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            padding: .9rem 2rem;
+            border: 2px solid rgba(102, 126, 234, .5);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #667eea;
+            transition: .3s;
+        }
+
+        .btn-ghost:hover {
+            background: #667eea;
+            color: #fff;
+        }
+
+        /* === SECTIONS === */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .sec-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .sec-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, .6);
+            font-size: 1.05rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* === ABOUT === */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-img {
+            width: 100%;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, .2), rgba(118, 75, 162, .1));
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            border: 1px solid rgba(255, 255, 255, .05);
+        }
+
+        .about-text h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            color: rgba(255, 255, 255, .65);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat-item .num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-item .lab {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem;
+        }
+
+        /* === SERVICES === */
+        .services-bg {
+            background: rgba(102, 126, 234, .03);
+        }
+
+        .svc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .svc-card {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: .3s;
+            text-align: center;
+        }
+
+        .svc-card:hover {
+            border-color: rgba(102, 126, 234, .3);
+            transform: translateY(-4px);
+            background: rgba(102, 126, 234, .06);
+        }
+
+        .svc-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .svc-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: .5rem;
+        }
+
+        .svc-card p {
+            color: rgba(255, 255, 255, .55);
+            font-size: .9rem;
+            line-height: 1.6;
+        }
+
+        /* === TEAM === */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: .3s;
+        }
+
+        .team-card:hover {
+            border-color: rgba(102, 126, 234, .3);
+            transform: translateY(-3px);
+        }
+
+        .team-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .team-card h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            margin-bottom: .25rem;
+        }
+
+        .team-card .role {
+            color: #667eea;
+            font-size: .85rem;
+            font-weight: 600;
+            margin-bottom: .5rem;
+        }
+
+        .team-card p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem;
+        }
+
+        /* === CTA === */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, .1), rgba(118, 75, 162, .05));
+            border-radius: 24px;
+            margin: 2rem;
+        }
+
+        .cta-section h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, .6);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, .4);
+            font-size: .85rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, .4);
+            transition: .2s;
+        }
+
+        .footer-links a:hover {
+            color: #667eea;
+        }
+
+        /* Back button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(11, 13, 23, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 999px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        @media(max-width:768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .stat-row {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../../index.html" class="back-btn">← Quay lại</a>
+
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="logo"><span>TechVision</span> Corp</div>
+            <div class="nav-links">
+                <a href="#about">Giới Thiệu</a>
+                <a href="#services">Dịch Vụ</a>
+                <a href="#team">Đội Ngũ</a>
+                <a href="#cta" class="cta">Liên Hệ</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="wrap">
+            <h1>Giải Pháp <span class="highlight">Công Nghệ</span><br>Cho Tương Lai</h1>
+            <p>Chúng tôi cung cấp giải pháp số toàn diện giúp doanh nghiệp của bạn bứt phá trong kỷ nguyên số hóa.</p>
+            <div class="hero-btns">
+                <a href="#services" class="btn-fill">🚀 Khám Phá Ngay</a>
+                <a href="#about" class="btn-ghost">Tìm Hiểu Thêm</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="wrap">
+            <div class="about-grid">
+                <div class="about-img">🏢</div>
+                <div class="about-text">
+                    <h2>Về TechVision Corp</h2>
+                    <p>Với hơn 10 năm kinh nghiệm trong ngành công nghệ, TechVision Corp tự hào là đối tác tin cậy của
+                        hơn 200 doanh nghiệp trên toàn quốc. Chúng tôi cam kết mang đến giải pháp sáng tạo, hiệu quả và
+                        bền vững.</p>
+                    <p>Đội ngũ 50+ kỹ sư tài năng, làm việc với tầm nhìn đưa công nghệ Việt vươn tầm quốc tế.</p>
+                    <div class="stat-row">
+                        <div class="stat-item">
+                            <div class="num">200+</div>
+                            <div class="lab">Khách hàng</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="num">500+</div>
+                            <div class="lab">Dự án</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="num">50+</div>
+                            <div class="lab">Nhân sự</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="num">10+</div>
+                            <div class="lab">Năm KN</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section services-bg" id="services">
+        <div class="wrap">
+            <h2 class="sec-title">Dịch Vụ Của Chúng Tôi</h2>
+            <p class="sec-sub">Giải pháp toàn diện từ tư vấn, phát triển đến vận hành</p>
+            <div class="svc-grid">
+                <div class="svc-card">
+                    <div class="icon">🌐</div>
+                    <h3>Phát Triển Web</h3>
+                    <p>Website responsive, tốc độ cao, trải nghiệm mượt mà trên mọi thiết bị</p>
+                </div>
+                <div class="svc-card">
+                    <div class="icon">📱</div>
+                    <h3>Ứng Dụng Mobile</h3>
+                    <p>App iOS & Android native và cross-platform với React Native, Flutter</p>
+                </div>
+                <div class="svc-card">
+                    <div class="icon">☁️</div>
+                    <h3>Cloud Solutions</h3>
+                    <p>Triển khai và quản lý hạ tầng đám mây AWS, Azure, GCP</p>
+                </div>
+                <div class="svc-card">
+                    <div class="icon">🤖</div>
+                    <h3>AI & Machine Learning</h3>
+                    <p>Tích hợp AI thông minh vào quy trình kinh doanh và sản phẩm</p>
+                </div>
+                <div class="svc-card">
+                    <div class="icon">🔒</div>
+                    <h3>Bảo Mật</h3>
+                    <p>Kiểm tra, đánh giá và triển khai giải pháp an ninh mạng chuyên sâu</p>
+                </div>
+                <div class="svc-card">
+                    <div class="icon">📊</div>
+                    <h3>Data Analytics</h3>
+                    <p>Phân tích dữ liệu, dashboard trực quan, hỗ trợ ra quyết định</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="team">
+        <div class="wrap">
+            <h2 class="sec-title">Đội Ngũ Lãnh Đạo</h2>
+            <p class="sec-sub">Những chuyên gia hàng đầu dẫn dắt TechVision</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💼</div>
+                    <h4>Nguyễn Minh Tuấn</h4>
+                    <div class="role">CEO & Founder</div>
+                    <p>15 năm kinh nghiệm trong ngành IT</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👩‍💻</div>
+                    <h4>Trần Thu Hà</h4>
+                    <div class="role">CTO</div>
+                    <p>Chuyên gia kiến trúc phần mềm</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👨‍🎨</div>
+                    <h4>Lê Hoàng Nam</h4>
+                    <div class="role">Design Director</div>
+                    <p>Đam mê tạo trải nghiệm người dùng</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👩‍🔬</div>
+                    <h4>Phạm Thị Lan</h4>
+                    <div class="role">Head of AI</div>
+                    <p>PhD Machine Learning, Stanford</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta">
+        <div class="wrap">
+            <div class="cta-section">
+                <h2>Sẵn Sàng Chuyển Đổi Số?</h2>
+                <p>Hãy để TechVision đồng hành cùng doanh nghiệp của bạn</p>
+                <a href="mailto:contact@techvision.vn" class="btn-fill">📞 Liên Hệ Ngay</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="wrap">
+            <span>© 2026 TechVision Corp. Demo by WebCraft Studio.</span>
+            <div class="footer-links">
+                <a href="#">Chính sách</a>
+                <a href="#">Điều khoản</a>
+                <a href="#">Liên hệ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) });
+    </script>
+</body>
+
+</html>

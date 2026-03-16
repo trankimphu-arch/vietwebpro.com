@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeStyle | Demo Thương Mại Điện Tử</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0D0D0D;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+        /* NAV */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            transition: .3s;
+            background: rgba(13, 13, 13, .9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, .05)
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: .02em
+        }
+
+        .nav-logo span {
+            color: #D4A853
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 2rem
+        }
+
+        .nav-center a {
+            color: rgba(255, 255, 255, .6);
+            font-weight: 500;
+            font-size: .9rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            transition: .2s
+        }
+
+        .nav-center a:hover {
+            color: #D4A853
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem
+        }
+
+        .nav-right a {
+            color: rgba(255, 255, 255, .7);
+            font-size: 1.2rem;
+            transition: .2s
+        }
+
+        .nav-right a:hover {
+            color: #D4A853
+        }
+
+        .cart-badge {
+            position: relative
+        }
+
+        .cart-badge::after {
+            content: '3';
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            width: 18px;
+            height: 18px;
+            background: #D4A853;
+            color: #0D0D0D;
+            border-radius: 50%;
+            font-size: .65rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        /* HERO BANNER */
+        .hero-banner {
+            margin-top: 60px;
+            position: relative;
+            height: 75vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212, 168, 83, .08), rgba(13, 13, 13, .9));
+            z-index: 1
+        }
+
+        .hero-banner .content {
+            position: relative;
+            z-index: 2
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: .4rem 1rem;
+            background: rgba(212, 168, 83, .15);
+            border: 1px solid rgba(212, 168, 83, .3);
+            border-radius: 999px;
+            color: #D4A853;
+            font-size: .75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: 1.5rem
+        }
+
+        .hero-banner h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1rem
+        }
+
+        .hero-banner h1 span {
+            color: #D4A853
+        }
+
+        .hero-banner p {
+            color: rgba(255, 255, 255, .55);
+            font-size: 1.1rem;
+            max-width: 520px;
+            margin-bottom: 2rem;
+            line-height: 1.7
+        }
+
+        .btn-gold {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .85rem 2rem;
+            background: linear-gradient(135deg, #D4A853, #B88A3D);
+            border-radius: 999px;
+            color: #0D0D0D;
+            font-weight: 700;
+            font-size: .95rem;
+            transition: .3s;
+            border: none;
+            cursor: pointer
+        }
+
+        .btn-gold:hover {
+            box-shadow: 0 0 35px rgba(212, 168, 83, .4);
+            transform: translateY(-2px)
+        }
+
+        /* CATEGORIES */
+        .section {
+            padding: 5rem 0
+        }
+
+        .sec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem
+        }
+
+        .sec-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700
+        }
+
+        .sec-link {
+            color: #D4A853;
+            font-weight: 600;
+            font-size: .9rem;
+            transition: .2s
+        }
+
+        .sec-link:hover {
+            opacity: .7
+        }
+
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem
+        }
+
+        .cat-card {
+            position: relative;
+            height: 200px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(212, 168, 83, .1), rgba(255, 255, 255, .02));
+            border: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: .75rem;
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .cat-card:hover {
+            border-color: rgba(212, 168, 83, .3);
+            transform: translateY(-3px)
+        }
+
+        .cat-card .emoji {
+            font-size: 3rem
+        }
+
+        .cat-card .name {
+            font-weight: 600;
+            font-size: .95rem;
+            letter-spacing: .02em
+        }
+
+        .cat-card .count {
+            color: rgba(255, 255, 255, .4);
+            font-size: .8rem
+        }
+
+        /* PRODUCTS */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1.5rem
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: .3s;
+            cursor: pointer
+        }
+
+        .product-card:hover {
+            border-color: rgba(212, 168, 83, .3);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .3)
+        }
+
+        .product-img {
+            height: 280px;
+            background: linear-gradient(135deg, rgba(212, 168, 83, .05), rgba(255, 255, 255, .02));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: .3rem .8rem;
+            background: #D4A853;
+            color: #0D0D0D;
+            border-radius: 999px;
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase
+        }
+
+        .product-fav {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            background: rgba(0, 0, 0, .4);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .9rem;
+            transition: .2s
+        }
+
+        .product-fav:hover {
+            background: rgba(212, 168, 83, .3)
+        }
+
+        .product-info {
+            padding: 1.25rem
+        }
+
+        .product-brand {
+            color: rgba(255, 255, 255, .4);
+            font-size: .75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: .3rem
+        }
+
+        .product-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: .5rem
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: .75rem
+        }
+
+        .product-price .current {
+            color: #D4A853;
+            font-weight: 700;
+            font-size: 1.1rem
+        }
+
+        .product-price .original {
+            color: rgba(255, 255, 255, .3);
+            text-decoration: line-through;
+            font-size: .9rem
+        }
+
+        .product-stars {
+            margin-top: .5rem;
+            color: #D4A853;
+            font-size: .8rem
+        }
+
+        /* FEATURES */
+        .features-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            margin: 3rem 0
+        }
+
+        .feat-item {
+            text-align: center
+        }
+
+        .feat-item .icon {
+            font-size: 2rem;
+            margin-bottom: .5rem
+        }
+
+        .feat-item h4 {
+            font-size: .9rem;
+            font-weight: 600;
+            margin-bottom: .25rem
+        }
+
+        .feat-item p {
+            color: rgba(255, 255, 255, .4);
+            font-size: .8rem
+        }
+
+        /* NEWSLETTER */
+        .newsletter {
+            text-align: center;
+            padding: 4rem;
+            background: linear-gradient(135deg, rgba(212, 168, 83, .08), rgba(255, 255, 255, .02));
+            border-radius: 24px;
+            border: 1px solid rgba(212, 168, 83, .1)
+        }
+
+        .newsletter h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: .75rem
+        }
+
+        .newsletter p {
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 2rem
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: .75rem;
+            max-width: 450px;
+            margin: 0 auto
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: .85rem 1.2rem;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 999px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: .95rem;
+            outline: none
+        }
+
+        .newsletter-form input:focus {
+            border-color: #D4A853
+        }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            padding: 2rem 0;
+            margin-top: 3rem
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, .35);
+            font-size: .85rem
+        }
+
+        /* BACK */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(13, 13, 13, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 999px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: #D4A853;
+            color: #0D0D0D;
+            border-color: #D4A853;
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:768px) {
+            .cat-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .nav-center {
+                display: none
+            }
+
+            .features-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem
+            }
+
+            .newsletter-form {
+                flex-direction: column
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../../index.html" class="back-btn">← Quay lại</a>
+
+    <nav class="nav">
+        <div class="wrap">
+            <div class="nav-logo">Luxe<span>Style</span></div>
+            <div class="nav-center">
+                <a href="#products">Sản Phẩm</a>
+                <a href="#categories">Danh Mục</a>
+                <a href="#">Bộ Sưu Tập</a>
+                <a href="#">Sale</a>
+            </div>
+            <div class="nav-right">
+                <a href="#">🔍</a>
+                <a href="#">👤</a>
+                <a href="#" class="cart-badge">🛒</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-banner">
+        <div class="wrap content">
+            <span class="hero-tag">Bộ sưu tập xuân hè 2026</span>
+            <h1>Phong Cách<br><span>Thượng Lưu</span></h1>
+            <p>Khám phá bộ sưu tập thời trang cao cấp mới nhất, được thiết kế bởi các nhà mốt hàng đầu châu Âu.</p>
+            <a href="#products" class="btn-gold">👗 Khám Phá Ngay</a>
+        </div>
+    </section>
+
+    <section class="section" id="categories">
+        <div class="wrap">
+            <div class="sec-header">
+                <h2 class="sec-title">Danh Mục</h2>
+                <a href="#" class="sec-link">Xem tất cả →</a>
+            </div>
+            <div class="cat-grid">
+                <div class="cat-card"><span class="emoji">👗</span><span class="name">Đầm Dạ Hội</span><span
+                        class="count">124 sản phẩm</span></div>
+                <div class="cat-card"><span class="emoji">👔</span><span class="name">Vest & Suits</span><span
+                        class="count">86 sản phẩm</span></div>
+                <div class="cat-card"><span class="emoji">👜</span><span class="name">Túi Xách</span><span
+                        class="count">215 sản phẩm</span></div>
+                <div class="cat-card"><span class="emoji">👠</span><span class="name">Giày Dép</span><span
+                        class="count">178 sản phẩm</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="products">
+        <div class="wrap">
+            <div class="sec-header">
+                <h2 class="sec-title">Sản Phẩm Nổi Bật</h2>
+                <a href="#" class="sec-link">Xem tất cả →</a>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">👗<span class="product-badge">Mới</span><span class="product-fav">♡</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">VALENTINO</div>
+                        <div class="product-name">Đầm Satin Cổ Chữ V</div>
+                        <div class="product-price"><span class="current">12,500,000₫</span><span
+                                class="original">15,800,000₫</span></div>
+                        <div class="product-stars">★★★★★ (48)</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">👜<span class="product-fav">♡</span></div>
+                    <div class="product-info">
+                        <div class="product-brand">GUCCI</div>
+                        <div class="product-name">Túi GG Marmont Mini</div>
+                        <div class="product-price"><span class="current">35,200,000₫</span></div>
+                        <div class="product-stars">★★★★★ (126)</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">👠<span class="product-badge">Hot</span><span class="product-fav">♡</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">CHRISTIAN LOUBOUTIN</div>
+                        <div class="product-name">So Kate Pumps 120mm</div>
+                        <div class="product-price"><span class="current">18,700,000₫</span><span
+                                class="original">22,000,000₫</span></div>
+                        <div class="product-stars">★★★★☆ (89)</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">👔<span class="product-fav">♡</span></div>
+                    <div class="product-info">
+                        <div class="product-brand">TOM FORD</div>
+                        <div class="product-name">Suit Wool Slim Fit</div>
+                        <div class="product-price"><span class="current">45,800,000₫</span></div>
+                        <div class="product-stars">★★★★★ (67)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="wrap">
+        <div class="features-bar">
+            <div class="feat-item">
+                <div class="icon">🚚</div>
+                <h4>Miễn Phí Ship</h4>
+                <p>Đơn từ 500K</p>
+            </div>
+            <div class="feat-item">
+                <div class="icon">↩️</div>
+                <h4>Đổi Trả 30 Ngày</h4>
+                <p>Miễn phí đổi trả</p>
+            </div>
+            <div class="feat-item">
+                <div class="icon">💎</div>
+                <h4>Hàng Chính Hãng</h4>
+                <p>Cam kết 100%</p>
+            </div>
+            <div class="feat-item">
+                <div class="icon">🔒</div>
+                <h4>Thanh Toán An Toàn</h4>
+                <p>SSL bảo mật</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="wrap">
+            <div class="newsletter">
+                <h2>Nhận Ưu Đãi Độc Quyền</h2>
+                <p>Đăng ký nhận thông tin về bộ sưu tập mới và khuyến mãi đặc biệt</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Email của bạn...">
+                    <button class="btn-gold">Đăng Ký</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="wrap">
+            <span>© 2026 LuxeStyle. Demo by WebCraft Studio.</span>
+            <span>Mọi quyền được bảo lưu.</span>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Studio | Demo Portfolio</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0A;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        /* NAV */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.25rem 0;
+            transition: .3s
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 10, 10, .95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, .05)
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .nav-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700
+        }
+
+        .nav-name span {
+            color: #FF6B6B
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .6);
+            font-size: .9rem;
+            font-weight: 500;
+            transition: .2s
+        }
+
+        .nav-links a:hover {
+            color: #FF6B6B
+        }
+
+        .hire-btn {
+            padding: .55rem 1.3rem;
+            background: #FF6B6B;
+            color: #fff !important;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: .85rem
+        }
+
+        .hire-btn:hover {
+            box-shadow: 0 0 25px rgba(255, 107, 107, .4)
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 40%, rgba(255, 107, 107, .08), transparent 60%)
+        }
+
+        .hero .wrap {
+            position: relative;
+            z-index: 2
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .4rem 1rem;
+            border: 1px solid rgba(255, 107, 107, .2);
+            border-radius: 999px;
+            font-size: .8rem;
+            color: #FF6B6B;
+            margin-bottom: 1.5rem
+        }
+
+        .hero-tag .dot {
+            width: 6px;
+            height: 6px;
+            background: #FF6B6B;
+            border-radius: 50%;
+            animation: blink 2s infinite
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .3
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: #FF6B6B
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, .55);
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: 2rem
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem
+        }
+
+        .btn-red {
+            padding: .85rem 2rem;
+            background: #FF6B6B;
+            border-radius: 999px;
+            font-weight: 600;
+            color: #fff;
+            transition: .3s;
+            border: none;
+            font-size: .95rem;
+            cursor: pointer
+        }
+
+        .btn-red:hover {
+            box-shadow: 0 0 35px rgba(255, 107, 107, .4);
+            transform: translateY(-2px)
+        }
+
+        .btn-line {
+            padding: .85rem 2rem;
+            border: 2px solid rgba(255, 107, 107, .4);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #FF6B6B;
+            transition: .3s
+        }
+
+        .btn-line:hover {
+            background: #FF6B6B;
+            color: #fff
+        }
+
+        /* SECTION */
+        .section {
+            padding: 6rem 0
+        }
+
+        .sec-label {
+            color: #FF6B6B;
+            font-size: .75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .15em;
+            margin-bottom: .5rem
+        }
+
+        .sec-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem
+        }
+
+        /* PROJECTS */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem
+        }
+
+        .project-card {
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .06);
+            transition: .3s;
+            cursor: pointer
+        }
+
+        .project-card:hover {
+            border-color: rgba(255, 107, 107, .3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .3)
+        }
+
+        .project-thumb {
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden
+        }
+
+        .project-thumb .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 107, 107, .15);
+            opacity: 0;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .project-card:hover .overlay {
+            opacity: 1
+        }
+
+        .overlay span {
+            padding: .6rem 1.5rem;
+            background: #FF6B6B;
+            border-radius: 999px;
+            color: #fff;
+            font-weight: 600;
+            font-size: .85rem
+        }
+
+        .p1 {
+            background: linear-gradient(135deg, #1a1a2e, #16213e)
+        }
+
+        .p2 {
+            background: linear-gradient(135deg, #2d1b69, #11001c)
+        }
+
+        .p3 {
+            background: linear-gradient(135deg, #0a3d2a, #0d1b0e)
+        }
+
+        .p4 {
+            background: linear-gradient(135deg, #3d1b1b, #1c0000)
+        }
+
+        .project-info {
+            padding: 1.25rem
+        }
+
+        .project-info .tags {
+            display: flex;
+            gap: .5rem;
+            margin-bottom: .5rem;
+            flex-wrap: wrap
+        }
+
+        .project-info .tag {
+            padding: .2rem .6rem;
+            background: rgba(255, 107, 107, .1);
+            color: #FF6B6B;
+            border-radius: 999px;
+            font-size: .7rem;
+            font-weight: 600
+        }
+
+        .project-info h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: .3rem
+        }
+
+        .project-info p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem
+        }
+
+        /* SKILLS */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem
+        }
+
+        .skill-card {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 12px;
+            text-align: center;
+            transition: .3s
+        }
+
+        .skill-card:hover {
+            border-color: rgba(255, 107, 107, .3);
+            transform: translateY(-3px)
+        }
+
+        .skill-card .icon {
+            font-size: 2rem;
+            margin-bottom: .5rem
+        }
+
+        .skill-card h4 {
+            font-size: .85rem;
+            font-weight: 600;
+            margin-bottom: .3rem
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: .5rem
+        }
+
+        .skill-bar .fill {
+            height: 100%;
+            background: #FF6B6B;
+            border-radius: 999px
+        }
+
+        /* EXPERIENCE */
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem
+        }
+
+        .exp-item {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 12px;
+            display: flex;
+            gap: 1.5rem;
+            transition: .3s
+        }
+
+        .exp-item:hover {
+            border-color: rgba(255, 107, 107, .2)
+        }
+
+        .exp-year {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: #FF6B6B;
+            font-size: 1.1rem;
+            white-space: nowrap;
+            min-width: 100px
+        }
+
+        .exp-content h4 {
+            font-weight: 700;
+            margin-bottom: .25rem
+        }
+
+        .exp-content .company {
+            color: #FF6B6B;
+            font-size: .85rem;
+            font-weight: 600;
+            margin-bottom: .3rem
+        }
+
+        .exp-content p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .9rem;
+            line-height: 1.6
+        }
+
+        /* CTA */
+        .cta-box {
+            text-align: center;
+            padding: 4rem;
+            background: linear-gradient(135deg, rgba(255, 107, 107, .08), rgba(255, 255, 255, .02));
+            border: 1px solid rgba(255, 107, 107, .1);
+            border-radius: 24px
+        }
+
+        .cta-box h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem
+        }
+
+        .cta-box p {
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 2rem;
+            font-size: 1.05rem
+        }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            padding: 2rem 0;
+            margin-top: 2rem
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, .35);
+            font-size: .85rem
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 1rem
+        }
+
+        .footer-socials a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .2s
+        }
+
+        .footer-socials a:hover {
+            background: #FF6B6B;
+            border-color: #FF6B6B
+        }
+
+        /* BACK */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(10, 10, 10, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 999px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: #FF6B6B;
+            border-color: #FF6B6B;
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:768px) {
+            .projects-grid {
+                grid-template-columns: 1fr
+            }
+
+            .nav-links {
+                display: none
+            }
+
+            .exp-item {
+                flex-direction: column;
+                gap: .5rem
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../../index.html" class="back-btn">← Quay lại</a>
+
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="nav-name">minh<span>.dev</span></div>
+            <div class="nav-links">
+                <a href="#projects">Dự Án</a>
+                <a href="#skills">Kỹ Năng</a>
+                <a href="#experience">Kinh Nghiệm</a>
+                <a href="#contact" class="hire-btn">Thuê Tôi</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="wrap">
+            <div class="hero-tag"><span class="dot"></span> Available for freelance</div>
+            <h1>Xin Chào, Tôi Là<br><em>Minh Nguyễn</em> 👋</h1>
+            <p>Full-stack Developer & UI Designer với 6 năm kinh nghiệm. Tôi biến ý tưởng thành sản phẩm số đẹp mắt và
+                hiệu quả.</p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn-red">🎯 Xem Dự Án</a>
+                <a href="#contact" class="btn-line">📄 Download CV</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects">
+        <div class="wrap">
+            <div class="sec-label">Portfolio</div>
+            <h2 class="sec-title">Dự Án Tiêu Biểu</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-thumb p1">🏦<div class="overlay"><span>Xem Chi Tiết</span></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span
+                                class="tag">MongoDB</span></div>
+                        <h3>FinTrack Dashboard</h3>
+                        <p>Bảng điều khiển quản lý tài chính cá nhân</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-thumb p2">🎵<div class="overlay"><span>Xem Chi Tiết</span></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="tags"><span class="tag">Vue.js</span><span class="tag">Firebase</span></div>
+                        <h3>SoundWave Player</h3>
+                        <p>Ứng dụng nghe nhạc trực tuyến</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-thumb p3">🌿<div class="overlay"><span>Xem Chi Tiết</span></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="tags"><span class="tag">Next.js</span><span class="tag">Stripe</span><span
+                                class="tag">Prisma</span></div>
+                        <h3>EcoStore Market</h3>
+                        <p>Sàn thương mại điện tử sản phẩm xanh</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-thumb p4">📊<div class="overlay"><span>Xem Chi Tiết</span></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span
+                                class="tag">React</span></div>
+                        <h3>DataViz AI</h3>
+                        <p>Nền tảng phân tích dữ liệu thông minh</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="skills" style="background:rgba(255,107,107,.02)">
+        <div class="wrap">
+            <div class="sec-label">Kỹ Năng</div>
+            <h2 class="sec-title">Tech Stack</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="icon">⚛️</div>
+                    <h4>React</h4>
+                    <div class="skill-bar">
+                        <div class="fill" style="width:95%"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="icon">🟢</div>
+                    <h4>Node.js</h4>
+                    <div class="skill-bar">
+                        <div class="fill" style="width:90%"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="icon">🐍</div>
+                    <h4>Python</h4>
+                    <div class="skill-bar">
+                        <div class="fill" style="width:85%"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="icon">🎨</div>
+                    <h4>Figma</h4>
+                    <div class="skill-bar">
+                        <div class="fill" style="width:92%"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="icon">🗄️</div>
+                    <h4>PostgreSQL</h4>
+                    <div class="skill-bar">
+                        <div class="fill" style="width:88%"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="icon">☁️</div>
+                    <h4>AWS</h4>
+                    <div class="skill-bar">
+                        <div class="fill" style="width:80%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="experience">
+        <div class="wrap">
+            <div class="sec-label">Kinh Nghiệm</div>
+            <h2 class="sec-title">Hành Trình Sự Nghiệp</h2>
+            <div class="exp-list">
+                <div class="exp-item">
+                    <div class="exp-year">2023 - Nay</div>
+                    <div class="exp-content">
+                        <h4>Senior Full-Stack Developer</h4>
+                        <div class="company">VNG Corporation</div>
+                        <p>Lead team 5 người phát triển nền tảng fintech. Tối ưu hiệu năng giảm 40% thời gian tải trang.
+                        </p>
+                    </div>
+                </div>
+                <div class="exp-item">
+                    <div class="exp-year">2021 - 2023</div>
+                    <div class="exp-content">
+                        <h4>Frontend Developer</h4>
+                        <div class="company">Tiki Vietnam</div>
+                        <p>Phát triển giao diện người dùng cho ứng dụng e-commerce phục vụ 10M+ người dùng.</p>
+                    </div>
+                </div>
+                <div class="exp-item">
+                    <div class="exp-year">2019 - 2021</div>
+                    <div class="exp-content">
+                        <h4>Junior Developer</h4>
+                        <div class="company">FPT Software</div>
+                        <p>Bắt đầu sự nghiệp với các dự án outsourcing cho khách hàng Nhật Bản.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="wrap">
+            <div class="cta-box">
+                <h2>Hãy Làm Việc Cùng Nhau! 🤝</h2>
+                <p>Bạn có dự án thú vị? Liên hệ với tôi ngay hôm nay</p>
+                <a href="mailto:minh@dev.vn" class="btn-red">📧 minh@dev.vn</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="wrap">
+            <span>© 2026 minh.dev — Demo by WebCraft Studio</span>
+            <div class="footer-socials">
+                <a href="#">🐙</a>
+                <a href="#">💼</a>
+                <a href="#">🐦</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) });
+    </script>
+</body>
+
+</html>
