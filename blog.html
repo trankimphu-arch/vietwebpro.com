@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Blog kiến thức về thiết kế website, SEO, marketing online. Chia sẻ kinh nghiệm thực tế từ WebCraft Studio.">
+    <title>Blog | WebCraft Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <style>
+        .page-banner {
+            position: relative;
+            height: 50vh;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 60px
+        }
+
+        .page-banner img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .3
+        }
+
+        .page-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 26, .3), rgba(10, 10, 26, .95))
+        }
+
+        .page-banner .content {
+            position: relative;
+            z-index: 2
+        }
+
+        .page-banner h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: .75rem
+        }
+
+        .page-banner p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            margin-bottom: 1rem;
+            font-size: .85rem;
+            color: var(--text-muted)
+        }
+
+        .breadcrumb a {
+            color: var(--primary-light)
+        }
+
+        .blog-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: start
+        }
+
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem
+        }
+
+        .blog-card {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition-base)
+        }
+
+        .blog-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md)
+        }
+
+        .blog-card-img {
+            height: 100%;
+            min-height: 180px;
+            background: var(--gradient-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem
+        }
+
+        .blog-card-content {
+            padding: 1.25rem 1.5rem 1.25rem 0
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: .5rem;
+            font-size: .8rem;
+            color: var(--text-muted)
+        }
+
+        .blog-category {
+            color: var(--primary-light);
+            font-weight: 600
+        }
+
+        .blog-card-content h3 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: .5rem;
+            line-height: 1.4
+        }
+
+        .blog-card-content h3:hover {
+            color: var(--primary-light)
+        }
+
+        .blog-card-content p {
+            color: var(--text-secondary);
+            font-size: .9rem;
+            line-height: 1.6;
+            margin-bottom: .75rem
+        }
+
+        .read-more {
+            color: var(--primary-light);
+            font-weight: 600;
+            font-size: .85rem
+        }
+
+        .blog-featured {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 3rem;
+            transition: var(--transition-base)
+        }
+
+        .blog-featured:hover {
+            border-color: var(--primary)
+        }
+
+        .blog-feat-img {
+            height: 300px;
+            background: linear-gradient(135deg, rgba(108, 92, 231, .15), rgba(0, 206, 201, .05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem
+        }
+
+        .blog-feat-content {
+            padding: 2rem
+        }
+
+        .blog-feat-content h2 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: .75rem
+        }
+
+        .blog-feat-content p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 100px
+        }
+
+        .sidebar-widget {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem
+        }
+
+        .sidebar-widget h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1rem
+        }
+
+        .sidebar-widget .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem
+        }
+
+        .sidebar-widget .tag {
+            padding: .3rem .8rem;
+            background: rgba(108, 92, 231, .1);
+            color: var(--primary-light);
+            border-radius: var(--radius-full);
+            font-size: .75rem;
+            font-weight: 600;
+            transition: var(--transition-fast);
+            cursor: pointer
+        }
+
+        .sidebar-widget .tag:hover {
+            background: var(--primary);
+            color: #fff
+        }
+
+        .sidebar-widget .recent-item {
+            padding: .75rem 0;
+            border-bottom: 1px solid var(--border-glass);
+            display: block
+        }
+
+        .sidebar-widget .recent-item:last-child {
+            border-bottom: none
+        }
+
+        .sidebar-widget .recent-item h5 {
+            font-size: .9rem;
+            font-weight: 600;
+            margin-bottom: .2rem
+        }
+
+        .sidebar-widget .recent-item span {
+            font-size: .75rem;
+            color: var(--text-muted)
+        }
+
+        .sidebar-cta {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center
+        }
+
+        .sidebar-cta h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .sidebar-cta p {
+            color: var(--text-secondary);
+            font-size: .85rem;
+            margin-bottom: 1rem
+        }
+
+        @media(max-width:768px) {
+            .blog-layout {
+                grid-template-columns: 1fr
+            }
+
+            .blog-card {
+                grid-template-columns: 1fr
+            }
+
+            .sidebar {
+                position: static
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">🚀</div><span>WebCraft</span>
+            </a>
+            <div class="nav-links" id="navLinks"><a href="about.html">Giới Thiệu</a><a href="services.html">Dịch
+                    Vụ</a><a href="portfolio.html">Dự Án</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a
+                    href="contact.html" class="nav-cta">Liên Hệ</a></div>
+            <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="page-banner">
+        <img src="images/banner-blog.png" alt="Blog WebCraft Studio">
+        <div class="content">
+            <div class="breadcrumb"><a href="index.html">Trang chủ</a><span>/</span><span>Blog</span></div>
+            <h1>Blog & Kiến Thức</h1>
+            <p>Chia sẻ kinh nghiệm thiết kế web, SEO & marketing online</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <!-- Featured -->
+            <a href="#" class="blog-featured reveal">
+                <div class="blog-feat-img">📖</div>
+                <div class="blog-feat-content">
+                    <div class="blog-meta"><span class="blog-category">Web Design</span><span>15/03/2026</span><span>8
+                            phút đọc</span></div>
+                    <h2>Xu Hướng Thiết Kế Website 2026: Từ AI Đến Immersive Experience</h2>
+                    <p>Năm 2026 đánh dấu bước chuyển lớn trong thiết kế web với sự trỗi dậy của AI-driven design, 3D
+                        immersive, và micro-interactions. Tìm hiểu những xu hướng bạn cần nắm để luôn đi đầu.</p>
+                    <span class="read-more">Đọc tiếp →</span>
+                </div>
+            </a>
+
+            <div class="blog-layout">
+                <div class="blog-list">
+                    <a href="#" class="blog-card reveal">
+                        <div class="blog-card-img">🔍</div>
+                        <div class="blog-card-content">
+                            <div class="blog-meta"><span class="blog-category">SEO</span><span>12/03/2026</span></div>
+                            <h3>10 Bước Tối Ưu SEO On-Page Cho Website Mới</h3>
+                            <p>Hướng dẫn chi tiết cách tối ưu SEO on-page từ tiêu đề, meta description đến cấu trúc
+                                heading...</p>
+                            <span class="read-more">Đọc tiếp →</span>
+                        </div>
+                    </a>
+                    <a href="#" class="blog-card reveal">
+                        <div class="blog-card-img">⚡</div>
+                        <div class="blog-card-content">
+                            <div class="blog-meta"><span class="blog-category">Performance</span><span>08/03/2026</span>
+                            </div>
+                            <h3>Tăng Tốc Website: Core Web Vitals & PageSpeed</h3>
+                            <p>Cách đạt điểm 90+ trên Google PageSpeed Insights và tác động đến SEO ranking...</p>
+                            <span class="read-more">Đọc tiếp →</span>
+                        </div>
+                    </a>
+                    <a href="#" class="blog-card reveal">
+                        <div class="blog-card-img">🛒</div>
+                        <div class="blog-card-content">
+                            <div class="blog-meta"><span class="blog-category">E-Commerce</span><span>01/03/2026</span>
+                            </div>
+                            <h3>Chi Phí Thiết Kế Website Bán Hàng: Đầu Tư Bao Nhiêu Là Đủ?</h3>
+                            <p>Phân tích chi tiết chi phí xây dựng website thương mại điện tử cho từng quy mô...</p>
+                            <span class="read-more">Đọc tiếp →</span>
+                        </div>
+                    </a>
+                    <a href="#" class="blog-card reveal">
+                        <div class="blog-card-img">🎨</div>
+                        <div class="blog-card-content">
+                            <div class="blog-meta"><span class="blog-category">UI/UX</span><span>25/02/2026</span></div>
+                            <h3>Tâm Lý Màu Sắc Trong Thiết Kế Website</h3>
+                            <p>Cách chọn bảng màu phù hợp với ngành nghề để tăng tỷ lệ chuyển đổi...</p>
+                            <span class="read-more">Đọc tiếp →</span>
+                        </div>
+                    </a>
+                </div>
+
+                <aside class="sidebar">
+                    <div class="sidebar-widget reveal">
+                        <h4>📂 Chủ Đề</h4>
+                        <div class="tags">
+                            <span class="tag">Web Design</span><span class="tag">SEO</span><span
+                                class="tag">E-Commerce</span><span class="tag">UI/UX</span><span
+                                class="tag">WordPress</span><span class="tag">Marketing</span><span
+                                class="tag">Performance</span>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget reveal">
+                        <h4>🔥 Bài Viết Mới</h4>
+                        <a href="#" class="recent-item">
+                            <h5>Xu Hướng Thiết Kế 2026</h5><span>15/03/2026</span>
+                        </a>
+                        <a href="#" class="recent-item">
+                            <h5>10 Bước SEO On-Page</h5><span>12/03/2026</span>
+                        </a>
+                        <a href="#" class="recent-item">
+                            <h5>Tăng Tốc Website</h5><span>08/03/2026</span>
+                        </a>
+                    </div>
+                    <div class="sidebar-cta reveal">
+                        <h4>Cần Website Chuyên Nghiệp?</h4>
+                        <p>Tư vấn miễn phí, báo giá trong 24h</p>
+                        <a href="contact.html" class="btn btn-primary"
+                            style="width:100%;justify-content:center;font-size:.85rem">Liên Hệ Ngay</a>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="logo-icon">🚀</div><span>WebCraft</span>
+                    </div>
+                    <p>Biến ý tưởng thành website chuyên nghiệp.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Trang</h4><a href="about.html">Giới thiệu</a><a href="services.html">Dịch vụ</a><a
+                        href="portfolio.html">Dự án</a><a href="blog.html">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Mẫu Website</h4><a href="demos/business/index.html">Doanh nghiệp</a><a
+                        href="demos/ecommerce/index.html">E-commerce</a><a
+                        href="demos/portfolio/index.html">Portfolio</a><a href="demos/restaurant/index.html">Nhà
+                        hàng</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Liên Hệ</h4><a href="mailto:hello@webcraft.vn">hello@webcraft.vn</a><a
+                        href="tel:0901234567">0901 234 567</a><a href="contact.html">Gửi yêu cầu</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>© 2026 WebCraft Studio. All rights reserved.</span>
+                <div class="footer-social"><a href="#">📘</a><a href="#">📸</a><a href="#">💼</a><a href="#">🐙</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Dịch vụ thiết kế website chuyên nghiệp - UI/UX, phát triển web, SEO, thương mại điện tử, bảo trì website.">
+    <title>Dịch Vụ | WebCraft Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <style>
+        .page-banner {
+            position: relative;
+            height: 50vh;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 60px
+        }
+
+        .page-banner img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .3
+        }
+
+        .page-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 26, .3), rgba(10, 10, 26, .95))
+        }
+
+        .page-banner .content {
+            position: relative;
+            z-index: 2
+        }
+
+        .page-banner h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: .75rem
+        }
+
+        .page-banner p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            margin-bottom: 1rem;
+            font-size: .85rem;
+            color: var(--text-muted)
+        }
+
+        .breadcrumb a {
+            color: var(--primary-light)
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline
+        }
+
+        .svc-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-glass)
+        }
+
+        .svc-detail:last-child {
+            border-bottom: none
+        }
+
+        .svc-detail.reverse {
+            direction: rtl
+        }
+
+        .svc-detail.reverse>* {
+            direction: ltr
+        }
+
+        .svc-detail .icon-big {
+            width: 100%;
+            max-width: 300px;
+            height: 250px;
+            border-radius: var(--radius-lg);
+            background: var(--gradient-card);
+            border: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            margin: 0 auto
+        }
+
+        .svc-detail h3 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem
+        }
+
+        .svc-detail p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem
+        }
+
+        .svc-features {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem
+        }
+
+        .svc-features li {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            color: var(--text-secondary);
+            font-size: .95rem
+        }
+
+        .svc-features li::before {
+            content: '✓';
+            color: var(--accent);
+            font-weight: 700
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem 0
+        }
+
+        .tech-tag {
+            padding: .5rem 1.25rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-full);
+            font-size: .85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition-base)
+        }
+
+        .tech-tag:hover {
+            border-color: var(--primary);
+            color: var(--primary-light)
+        }
+
+        @media(max-width:768px) {
+
+            .svc-detail,
+            .svc-detail.reverse {
+                grid-template-columns: 1fr;
+                direction: ltr
+            }
+
+            .svc-detail.reverse>* {
+                direction: ltr
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">🚀</div><span>WebCraft</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="about.html">Giới Thiệu</a>
+                <a href="services.html">Dịch Vụ</a>
+                <a href="portfolio.html">Dự Án</a>
+                <a href="blog.html">Blog</a>
+                <a href="faq.html">FAQ</a>
+                <a href="contact.html" class="nav-cta">Liên Hệ</a>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="page-banner">
+        <img src="images/banner-services.png" alt="Dịch vụ WebCraft Studio">
+        <div class="content">
+            <div class="breadcrumb"><a href="index.html">Trang chủ</a><span>/</span><span>Dịch vụ</span></div>
+            <h1>Dịch Vụ Của Chúng Tôi</h1>
+            <p>Giải pháp website toàn diện từ thiết kế đến vận hành</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <!-- Service 1 -->
+            <div class="svc-detail reveal">
+                <div class="icon-big">🎨</div>
+                <div>
+                    <h3>Thiết Kế UI/UX</h3>
+                    <p>Chúng tôi tạo ra những giao diện tuyệt đẹp, trực quan, và tối ưu trải nghiệm người dùng. Mỗi
+                        thiết kế được nghiên cứu kỹ lưỡng từ hành vi người dùng đến xu hướng thiết kế mới nhất.</p>
+                    <ul class="svc-features">
+                        <li>Wireframe & Prototype tương tác</li>
+                        <li>Design System nhất quán</li>
+                        <li>Kiểm thử UX với người dùng thực</li>
+                        <li>Responsive trên mọi thiết bị</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="svc-detail reverse reveal">
+                <div class="icon-big">💻</div>
+                <div>
+                    <h3>Phát Triển Website</h3>
+                    <p>Code chuẩn, tốc độ tải nhanh, bảo mật cao. Sử dụng công nghệ mới nhất để tạo ra những website
+                        hiệu năng vượt trội.</p>
+                    <ul class="svc-features">
+                        <li>HTML5, CSS3, JavaScript hiện đại</li>
+                        <li>Framework: React, Next.js, Vue.js</li>
+                        <li>CMS: WordPress, Strapi</li>
+                        <li>Tốc độ tải &lt; 2 giây</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="svc-detail reveal">
+                <div class="icon-big">🛒</div>
+                <div>
+                    <h3>Thương Mại Điện Tử</h3>
+                    <p>Giải pháp bán hàng online toàn diện với tích hợp thanh toán, quản lý kho, và tối ưu chuyển đổi.
+                    </p>
+                    <ul class="svc-features">
+                        <li>WooCommerce, Shopify, Custom</li>
+                        <li>Cổng thanh toán đa dạng (VNPay, MoMo, ZaloPay)</li>
+                        <li>Quản lý đơn hàng & kho tự động</li>
+                        <li>Tối ưu tỷ lệ chuyển đổi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="svc-detail reverse reveal">
+                <div class="icon-big">🔍</div>
+                <div>
+                    <h3>Tối Ưu SEO</h3>
+                    <p>Tăng thứ hạng tìm kiếm Google, thu hút lượng truy cập organic chất lượng cao một cách bền vững.
+                    </p>
+                    <ul class="svc-features">
+                        <li>SEO On-page & Technical SEO</li>
+                        <li>Nghiên cứu từ khóa chuyên sâu</li>
+                        <li>Tối ưu Core Web Vitals</li>
+                        <li>Báo cáo thứ hạng hàng tháng</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service 5 -->
+            <div class="svc-detail reveal">
+                <div class="icon-big">🛡️</div>
+                <div>
+                    <h3>Bảo Trì & Hỗ Trợ</h3>
+                    <p>Đồng hành sau bàn giao để website luôn hoạt động ổn định, bảo mật, và cập nhật.</p>
+                    <ul class="svc-features">
+                        <li>Cập nhật bảo mật thường xuyên</li>
+                        <li>Sao lưu dữ liệu tự động</li>
+                        <li>Hỗ trợ kỹ thuật nhanh chóng</li>
+                        <li>Giám sát uptime 24/7</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <section class="section" style="background:rgba(108,92,231,.03)">
+        <div class="container">
+            <h2 class="section-title reveal">Công Nghệ Sử Dụng</h2>
+            <p class="section-subtitle reveal">Luôn cập nhật và áp dụng công nghệ tiên tiến nhất</p>
+            <div class="tech-stack reveal">
+                <span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span><span
+                    class="tech-tag">JavaScript</span><span class="tech-tag">React</span><span
+                    class="tech-tag">Next.js</span><span class="tech-tag">Vue.js</span><span
+                    class="tech-tag">Node.js</span><span class="tech-tag">PHP</span><span
+                    class="tech-tag">Laravel</span><span class="tech-tag">WordPress</span><span
+                    class="tech-tag">WooCommerce</span><span class="tech-tag">Shopify</span><span
+                    class="tech-tag">Figma</span><span class="tech-tag">MySQL</span><span
+                    class="tech-tag">MongoDB</span><span class="tech-tag">AWS</span><span
+                    class="tech-tag">Vercel</span><span class="tech-tag">Git</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+        <div class="container" style="text-align:center">
+            <h2 class="section-title reveal">Bạn Cần Dịch Vụ Nào?</h2>
+            <p class="section-subtitle reveal">Liên hệ để nhận tư vấn miễn phí và báo giá chi tiết</p>
+            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap" class="reveal">
+                <a href="contact.html" class="btn btn-primary">💬 Tư Vấn Miễn Phí</a>
+                <a href="portfolio.html" class="btn btn-outline">🎨 Xem Dự Án</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="logo-icon">🚀</div><span>WebCraft</span>
+                    </div>
+                    <p>Biến ý tưởng thành website chuyên nghiệp.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Trang</h4><a href="about.html">Giới thiệu</a><a href="services.html">Dịch vụ</a><a
+                        href="portfolio.html">Dự án</a><a href="blog.html">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Mẫu Website</h4><a href="demos/business/index.html">Doanh nghiệp</a><a
+                        href="demos/ecommerce/index.html">E-commerce</a><a
+                        href="demos/portfolio/index.html">Portfolio</a><a href="demos/restaurant/index.html">Nhà
+                        hàng</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Liên Hệ</h4><a href="mailto:hello@webcraft.vn">hello@webcraft.vn</a><a
+                        href="tel:0901234567">0901 234 567</a><a href="contact.html">Gửi yêu cầu</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>© 2026 WebCraft Studio. All rights reserved.</span>
+                <div class="footer-social"><a href="#">📘</a><a href="#">📸</a><a href="#">💼</a><a href="#">🐙</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

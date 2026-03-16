@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Câu hỏi thường gặp về dịch vụ thiết kế website tại WebCraft Studio.">
+    <title>FAQ | WebCraft Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <style>
+        .page-header {
+            margin-top: 80px;
+            padding: 3rem 0;
+            text-align: center
+        }
+
+        .page-header h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: .5rem
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            margin-bottom: 1rem;
+            font-size: .85rem;
+            color: var(--text-muted)
+        }
+
+        .breadcrumb a {
+            color: var(--primary-light)
+        }
+
+        .faq-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 3rem;
+            align-items: start
+        }
+
+        .faq-nav {
+            position: sticky;
+            top: 100px
+        }
+
+        .faq-nav a {
+            display: block;
+            padding: .6rem 1rem;
+            border-left: 2px solid var(--border-glass);
+            color: var(--text-secondary);
+            font-size: .9rem;
+            font-weight: 500;
+            transition: var(--transition-fast)
+        }
+
+        .faq-nav a:hover,
+        .faq-nav a.active {
+            border-color: var(--primary);
+            color: var(--primary-light);
+            background: rgba(108, 92, 231, .05)
+        }
+
+        .faq-section {
+            margin-bottom: 3rem
+        }
+
+        .faq-section h2 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            margin-bottom: .75rem;
+            overflow: hidden;
+            transition: var(--transition-fast)
+        }
+
+        .faq-item:hover {
+            border-color: var(--border-accent)
+        }
+
+        .faq-question {
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: .95rem;
+            background: var(--bg-card);
+            transition: var(--transition-fast);
+            user-select: none
+        }
+
+        .faq-question:hover {
+            background: var(--bg-card-hover)
+        }
+
+        .faq-question .arrow {
+            font-size: 1.2rem;
+            transition: transform .3s;
+            color: var(--primary-light)
+        }
+
+        .faq-item.open .faq-question .arrow {
+            transform: rotate(180deg)
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s ease, padding .4s ease;
+            color: var(--text-secondary);
+            font-size: .95rem;
+            line-height: 1.7
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem
+        }
+
+        .faq-cta {
+            text-align: center;
+            padding: 3rem;
+            background: var(--gradient-card);
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-xl)
+        }
+
+        .faq-cta h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: .5rem
+        }
+
+        .faq-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem
+        }
+
+        @media(max-width:768px) {
+            .faq-layout {
+                grid-template-columns: 1fr
+            }
+
+            .faq-nav {
+                position: static;
+                display: flex;
+                flex-wrap: wrap;
+                gap: .5rem
+            }
+
+            .faq-nav a {
+                border-left: none;
+                border-bottom: 2px solid var(--border-glass);
+                padding: .4rem .8rem;
+                font-size: .8rem
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">🚀</div><span>WebCraft</span>
+            </a>
+            <div class="nav-links" id="navLinks"><a href="about.html">Giới Thiệu</a><a href="services.html">Dịch
+                    Vụ</a><a href="portfolio.html">Dự Án</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a
+                    href="contact.html" class="nav-cta">Liên Hệ</a></div>
+            <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="breadcrumb"><a href="index.html">Trang chủ</a><span>/</span><span>FAQ</span></div>
+        <h1>Câu Hỏi Thường Gặp</h1>
+        <p>Giải đáp mọi thắc mắc về dịch vụ thiết kế website</p>
+    </div>
+
+    <section class="section" style="padding-top:0">
+        <div class="container">
+            <div class="faq-layout">
+                <nav class="faq-nav">
+                    <a href="#general" class="active">Tổng quan</a>
+                    <a href="#pricing-faq">Chi phí</a>
+                    <a href="#process-faq">Quy trình</a>
+                    <a href="#technical">Kỹ thuật</a>
+                    <a href="#support">Hỗ trợ</a>
+                </nav>
+
+                <div>
+                    <!-- General -->
+                    <div class="faq-section" id="general">
+                        <h2>📋 Tổng Quan</h2>
+                        <div class="faq-item open">
+                            <div class="faq-question">WebCraft Studio cung cấp những dịch vụ gì?<span
+                                    class="arrow">▾</span></div>
+                            <div class="faq-answer">Chúng tôi cung cấp dịch vụ thiết kế UI/UX, phát triển website,
+                                thương mại điện tử, tối ưu SEO, và bảo trì website. Từ landing page đơn giản đến hệ
+                                thống e-commerce phức tạp — chúng tôi đều có thể đáp ứng.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Ai nên sử dụng dịch vụ của WebCraft?<span class="arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">Startup, doanh nghiệp vừa và nhỏ, freelancer, nhà hàng, bất động sản
+                                — bất kỳ ai cần website chuyên nghiệp để phát triển kinh doanh online. Chúng tôi có gói
+                                phù hợp cho mọi quy mô.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Tôi có thể xem mẫu website trước khi đặt hàng không?<span
+                                    class="arrow">▾</span></div>
+                            <div class="faq-answer">Có! Truy cập trang <a href="portfolio.html"
+                                    style="color:var(--primary-light)">Dự Án</a> để xem các demo mẫu website chúng tôi
+                                đã thực hiện. Bạn có thể chọn mẫu ưng ý và chúng tôi sẽ tùy chỉnh theo brand của bạn.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pricing -->
+                    <div class="faq-section" id="pricing-faq">
+                        <h2>💰 Chi Phí</h2>
+                        <div class="faq-item">
+                            <div class="faq-question">Chi phí thiết kế website là bao nhiêu?<span class="arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">Gói Cơ Bản từ 5 triệu VNĐ (1-3 trang), Gói Chuyên Nghiệp từ 15 triệu
+                                VNĐ (5-10 trang), Gói Doanh Nghiệp từ 35 triệu VNĐ (không giới hạn). Chi phí cụ thể phụ
+                                thuộc vào yêu cầu và tính năng.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Có phí phát sinh ngoài bảng giá không?<span class="arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">Không. Bảng giá đã bao gồm thiết kế, code, cài đặt hosting, và hướng
+                                dẫn sử dụng. Chỉ phát sinh thêm nếu bạn yêu cầu tính năng đặc biệt ngoài scope ban đầu
+                                (sẽ được báo giá trước).</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Phương thức thanh toán như thế nào?<span class="arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">Thanh toán 50% khi bắt đầu dự án, 50% khi bàn giao. Hỗ trợ chuyển
+                                khoản ngân hàng, ví điện tử (MoMo, ZaloPay), hoặc tiền mặt.</div>
+                        </div>
+                    </div>
+
+                    <!-- Process -->
+                    <div class="faq-section" id="process-faq">
+                        <h2>⚙️ Quy Trình</h2>
+                        <div class="faq-item">
+                            <div class="faq-question">Thời gian hoàn thành website là bao lâu?<span
+                                    class="arrow">▾</span></div>
+                            <div class="faq-answer">Gói Cơ Bản: 5-7 ngày. Gói Chuyên Nghiệp: 10-15 ngày. Gói Doanh
+                                Nghiệp: 20-30 ngày. Thời gian có thể thay đổi tùy theo độ phức tạp và tốc độ phản hồi
+                                của khách hàng.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Tôi cần chuẩn bị gì trước khi bắt đầu?<span class="arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">Thông tin doanh nghiệp (logo, slogan, màu brand), nội dung (text,
+                                hình ảnh sản phẩm/dịch vụ), và mẫu website tham khảo nếu có. Chúng tôi sẽ hướng dẫn bạn
+                                chi tiết trong buổi tư vấn.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Được chỉnh sửa bao nhiêu lần?<span class="arrow">▾</span></div>
+                            <div class="faq-answer">Unlimited chỉnh sửa trong phạm vi thiết kế đã thống nhất. Chúng tôi
+                                sẽ gửi bản preview để bạn duyệt trước khi code chính thức.</div>
+                        </div>
+                    </div>
+
+                    <!-- Technical -->
+                    <div class="faq-section" id="technical">
+                        <h2>🔧 Kỹ Thuật</h2>
+                        <div class="faq-item">
+                            <div class="faq-question">Website có tương thích mobile không?<span class="arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">100% responsive. Tất cả website đều được thiết kế và kiểm thử trên
+                                desktop, tablet, và điện thoại di động để đảm bảo trải nghiệm tốt nhất.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Website có chuẩn SEO không?<span class="arrow">▾</span></div>
+                            <div class="faq-answer">Có. Chúng tôi tối ưu SEO on-page cơ bản cho tất cả gói: meta tags,
+                                heading structure, sitemap, robots.txt, schema markup, tốc độ tải trang.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Tôi có được source code không?<span class="arrow">▾</span></div>
+                            <div class="faq-answer">Có. Sau khi thanh toán đầy đủ, bạn sở hữu toàn bộ source code và có
+                                quyền sở hữu website 100%.</div>
+                        </div>
+                    </div>
+
+                    <!-- Support -->
+                    <div class="faq-section" id="support">
+                        <h2>🛡️ Hỗ Trợ</h2>
+                        <div class="faq-item">
+                            <div class="faq-question">Có hỗ trợ sau khi bàn giao không?<span class="arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">Có. Gói Cơ Bản: 30 ngày. Gói Chuyên Nghiệp: 90 ngày. Gói Doanh
+                                Nghiệp: 1 năm. Bao gồm sửa lỗi, hướng dẫn sử dụng, và cập nhật nhỏ.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Có dịch vụ bảo trì hàng tháng không?<span class="arrow">▾</span>
+                            </div>
+                            <div class="faq-answer">Có. Gói bảo trì từ 500K/tháng bao gồm: sao lưu, cập nhật bảo mật,
+                                giám sát uptime, và chỉnh sửa nội dung nhỏ.</div>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div class="faq-cta reveal">
+                        <h3>Chưa Tìm Được Câu Trả Lời?</h3>
+                        <p>Liên hệ trực tiếp để được tư vấn chi tiết</p>
+                        <a href="contact.html" class="btn btn-primary">💬 Liên Hệ Ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="logo-icon">🚀</div><span>WebCraft</span>
+                    </div>
+                    <p>Biến ý tưởng thành website chuyên nghiệp.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Trang</h4><a href="about.html">Giới thiệu</a><a href="services.html">Dịch vụ</a><a
+                        href="portfolio.html">Dự án</a><a href="blog.html">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Mẫu</h4><a href="demos/business/index.html">Doanh nghiệp</a><a
+                        href="demos/ecommerce/index.html">E-commerce</a><a
+                        href="demos/portfolio/index.html">Portfolio</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Liên Hệ</h4><a href="mailto:hello@webcraft.vn">hello@webcraft.vn</a><a
+                        href="tel:0901234567">0901 234 567</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>© 2026 WebCraft Studio. All rights reserved.</span>
+                <div class="footer-social"><a href="#">📘</a><a href="#">📸</a><a href="#">💼</a><a href="#">🐙</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+    <script>
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                const wasOpen = item.classList.contains('open');
+                // Close all in same section
+                item.closest('.faq-section').querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                if (!wasOpen) item.classList.add('open');
+            });
+        });
+        // Side nav active on scroll
+        const sections = document.querySelectorAll('.faq-section');
+        const navLinks = document.querySelectorAll('.faq-nav a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 150) current = s.id; });
+            navLinks.forEach(l => { l.classList.toggle('active', l.getAttribute('href') === '#' + current) });
+        });
+    </script>
+</body>
+
+</html>

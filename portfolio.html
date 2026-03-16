@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Các dự án website đã thực hiện bởi WebCraft Studio - Landing page, thương mại điện tử, portfolio, nhà hàng, bất động sản.">
+    <title>Dự Án | WebCraft Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <style>
+        .page-banner {
+            position: relative;
+            height: 50vh;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 60px
+        }
+
+        .page-banner img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .3
+        }
+
+        .page-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 26, .3), rgba(10, 10, 26, .95))
+        }
+
+        .page-banner .content {
+            position: relative;
+            z-index: 2
+        }
+
+        .page-banner h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: .75rem
+        }
+
+        .page-banner p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            margin-bottom: 1rem;
+            font-size: .85rem;
+            color: var(--text-muted)
+        }
+
+        .breadcrumb a {
+            color: var(--primary-light)
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: .75rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap
+        }
+
+        .filter-tab {
+            padding: .5rem 1.5rem;
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-full);
+            font-size: .85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            color: var(--text-secondary);
+            background: transparent
+        }
+
+        .filter-tab.active,
+        .filter-tab:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary)
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem
+        }
+
+        .port-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            transition: var(--transition-base)
+        }
+
+        .port-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow)
+        }
+
+        .port-thumb {
+            height: 230px;
+            overflow: hidden;
+            position: relative
+        }
+
+        .port-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow)
+        }
+
+        .port-card:hover .port-thumb img {
+            transform: scale(1.05)
+        }
+
+        .port-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10, 10, 26, .9), transparent 60%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: var(--transition-base)
+        }
+
+        .port-card:hover .port-overlay {
+            opacity: 1
+        }
+
+        .port-info {
+            padding: 1.25rem
+        }
+
+        .port-tag {
+            display: inline-block;
+            padding: .2rem .7rem;
+            background: rgba(108, 92, 231, .15);
+            color: var(--primary-light);
+            border-radius: var(--radius-full);
+            font-size: .7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            margin-bottom: .5rem
+        }
+
+        .port-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: .3rem
+        }
+
+        .port-info p {
+            color: var(--text-secondary);
+            font-size: .9rem;
+            margin-bottom: .75rem
+        }
+
+        .port-tech {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap
+        }
+
+        .port-tech span {
+            padding: .2rem .5rem;
+            background: rgba(255, 255, 255, .05);
+            border-radius: var(--radius-sm);
+            font-size: .7rem;
+            color: var(--text-muted)
+        }
+
+        .case-study {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-glass)
+        }
+
+        .case-study img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-glass)
+        }
+
+        .case-study h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem
+        }
+
+        .case-study p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem
+        }
+
+        .case-results {
+            display: flex;
+            gap: 2rem
+        }
+
+        .case-result .num {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent)
+        }
+
+        .case-result .lab {
+            color: var(--text-muted);
+            font-size: .8rem
+        }
+
+        @media(max-width:768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr
+            }
+
+            .case-study {
+                grid-template-columns: 1fr
+            }
+
+            .case-results {
+                flex-wrap: wrap
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">🚀</div><span>WebCraft</span>
+            </a>
+            <div class="nav-links" id="navLinks"><a href="about.html">Giới Thiệu</a><a href="services.html">Dịch
+                    Vụ</a><a href="portfolio.html">Dự Án</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a
+                    href="contact.html" class="nav-cta">Liên Hệ</a></div>
+            <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="page-banner">
+        <img src="images/banner-portfolio.png" alt="Dự án WebCraft Studio">
+        <div class="content">
+            <div class="breadcrumb"><a href="index.html">Trang chủ</a><span>/</span><span>Dự án</span></div>
+            <h1>Dự Án Đã Thực Hiện</h1>
+            <p>150+ dự án thành công cho mọi ngành nghề</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="filter-tabs reveal">
+                <span class="filter-tab active">Tất cả</span>
+                <span class="filter-tab">Doanh nghiệp</span>
+                <span class="filter-tab">E-Commerce</span>
+                <span class="filter-tab">Portfolio</span>
+                <span class="filter-tab">F&B</span>
+                <span class="filter-tab">Bất động sản</span>
+            </div>
+
+            <div class="portfolio-grid">
+                <a href="demos/business/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="images/demo-business.png" alt="TechVision Corp">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Doanh Nghiệp</span>
+                        <h3>TechVision Corp</h3>
+                        <p>Landing page công ty công nghệ với thiết kế hiện đại</p>
+                        <div class="port-tech"><span>HTML/CSS</span><span>JavaScript</span><span>Responsive</span></div>
+                    </div>
+                </a>
+                <a href="demos/ecommerce/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="images/demo-ecommerce.png" alt="LuxeStyle Fashion">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">E-Commerce</span>
+                        <h3>LuxeStyle Fashion</h3>
+                        <p>Shop thời trang cao cấp với giao diện sang trọng</p>
+                        <div class="port-tech"><span>E-Commerce</span><span>Thanh Toán</span><span>SEO</span></div>
+                    </div>
+                </a>
+                <a href="demos/portfolio/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="images/demo-portfolio.png" alt="Creative Studio">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Portfolio</span>
+                        <h3>Creative Studio</h3>
+                        <p>Portfolio cá nhân cho designer & developer</p>
+                        <div class="port-tech"><span>React</span><span>Animation</span><span>Dark Mode</span></div>
+                    </div>
+                </a>
+                <a href="demos/restaurant/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="images/demo-restaurant.png" alt="Golden Kitchen">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">F&B</span>
+                        <h3>Golden Kitchen</h3>
+                        <p>Nhà hàng cao cấp với menu online & đặt bàn</p>
+                        <div class="port-tech"><span>Booking</span><span>Menu Online</span><span>SEO Local</span></div>
+                    </div>
+                </a>
+                <a href="demos/realestate/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="images/demo-realestate.png" alt="DreamHome Realty">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">BĐS</span>
+                        <h3>DreamHome Realty</h3>
+                        <p>Nền tảng mua bán & cho thuê bất động sản</p>
+                        <div class="port-tech"><span>Search</span><span>Listing</span><span>Map</span></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDY -->
+    <section class="section" style="background:rgba(108,92,231,.03)">
+        <div class="container">
+            <h2 class="section-title reveal">Case Study Nổi Bật</h2>
+            <div class="case-study reveal">
+                <img src="images/demo-ecommerce.png" alt="LuxeStyle Case Study">
+                <div>
+                    <h3>LuxeStyle Fashion - Tăng 200% Doanh Thu Online</h3>
+                    <p>LuxeStyle là thương hiệu thời trang cao cấp muốn mở rộng kênh bán hàng trực tuyến. Chúng tôi đã
+                        thiết kế và phát triển website thương mại điện tử hoàn chỉnh với trải nghiệm mua sắm premium.
+                    </p>
+                    <p>Kết quả sau 3 tháng triển khai đã vượt xa kỳ vọng của khách hàng.</p>
+                    <div class="case-results">
+                        <div class="case-result">
+                            <div class="num">+200%</div>
+                            <div class="lab">Doanh thu online</div>
+                        </div>
+                        <div class="case-result">
+                            <div class="num">+150%</div>
+                            <div class="lab">Lượt truy cập</div>
+                        </div>
+                        <div class="case-result">
+                            <div class="num">3.5%</div>
+                            <div class="lab">Tỷ lệ chuyển đổi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container" style="text-align:center">
+            <h2 class="section-title reveal">Muốn Có Website Như Vậy?</h2>
+            <p class="section-subtitle reveal">Liên hệ ngay để được tư vấn và báo giá miễn phí</p>
+            <a href="contact.html" class="btn btn-primary reveal">💬 Liên Hệ Ngay</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="logo-icon">🚀</div><span>WebCraft</span>
+                    </div>
+                    <p>Biến ý tưởng thành website chuyên nghiệp.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Trang</h4><a href="about.html">Giới thiệu</a><a href="services.html">Dịch vụ</a><a
+                        href="portfolio.html">Dự án</a><a href="blog.html">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Mẫu Website</h4><a href="demos/business/index.html">Doanh nghiệp</a><a
+                        href="demos/ecommerce/index.html">E-commerce</a><a
+                        href="demos/portfolio/index.html">Portfolio</a><a href="demos/restaurant/index.html">Nhà
+                        hàng</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Liên Hệ</h4><a href="mailto:hello@webcraft.vn">hello@webcraft.vn</a><a
+                        href="tel:0901234567">0901 234 567</a><a href="contact.html">Gửi yêu cầu</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>© 2026 WebCraft Studio. All rights reserved.</span>
+                <div class="footer-social"><a href="#">📘</a><a href="#">📸</a><a href="#">💼</a><a href="#">🐙</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+    <script>document.querySelectorAll('.filter-tab').forEach(t => { t.addEventListener('click', () => { document.querySelectorAll('.filter-tab').forEach(x => x.classList.remove('active')); t.classList.add('active') }) })</script>
+</body>
+
+</html>

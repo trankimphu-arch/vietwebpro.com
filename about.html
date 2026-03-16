@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Tìm hiểu về WebCraft Studio - Đội ngũ thiết kế website chuyên nghiệp với hơn 5 năm kinh nghiệm.">
+    <title>Giới Thiệu | WebCraft Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <style>
+        .page-banner {
+            position: relative;
+            height: 50vh;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 60px
+        }
+
+        .page-banner img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .3
+        }
+
+        .page-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 26, .3), rgba(10, 10, 26, .95))
+        }
+
+        .page-banner .content {
+            position: relative;
+            z-index: 2
+        }
+
+        .page-banner h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: .75rem
+        }
+
+        .page-banner p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            margin-bottom: 1rem;
+            font-size: .85rem;
+            color: var(--text-muted)
+        }
+
+        .breadcrumb a {
+            color: var(--primary-light)
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline
+        }
+
+        .about-story {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center
+        }
+
+        .about-story img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-glass)
+        }
+
+        .about-story h2 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem
+        }
+
+        .about-story p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem
+        }
+
+        .highlight-text {
+            color: var(--primary-light);
+            font-weight: 600
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 2.5rem 1.5rem
+        }
+
+        .value-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem
+        }
+
+        .value-card h3 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+            font-size: .9rem;
+            line-height: 1.7
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+            padding: 3rem 0
+        }
+
+        .stat-box .num {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        .stat-box .lab {
+            color: var(--text-muted);
+            font-size: .9rem;
+            margin-top: .25rem
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 2rem
+        }
+
+        .team-member .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem
+        }
+
+        .team-member h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            margin-bottom: .25rem
+        }
+
+        .team-member .role {
+            color: var(--primary-light);
+            font-size: .85rem;
+            font-weight: 600;
+            margin-bottom: .5rem
+        }
+
+        .team-member p {
+            color: var(--text-secondary);
+            font-size: .85rem
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-accent)
+        }
+
+        .timeline-item {
+            padding-left: 60px;
+            margin-bottom: 2rem;
+            position: relative
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--bg-dark)
+        }
+
+        .timeline-item .year {
+            color: var(--primary-light);
+            font-weight: 700;
+            font-size: .9rem;
+            margin-bottom: .25rem
+        }
+
+        .timeline-item h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            margin-bottom: .25rem
+        }
+
+        .timeline-item p {
+            color: var(--text-secondary);
+            font-size: .9rem
+        }
+
+        @media(max-width:768px) {
+            .about-story {
+                grid-template-columns: 1fr
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">🚀</div><span>WebCraft</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="about.html">Giới Thiệu</a>
+                <a href="services.html">Dịch Vụ</a>
+                <a href="portfolio.html">Dự Án</a>
+                <a href="blog.html">Blog</a>
+                <a href="faq.html">FAQ</a>
+                <a href="contact.html" class="nav-cta">Liên Hệ</a>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <!-- BANNER -->
+    <section class="page-banner">
+        <img src="images/banner-about.png" alt="Giới thiệu WebCraft Studio">
+        <div class="content">
+            <div class="breadcrumb"><a href="index.html">Trang chủ</a><span>/</span><span>Giới thiệu</span></div>
+            <h1>Về Chúng Tôi</h1>
+            <p>Đội ngũ đam mê công nghệ, tận tâm với từng sản phẩm</p>
+        </div>
+    </section>
+
+    <!-- STORY -->
+    <section class="section">
+        <div class="container">
+            <div class="about-story reveal">
+                <img src="images/banner-about.png" alt="Câu chuyện WebCraft">
+                <div>
+                    <h2>Câu Chuyện Của Chúng Tôi</h2>
+                    <p>WebCraft Studio được thành lập từ năm 2021 với sứ mệnh đơn giản: <span
+                            class="highlight-text">giúp mọi doanh nghiệp có một website chuyên nghiệp</span> mà không
+                        cần phải tốn hàng trăm triệu đồng.</p>
+                    <p>Bắt đầu từ một nhóm 3 người đam mê thiết kế web, chúng tôi đã phát triển thành đội ngũ 15+ thành
+                        viên chuyên nghiệp, phục vụ hơn 150 khách hàng trên toàn quốc.</p>
+                    <p>Chúng tôi tin rằng mỗi doanh nghiệp đều xứng đáng có một website đẹp, nhanh, và mang lại kết quả
+                        kinh doanh thực sự. Đó là lý do chúng tôi không ngừng học hỏi và áp dụng công nghệ mới nhất.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section style="background:rgba(108,92,231,.03)">
+        <div class="container">
+            <div class="stats-section">
+                <div class="stat-box reveal">
+                    <div class="num">150+</div>
+                    <div class="lab">Dự án hoàn thành</div>
+                </div>
+                <div class="stat-box reveal">
+                    <div class="num">98%</div>
+                    <div class="lab">Khách hàng hài lòng</div>
+                </div>
+                <div class="stat-box reveal">
+                    <div class="num">15+</div>
+                    <div class="lab">Thành viên</div>
+                </div>
+                <div class="stat-box reveal">
+                    <div class="num">5+</div>
+                    <div class="lab">Năm kinh nghiệm</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title reveal">Giá Trị Cốt Lõi</h2>
+            <p class="section-subtitle reveal">Những nguyên tắc định hướng mọi hoạt động của chúng tôi</p>
+            <div class="values-grid">
+                <div class="glass-card value-card reveal">
+                    <div class="icon">🎯</div>
+                    <h3>Chất Lượng</h3>
+                    <p>Mỗi pixel đều được chăm chút, mỗi dòng code đều được tối ưu hóa</p>
+                </div>
+                <div class="glass-card value-card reveal">
+                    <div class="icon">🤝</div>
+                    <h3>Tận Tâm</h3>
+                    <p>Đặt lợi ích khách hàng lên hàng đầu, đồng hành từ A đến Z</p>
+                </div>
+                <div class="glass-card value-card reveal">
+                    <div class="icon">💡</div>
+                    <h3>Sáng Tạo</h3>
+                    <p>Không theo khuôn mẫu, mỗi website là một tác phẩm nghệ thuật riêng biệt</p>
+                </div>
+                <div class="glass-card value-card reveal">
+                    <div class="icon">⚡</div>
+                    <h3>Tốc Độ</h3>
+                    <p>Bàn giao đúng hạn, website tải nhanh, quy trình làm việc hiệu quả</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="section" style="background:rgba(108,92,231,.03)">
+        <div class="container">
+            <h2 class="section-title reveal">Đội Ngũ Của Chúng Tôi</h2>
+            <p class="section-subtitle reveal">Những con người tài năng đằng sau mỗi dự án</p>
+            <div class="team-grid">
+                <div class="glass-card team-member reveal">
+                    <div class="avatar">👨‍💼</div>
+                    <h4>Nguyễn Văn A</h4>
+                    <div class="role">Founder & CEO</div>
+                    <p>10+ năm kinh nghiệm quản lý dự án web</p>
+                </div>
+                <div class="glass-card team-member reveal">
+                    <div class="avatar">👩‍🎨</div>
+                    <h4>Trần Thị B</h4>
+                    <div class="role">Lead Designer</div>
+                    <p>Chuyên gia UI/UX, từng làm tại Agency top đầu</p>
+                </div>
+                <div class="glass-card team-member reveal">
+                    <div class="avatar">👨‍💻</div>
+                    <h4>Lê Văn C</h4>
+                    <div class="role">Tech Lead</div>
+                    <p>Full-stack developer, expert React & Node.js</p>
+                </div>
+                <div class="glass-card team-member reveal">
+                    <div class="avatar">👩‍💻</div>
+                    <h4>Phạm Thị D</h4>
+                    <div class="role">SEO Specialist</div>
+                    <p>Đưa hàng trăm website lên top Google</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title reveal">Hành Trình Phát Triển</h2>
+            <div class="timeline reveal">
+                <div class="timeline-item">
+                    <div class="year">2021</div>
+                    <h4>Thành lập WebCraft Studio</h4>
+                    <p>Bắt đầu với 3 thành viên và đam mê thiết kế web</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2022</div>
+                    <h4>Hoàn thành 50 dự án đầu tiên</h4>
+                    <p>Mở rộng đội ngũ lên 8 người, phục vụ đa ngành</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2023</div>
+                    <h4>Ra mắt dịch vụ E-commerce</h4>
+                    <p>Cung cấp giải pháp bán hàng trực tuyến toàn diện</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2024</div>
+                    <h4>Cán mốc 100 khách hàng</h4>
+                    <p>Tỷ lệ khách hàng quay lại đạt 85%</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2025</div>
+                    <h4>Đội ngũ 15+ thành viên</h4>
+                    <p>Mở rộng dịch vụ AI & automation cho website</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="background:linear-gradient(135deg,rgba(108,92,231,.08),rgba(0,206,201,.03))">
+        <div class="container" style="text-align:center">
+            <h2 class="section-title reveal">Sẵn Sàng Hợp Tác?</h2>
+            <p class="section-subtitle reveal">Hãy để chúng tôi biến ý tưởng của bạn thành hiện thực</p>
+            <a href="contact.html" class="btn btn-primary reveal">💬 Liên Hệ Ngay</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="logo-icon">🚀</div><span>WebCraft</span>
+                    </div>
+                    <p>Biến ý tưởng thành website chuyên nghiệp.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Trang</h4><a href="about.html">Giới thiệu</a><a href="services.html">Dịch vụ</a><a
+                        href="portfolio.html">Dự án</a><a href="blog.html">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Mẫu Website</h4><a href="demos/business/index.html">Doanh nghiệp</a><a
+                        href="demos/ecommerce/index.html">E-commerce</a><a
+                        href="demos/portfolio/index.html">Portfolio</a><a href="demos/restaurant/index.html">Nhà
+                        hàng</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Liên Hệ</h4><a href="mailto:hello@webcraft.vn">hello@webcraft.vn</a><a
+                        href="tel:0901234567">0901 234 567</a><a href="contact.html">Gửi yêu cầu</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>© 2026 WebCraft Studio. All rights reserved.</span>
+                <div class="footer-social"><a href="#">📘</a><a href="#">📸</a><a href="#">💼</a><a href="#">🐙</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

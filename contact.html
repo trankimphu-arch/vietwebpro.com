@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Liên hệ WebCraft Studio để được tư vấn miễn phí về thiết kế website chuyên nghiệp.">
+    <title>Liên Hệ | WebCraft Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <style>
+        .page-banner {
+            position: relative;
+            height: 45vh;
+            min-height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 60px
+        }
+
+        .page-banner img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .3
+        }
+
+        .page-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 26, .3), rgba(10, 10, 26, .95))
+        }
+
+        .page-banner .content {
+            position: relative;
+            z-index: 2
+        }
+
+        .page-banner h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: .75rem
+        }
+
+        .page-banner p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: .5rem;
+            margin-bottom: 1rem;
+            font-size: .85rem;
+            color: var(--text-muted)
+        }
+
+        .breadcrumb a {
+            color: var(--primary-light)
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            align-items: start
+        }
+
+        .contact-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem
+        }
+
+        .c-card {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem
+        }
+
+        .c-card .c-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: var(--radius-md);
+            background: var(--gradient-card);
+            border: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0
+        }
+
+        .c-card h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            margin-bottom: .25rem
+        }
+
+        .c-card p {
+            color: var(--text-secondary);
+            font-size: .95rem
+        }
+
+        .c-card a {
+            color: var(--primary-light);
+            font-weight: 500
+        }
+
+        .c-card a:hover {
+            text-decoration: underline
+        }
+
+        .map-embed {
+            width: 100%;
+            height: 250px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem
+        }
+
+        .contact-form-page {
+            padding: 2.5rem
+        }
+
+        .contact-form-page h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: .5rem
+        }
+
+        .contact-form-page .desc {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: .95rem
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem
+        }
+
+        .social-link {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: var(--transition-base)
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:768px) {
+            .contact-grid {
+                grid-template-columns: 1fr
+            }
+
+            .form-row {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">🚀</div><span>WebCraft</span>
+            </a>
+            <div class="nav-links" id="navLinks"><a href="about.html">Giới Thiệu</a><a href="services.html">Dịch
+                    Vụ</a><a href="portfolio.html">Dự Án</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a
+                    href="contact.html" class="nav-cta">Liên Hệ</a></div>
+            <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="page-banner">
+        <img src="images/banner-contact.png" alt="Liên hệ WebCraft Studio">
+        <div class="content">
+            <div class="breadcrumb"><a href="index.html">Trang chủ</a><span>/</span><span>Liên hệ</span></div>
+            <h1>Liên Hệ Với Chúng Tôi</h1>
+            <p>Hãy để lại thông tin, chúng tôi sẽ phản hồi trong vòng 24 giờ</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="contact-grid">
+                <div>
+                    <div class="contact-cards">
+                        <div class="glass-card c-card reveal">
+                            <div class="c-icon">📧</div>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:hello@webcraft.vn">hello@webcraft.vn</a></p>
+                                <p style="font-size:.8rem;color:var(--text-muted)">Phản hồi trong 2-4 giờ làm việc</p>
+                            </div>
+                        </div>
+                        <div class="glass-card c-card reveal">
+                            <div class="c-icon">📱</div>
+                            <div>
+                                <h4>Hotline</h4>
+                                <p><a href="tel:0901234567">0901 234 567</a></p>
+                                <p style="font-size:.8rem;color:var(--text-muted)">Thứ 2 - Thứ 7, 8:00 - 18:00</p>
+                            </div>
+                        </div>
+                        <div class="glass-card c-card reveal">
+                            <div class="c-icon">💬</div>
+                            <div>
+                                <h4>Zalo / Messenger</h4>
+                                <p><a href="#">Chat ngay với tư vấn viên</a></p>
+                                <p style="font-size:.8rem;color:var(--text-muted)">Online 8:00 - 22:00</p>
+                            </div>
+                        </div>
+                        <div class="glass-card c-card reveal">
+                            <div class="c-icon">📍</div>
+                            <div>
+                                <h4>Địa Chỉ</h4>
+                                <p>123 Nguyễn Huệ, Quận 1</p>
+                                <p>TP. Hồ Chí Minh, Việt Nam</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-links reveal">
+                        <a href="#" class="social-link" title="Facebook">📘</a>
+                        <a href="#" class="social-link" title="Instagram">📸</a>
+                        <a href="#" class="social-link" title="LinkedIn">💼</a>
+                        <a href="#" class="social-link" title="GitHub">🐙</a>
+                        <a href="#" class="social-link" title="YouTube">🎬</a>
+                    </div>
+
+                    <div class="map-embed reveal">🗺️ Bản đồ Google Maps</div>
+                </div>
+
+                <form class="glass-card contact-form-page contact-form-el reveal">
+                    <h3>Gửi Yêu Cầu Tư Vấn</h3>
+                    <p class="desc">Điền thông tin bên dưới, chúng tôi sẽ liên hệ tư vấn miễn phí</p>
+                    <div class="form-row">
+                        <div class="form-group"><label>Họ và tên *</label><input type="text" placeholder="Nguyễn Văn A"
+                                required></div>
+                        <div class="form-group"><label>Email *</label><input type="email"
+                                placeholder="email@company.com" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Số điện thoại</label><input type="tel"
+                                placeholder="0901 234 567"></div>
+                        <div class="form-group"><label>Ngân sách dự kiến</label>
+                            <select>
+                                <option value="">-- Chọn --</option>
+                                <option>Dưới 5 triệu</option>
+                                <option>5 - 15 triệu</option>
+                                <option>15 - 35 triệu</option>
+                                <option>Trên 35 triệu</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Loại website cần làm</label>
+                        <select>
+                            <option value="">-- Chọn --</option>
+                            <option>Landing Page</option>
+                            <option>Website doanh nghiệp</option>
+                            <option>Thương mại điện tử</option>
+                            <option>Portfolio</option>
+                            <option>Blog / Tin tức</option>
+                            <option>Nhà hàng / F&B</option>
+                            <option>Bất động sản</option>
+                            <option>Khác</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Mô tả chi tiết yêu cầu</label><textarea
+                            placeholder="Mô tả website bạn muốn: mục đích, tính năng, tham khảo mẫu nào..."></textarea>
+                    </div>
+                    <div class="form-group"><label>Bạn biết đến chúng tôi qua đâu?</label>
+                        <select>
+                            <option value="">-- Chọn --</option>
+                            <option>Google</option>
+                            <option>Facebook</option>
+                            <option>Bạn bè giới thiệu</option>
+                            <option>Khác</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-accent" style="width:100%;justify-content:center">Gửi Yêu Cầu
+                        Tư Vấn →</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <div class="logo-icon">🚀</div><span>WebCraft</span>
+                    </div>
+                    <p>Biến ý tưởng thành website chuyên nghiệp.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Trang</h4><a href="about.html">Giới thiệu</a><a href="services.html">Dịch vụ</a><a
+                        href="portfolio.html">Dự án</a><a href="blog.html">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Mẫu</h4><a href="demos/business/index.html">Doanh nghiệp</a><a
+                        href="demos/ecommerce/index.html">E-commerce</a><a
+                        href="demos/portfolio/index.html">Portfolio</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Liên Hệ</h4><a href="mailto:hello@webcraft.vn">hello@webcraft.vn</a><a
+                        href="tel:0901234567">0901 234 567</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>© 2026 WebCraft Studio. All rights reserved.</span>
+                <div class="footer-social"><a href="#">📘</a><a href="#">📸</a><a href="#">💼</a><a href="#">🐙</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
