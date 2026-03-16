@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VietTravel | Demo Du Lịch</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #06101A;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            transition: .3s
+        }
+
+        .nav.scrolled {
+            background: rgba(6, 16, 26, .95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, .05)
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .nav-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800
+        }
+
+        .nav-logo span {
+            color: #F59E0B
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .55);
+            font-size: .9rem;
+            font-weight: 500;
+            transition: .2s
+        }
+
+        .nav-links a:hover {
+            color: #F59E0B
+        }
+
+        .cta-nav {
+            padding: .55rem 1.3rem;
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            border-radius: 999px;
+            color: #fff !important;
+            font-weight: 600;
+            font-size: .85rem
+        }
+
+        .hero {
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 60% 40%, rgba(245, 158, 11, .06), transparent 50%)
+        }
+
+        .hero .wrap {
+            position: relative;
+            z-index: 2;
+            text-align: center
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.2rem, 5.5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.12;
+            margin-bottom: 1.5rem
+        }
+
+        .hero h1 span {
+            color: #F59E0B
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, .45);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7
+        }
+
+        .search-travel {
+            display: flex;
+            gap: .5rem;
+            max-width: 750px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 999px;
+            padding: .35rem
+        }
+
+        .search-travel input,
+        .search-travel select {
+            flex: 1;
+            padding: .8rem 1.2rem;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: .9rem;
+            outline: none;
+            min-width: 0
+        }
+
+        .search-travel select {
+            max-width: 140px;
+            color: rgba(255, 255, 255, .5)
+        }
+
+        select option {
+            background: #06101A
+        }
+
+        .search-travel button {
+            padding: .8rem 2rem;
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            border-radius: 999px;
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+            white-space: nowrap
+        }
+
+        .search-travel button:hover {
+            box-shadow: 0 0 25px rgba(245, 158, 11, .3)
+        }
+
+        .section {
+            padding: 5rem 0
+        }
+
+        .sec-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: .5rem
+        }
+
+        .sec-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, .4);
+            font-size: .9rem;
+            margin-bottom: 3rem
+        }
+
+        .dest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem
+        }
+
+        .dest-card {
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .06);
+            transition: .3s;
+            cursor: pointer
+        }
+
+        .dest-card:hover {
+            border-color: rgba(245, 158, 11, .3);
+            transform: translateY(-4px)
+        }
+
+        .dest-img {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative
+        }
+
+        .d1 {
+            background: linear-gradient(135deg, #0a1a10, #06101A)
+        }
+
+        .d2 {
+            background: linear-gradient(135deg, #1a150a, #06101A)
+        }
+
+        .d3 {
+            background: linear-gradient(135deg, #0a0e1a, #06101A)
+        }
+
+        .d4 {
+            background: linear-gradient(135deg, #1a0e0e, #06101A)
+        }
+
+        .dest-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: .3rem .8rem;
+            background: rgba(245, 158, 11, .9);
+            border-radius: 999px;
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase
+        }
+
+        .dest-info {
+            padding: 1.25rem
+        }
+
+        .dest-info h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: .3rem
+        }
+
+        .dest-info .loc {
+            color: rgba(255, 255, 255, .4);
+            font-size: .85rem;
+            margin-bottom: .5rem
+        }
+
+        .dest-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .dest-price {
+            color: #F59E0B;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem
+        }
+
+        .dest-rating {
+            color: rgba(255, 255, 255, .4);
+            font-size: .85rem
+        }
+
+        .perks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem
+        }
+
+        .perk {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: rgba(255, 255, 255, .02);
+            border: 1px solid rgba(255, 255, 255, .05);
+            border-radius: 16px
+        }
+
+        .perk .icon {
+            font-size: 2rem;
+            margin-bottom: .75rem
+        }
+
+        .perk h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: .95rem;
+            margin-bottom: .3rem
+        }
+
+        .perk p {
+            color: rgba(255, 255, 255, .4);
+            font-size: .8rem
+        }
+
+        .cta-travel {
+            text-align: center;
+            padding: 4rem;
+            background: linear-gradient(135deg, rgba(245, 158, 11, .06), transparent);
+            border: 1px solid rgba(245, 158, 11, .1);
+            border-radius: 24px;
+            margin-top: 2rem
+        }
+
+        .cta-travel h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: .5rem
+        }
+
+        .cta-travel p {
+            color: rgba(255, 255, 255, .4);
+            margin-bottom: 2rem
+        }
+
+        .btn-amber {
+            padding: .85rem 2rem;
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            border-radius: 999px;
+            font-weight: 700;
+            color: #fff;
+            transition: .3s;
+            border: none;
+            font-size: .9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .btn-amber:hover {
+            box-shadow: 0 0 30px rgba(245, 158, 11, .3);
+            transform: translateY(-2px)
+        }
+
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            padding: 2rem 0;
+            margin-top: 3rem
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, .3);
+            font-size: .8rem;
+            flex-wrap: wrap;
+            gap: 1rem
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(6, 16, 26, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 999px;
+            color: #fff;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: #F59E0B;
+            border-color: #F59E0B
+        }
+
+        @media(max-width:768px) {
+            .search-travel {
+                flex-direction: column;
+                border-radius: 16px
+            }
+
+            .search-travel select {
+                max-width: 100%
+            }
+
+            .dest-grid {
+                grid-template-columns: 1fr
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../index.html" class="back-btn">← Quay lại</a>
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="nav-logo">Viet<span>Travel</span></div>
+            <div class="nav-links"><a href="#destinations">Điểm Đến</a><a href="#why">Ưu Điểm</a><a href="#"
+                    class="cta-nav">Đặt Tour</a></div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="wrap">
+            <h1>Khám Phá<br><span>Việt Nam</span> Tuyệt Đẹp</h1>
+            <p>Tour du lịch trọn gói đến những điểm đến hấp dẫn nhất Việt Nam. Đặt tour dễ dàng, giá cả minh bạch.</p>
+            <div class="search-travel"><input type="text" placeholder="🔍 Bạn muốn đi đâu?"><select>
+                    <option>Loại tour</option>
+                    <option>Biển đảo</option>
+                    <option>Núi rừng</option>
+                    <option>Văn hóa</option>
+                    <option>Phiêu lưu</option>
+                </select><select>
+                    <option>Số ngày</option>
+                    <option>2-3 ngày</option>
+                    <option>4-5 ngày</option>
+                    <option>6-7 ngày</option>
+                </select><button>Tìm Tour</button></div>
+        </div>
+    </section>
+
+    <section class="section" id="destinations">
+        <div class="wrap">
+            <h2 class="sec-title">Điểm Đến Hot</h2>
+            <p class="sec-sub">Những tour được yêu thích nhất mùa này</p>
+            <div class="dest-grid">
+                <div class="dest-card">
+                    <div class="dest-img d1">🏝️<span class="dest-badge">Hot</span></div>
+                    <div class="dest-info">
+                        <h3>Phú Quốc 4N3Đ</h3>
+                        <div class="loc">📍 Kiên Giang</div>
+                        <div class="dest-bottom"><span class="dest-price">4.500K/người</span><span class="dest-rating">⭐
+                                4.8</span></div>
+                    </div>
+                </div>
+                <div class="dest-card">
+                    <div class="dest-img d2">🏔️<span class="dest-badge">Mới</span></div>
+                    <div class="dest-info">
+                        <h3>Sapa Trekking 3N2Đ</h3>
+                        <div class="loc">📍 Lào Cai</div>
+                        <div class="dest-bottom"><span class="dest-price">3.200K/người</span><span class="dest-rating">⭐
+                                4.9</span></div>
+                    </div>
+                </div>
+                <div class="dest-card">
+                    <div class="dest-img d3">🌊</div>
+                    <div class="dest-info">
+                        <h3>Đà Nẵng - Hội An 5N4Đ</h3>
+                        <div class="loc">📍 Miền Trung</div>
+                        <div class="dest-bottom"><span class="dest-price">5.800K/người</span><span class="dest-rating">⭐
+                                4.7</span></div>
+                    </div>
+                </div>
+                <div class="dest-card">
+                    <div class="dest-img d4">🏛️</div>
+                    <div class="dest-info">
+                        <h3>Hà Nội - Ninh Bình 3N2Đ</h3>
+                        <div class="loc">📍 Miền Bắc</div>
+                        <div class="dest-bottom"><span class="dest-price">2.800K/người</span><span class="dest-rating">⭐
+                                4.6</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="why">
+        <div class="wrap">
+            <h2 class="sec-title">Tại Sao Chọn VietTravel?</h2>
+            <div class="perks">
+                <div class="perk">
+                    <div class="icon">💰</div>
+                    <h3>Giá Tốt Nhất</h3>
+                    <p>Cam kết giá cạnh tranh nhất thị trường</p>
+                </div>
+                <div class="perk">
+                    <div class="icon">🛡️</div>
+                    <h3>An Toàn</h3>
+                    <p>Bảo hiểm du lịch và hỗ trợ 24/7</p>
+                </div>
+                <div class="perk">
+                    <div class="icon">🚌</div>
+                    <h3>Xe Chất Lượng</h3>
+                    <p>Xe mới, ghế ngồi thoải mái</p>
+                </div>
+                <div class="perk">
+                    <div class="icon">🎯</div>
+                    <h3>Lịch Trình Hay</h3>
+                    <p>Tối ưu thời gian, trải nghiệm trọn vẹn</p>
+                </div>
+            </div>
+            <div class="cta-travel">
+                <h2>Đặt Tour Ngay Hôm Nay</h2>
+                <p>Giảm 15% cho đoàn từ 5 người</p><a href="#" class="btn-amber">📞 Hotline: 1900 1234</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="wrap"><span>© 2026 VietTravel. Demo by VietWebPro.</span><span>📞 1900 1234 | 📧
+                info@viettravel.vn</span></div>
+    </footer>
+    <script>window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) })</script>
+</body>
+
+</html>

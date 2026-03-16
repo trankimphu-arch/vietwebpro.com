@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlowSpa | Demo Spa & Thẩm Mỹ</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0d0d;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            transition: .3s
+        }
+
+        .nav.scrolled {
+            background: rgba(13, 13, 13, .95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, .05)
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: .02em
+        }
+
+        .nav-logo span {
+            color: #C9A96E
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem;
+            font-weight: 500;
+            transition: .2s;
+            text-transform: uppercase;
+            letter-spacing: .1em
+        }
+
+        .nav-links a:hover {
+            color: #C9A96E
+        }
+
+        .book-btn {
+            padding: .55rem 1.3rem;
+            background: linear-gradient(135deg, #C9A96E, #A07D4E);
+            border-radius: 999px;
+            color: #fff !important;
+            font-weight: 600;
+            font-size: .8rem;
+            letter-spacing: .05em
+        }
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 70%, rgba(201, 169, 110, .08), transparent 60%)
+        }
+
+        .hero .wrap {
+            position: relative;
+            z-index: 2;
+            text-align: center
+        }
+
+        .hero-sub {
+            font-size: .8rem;
+            text-transform: uppercase;
+            letter-spacing: .3em;
+            color: #C9A96E;
+            margin-bottom: 1rem;
+            font-weight: 500
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: #C9A96E
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, .45);
+            max-width: 550px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7
+        }
+
+        .btn-gold {
+            padding: .85rem 2.5rem;
+            background: linear-gradient(135deg, #C9A96E, #A07D4E);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #fff;
+            transition: .3s;
+            border: none;
+            font-size: .85rem;
+            letter-spacing: .05em;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            text-transform: uppercase
+        }
+
+        .btn-gold:hover {
+            box-shadow: 0 0 35px rgba(201, 169, 110, .3);
+            transform: translateY(-2px)
+        }
+
+        .section {
+            padding: 5rem 0
+        }
+
+        .sec-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: .5rem
+        }
+
+        .sec-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, .4);
+            font-size: .9rem;
+            margin-bottom: 3rem
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem
+        }
+
+        .svc {
+            padding: 2.5rem 2rem;
+            background: rgba(255, 255, 255, .02);
+            border: 1px solid rgba(255, 255, 255, .05);
+            border-radius: 16px;
+            text-align: center;
+            transition: .3s
+        }
+
+        .svc:hover {
+            border-color: rgba(201, 169, 110, .3);
+            transform: translateY(-3px)
+        }
+
+        .svc .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem
+        }
+
+        .svc h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .svc p {
+            color: rgba(255, 255, 255, .4);
+            font-size: .85rem;
+            line-height: 1.6;
+            margin-bottom: .75rem
+        }
+
+        .svc .price {
+            color: #C9A96E;
+            font-weight: 700;
+            font-size: 1.1rem
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem
+        }
+
+        .gallery-item {
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: .3s;
+            cursor: pointer
+        }
+
+        .g1 {
+            background: linear-gradient(135deg, #1a1510, #0d0d0d)
+        }
+
+        .g2 {
+            background: linear-gradient(135deg, #10150d, #0d0d0d)
+        }
+
+        .g3 {
+            background: linear-gradient(135deg, #15100d, #0d0d0d)
+        }
+
+        .g4 {
+            background: linear-gradient(135deg, #0d1015, #0d0d0d)
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            border: 1px solid rgba(201, 169, 110, .3)
+        }
+
+        .testimonial {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 2rem
+        }
+
+        .testimonial p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, .7)
+        }
+
+        .testimonial .author {
+            color: #C9A96E;
+            font-weight: 600;
+            font-size: .9rem
+        }
+
+        .cta-sec {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(201, 169, 110, .05), transparent);
+            border: 1px solid rgba(201, 169, 110, .1);
+            border-radius: 24px
+        }
+
+        .cta-sec h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: .75rem
+        }
+
+        .cta-sec p {
+            color: rgba(255, 255, 255, .4);
+            margin-bottom: 2rem
+        }
+
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, .05);
+            padding: 2rem 0;
+            margin-top: 3rem
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, .3);
+            font-size: .8rem;
+            flex-wrap: wrap;
+            gap: 1rem
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(13, 13, 13, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 999px;
+            color: #fff;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: #C9A96E;
+            border-color: #C9A96E
+        }
+
+        @media(max-width:768px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../index.html" class="back-btn">← Quay lại</a>
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="nav-logo">Glow<span>Spa</span></div>
+            <div class="nav-links"><a href="#services">Dịch Vụ</a><a href="#gallery">Hình Ảnh</a><a href="#"
+                    class="book-btn">Đặt Lịch</a></div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="wrap">
+            <div class="hero-sub">✦ Spa & Thẩm Mỹ Cao Cấp</div>
+            <h1>Nơi Vẻ Đẹp<br><em>Được Tôn Vinh</em></h1>
+            <p>Trải nghiệm dịch vụ spa thư giãn và chăm sóc da chuyên sâu trong không gian sang trọng, riêng tư.</p>
+            <a href="#" class="btn-gold">✦ Đặt Lịch Hẹn</a>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <div class="wrap">
+            <h2 class="sec-title">Dịch Vụ Nổi Bật</h2>
+            <p class="sec-sub">Chăm sóc toàn diện từ da mặt đến body</p>
+            <div class="services-grid">
+                <div class="svc">
+                    <div class="icon">💆‍♀️</div>
+                    <h3>Facial Cao Cấp</h3>
+                    <p>Chăm sóc da mặt chuyên sâu với sản phẩm cao cấp từ Pháp</p>
+                    <div class="price">Từ 500K</div>
+                </div>
+                <div class="svc">
+                    <div class="icon">🧖‍♀️</div>
+                    <h3>Body Massage</h3>
+                    <p>Massage thư giãn toàn thân với tinh dầu thiên nhiên</p>
+                    <div class="price">Từ 400K</div>
+                </div>
+                <div class="svc">
+                    <div class="icon">💅</div>
+                    <h3>Nail Art</h3>
+                    <p>Thiết kế nail nghệ thuật theo xu hướng mới nhất</p>
+                    <div class="price">Từ 200K</div>
+                </div>
+                <div class="svc">
+                    <div class="icon">✨</div>
+                    <h3>Trị Liệu Da</h3>
+                    <p>Điều trị mụn, nám, tàn nhang với công nghệ hiện đại</p>
+                    <div class="price">Từ 800K</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="gallery">
+        <div class="wrap">
+            <h2 class="sec-title">Không Gian</h2>
+            <p class="sec-sub">Thư giãn trong không gian sang trọng, ấm cúng</p>
+            <div class="gallery">
+                <div class="gallery-item g1">🕯️</div>
+                <div class="gallery-item g2">🌿</div>
+                <div class="gallery-item g3">🛁</div>
+                <div class="gallery-item g4">💎</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="wrap">
+            <div class="testimonial">
+                <p>"GlowSpa là nơi tôi tin tưởng gửi gắm vẻ đẹp. Dịch vụ chuyên nghiệp, không gian tuyệt vời."</p>
+                <div class="author">— Chị Nguyễn Thị Lan, Khách hàng thân thiết</div>
+            </div>
+            <div class="cta-sec">
+                <h2>Đặt Lịch Hôm Nay</h2>
+                <p>Ưu đãi 20% cho khách hàng lần đầu</p><a href="#" class="btn-gold">📞 Gọi 0901 234 567</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="wrap"><span>© 2026 GlowSpa. Demo by VietWebPro.</span><span>📍 123 Nguyễn Huệ, Q.1, TP.HCM</span>
+        </div>
+    </footer>
+    <script>window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) })</script>
+</body>
+
+</html>
