@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="VietWebPro portfolio — 20+ website templates: business, e-commerce, restaurant, real estate, spa, education, travel.">
+    <title>Portfolio | VietWebPro</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../images/favicon.svg">
+    <style>
+        .page-banner {
+            position: relative;
+            padding: 8rem 2rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 60px
+        }
+
+        .page-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 26, .3), rgba(10, 10, 26, .95))
+        }
+
+        .page-banner .content {
+            position: relative;
+            z-index: 2
+        }
+
+        .page-banner h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: .75rem
+        }
+
+        .page-banner p {
+            color: var(--text-secondary);
+            font-size: 1.1rem
+        }
+
+        .port-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem
+        }
+
+        .port-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            transition: var(--transition-base)
+        }
+
+        .port-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow)
+        }
+
+        .port-thumb {
+            position: relative;
+            height: 220px;
+            overflow: hidden
+        }
+
+        .port-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow)
+        }
+
+        .port-card:hover .port-thumb img {
+            transform: scale(1.05)
+        }
+
+        .port-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10, 10, 26, .9), transparent 60%);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: var(--transition-base)
+        }
+
+        .port-card:hover .port-overlay {
+            opacity: 1
+        }
+
+        .port-info {
+            padding: 1.25rem
+        }
+
+        .port-tag {
+            display: inline-block;
+            padding: .2rem .6rem;
+            background: rgba(108, 92, 231, .15);
+            color: var(--primary-light);
+            border-radius: var(--radius-full);
+            font-size: .7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            margin-bottom: .5rem
+        }
+
+        .port-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: .25rem
+        }
+
+        .port-info p {
+            color: var(--text-secondary);
+            font-size: .85rem
+        }
+
+        .cta-box {
+            text-align: center;
+            background: var(--gradient-card);
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            margin-top: 3rem
+        }
+
+        .cta-box h2 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: .75rem
+        }
+
+        .cta-box p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container"><a href="index.html" class="nav-logo"><img src="../images/logo.png" alt="VietWebPro"
+                    style="height:32px;border-radius:6px"> <span>VietWebPro</span></a>
+            <div class="nav-links" id="navLinks"><a href="about.html">About</a><a href="services.html">Services</a><a
+                    href="portfolio.html">Portfolio</a><a href="contact.html">Contact</a><a href="../portfolio.html"
+                    style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;letter-spacing:.05em">VI</a>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="page-banner">
+        <div class="content">
+            <h1>Portfolio</h1>
+            <p>Website templates we have built</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="port-grid">
+                <a target="_blank" href="../demos/business/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="../images/demo-business.png" alt="Business">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">View Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Business</span>
+                        <h3>TechVision Corp</h3>
+                        <p>Modern corporate website</p>
+                    </div>
+                </a>
+                <a target="_blank" href="../demos/ecommerce/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="../images/demo-ecommerce.png" alt="E-Commerce">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">View Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">E-Commerce</span>
+                        <h3>LuxeStyle Fashion</h3>
+                        <p>Online fashion store</p>
+                    </div>
+                </a>
+                <a target="_blank" href="../demos/restaurant/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="../images/demo-restaurant.png" alt="Restaurant">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">View Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">F&B</span>
+                        <h3>Golden Kitchen</h3>
+                        <p>Restaurant & menu website</p>
+                    </div>
+                </a>
+                <a target="_blank" href="../demos/realestate/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="../images/demo-realestate.png" alt="Real Estate">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">View Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Real Estate</span>
+                        <h3>DreamHome Realty</h3>
+                        <p>Property listing website</p>
+                    </div>
+                </a>
+                <a target="_blank" href="../demos/spa/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="../images/demo-spa.png" alt="Spa">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">View Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Spa & Beauty</span>
+                        <h3>GlowSpa</h3>
+                        <p>Spa & wellness center</p>
+                    </div>
+                </a>
+                <a target="_blank" href="../demos/education/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="../images/demo-education.png" alt="Education">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">View Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Education</span>
+                        <h3>EduStar</h3>
+                        <p>Online learning platform</p>
+                    </div>
+                </a>
+                <a target="_blank" href="../demos/travel/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="../images/demo-travel.png" alt="Travel">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">View Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Travel</span>
+                        <h3>VietTravel</h3>
+                        <p>Travel agency website</p>
+                    </div>
+                </a>
+                <a target="_blank" href="../demos/portfolio/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="../images/demo-portfolio.png" alt="Portfolio">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">View Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Portfolio</span>
+                        <h3>Creative Studio</h3>
+                        <p>Designer portfolio</p>
+                    </div>
+                </a>
+                <a target="_blank" href="../demos/cafe/index.html" class="port-card reveal">
+                    <div class="port-thumb"><img src="../images/demo-cafe.png" alt="Cafe">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">View Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">F&B</span>
+                        <h3>BrewCafe</h3>
+                        <p>Specialty coffee shop</p>
+                    </div>
+                </a>
+            </div>
+            <div class="cta-box reveal">
+                <h2>Like What You See?</h2>
+                <p>We can customize any template or build from scratch for your brand</p><a href="contact.html"
+                    class="btn btn-primary">Get Free Quote →</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><span>© 2026 VietWebPro. All rights reserved.</span>
+                <div class="footer-social"><a href="https://www.facebook.com/phu.trankim.319/" target="_blank">📘</a><a
+                        href="https://zalo.me/0355025126" target="_blank">💬</a></div>
+            </div>
+        </div>
+    </footer>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

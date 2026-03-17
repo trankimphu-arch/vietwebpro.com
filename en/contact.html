@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Contact VietWebPro for a free quote. Professional web design starting from $200. Email, phone, or submit a request form.">
+    <title>Contact | VietWebPro</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../images/favicon.svg">
+    <style>
+        .page-banner {
+            position: relative;
+            padding: 8rem 2rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            margin-top: 60px
+        }
+
+        .page-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 26, .3), rgba(10, 10, 26, .95))
+        }
+
+        .page-banner .content {
+            position: relative;
+            z-index: 2
+        }
+
+        .page-banner h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: .75rem
+        }
+
+        .page-banner p {
+            color: var(--text-secondary);
+            font-size: 1.1rem
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem
+        }
+
+        @media(max-width:768px) {
+            .contact-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .c-card {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            align-items: flex-start;
+            margin-bottom: 1rem
+        }
+
+        .c-card .c-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-md);
+            background: var(--gradient-card);
+            border: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0
+        }
+
+        .c-card h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            margin-bottom: .25rem
+        }
+
+        .c-card p,
+        .c-card a {
+            color: var(--text-secondary);
+            font-size: .9rem;
+            display: block
+        }
+
+        .c-card a:hover {
+            color: var(--primary-light)
+        }
+
+        .contact-form-page {
+            padding: 2rem
+        }
+
+        .contact-form-page h3 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: .5rem
+        }
+
+        .contact-form-page>p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: .95rem
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: .4rem;
+            font-size: .9rem;
+            color: var(--text-secondary)
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: .75rem 1rem;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: .95rem;
+            transition: var(--transition-fast)
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, .15)
+        }
+
+        .form-group select option {
+            background: var(--bg-card);
+            color: var(--text-primary)
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container"><a href="index.html" class="nav-logo"><img src="../images/logo.png" alt="VietWebPro"
+                    style="height:32px;border-radius:6px"> <span>VietWebPro</span></a>
+            <div class="nav-links" id="navLinks"><a href="about.html">About</a><a href="services.html">Services</a><a
+                    href="portfolio.html">Portfolio</a><a href="contact.html">Contact</a><a href="../contact.html"
+                    style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;letter-spacing:.05em">VI</a>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="page-banner">
+        <div class="content">
+            <h1>Contact Us</h1>
+            <p>We're ready to listen and help you succeed</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="contact-grid">
+                <div>
+                    <div class="contact-cards">
+                        <div class="glass-card c-card reveal">
+                            <div class="c-icon">📧</div>
+                            <div>
+                                <h4>Email</h4><a href="mailto:kimphu1988@gmail.com">kimphu1988@gmail.com</a>
+                                <p>Reply within 2-4 business hours</p>
+                            </div>
+                        </div>
+                        <div class="glass-card c-card reveal">
+                            <div class="c-icon">📞</div>
+                            <div>
+                                <h4>Phone / WhatsApp</h4><a href="tel:+84355025126">+84 355 025 126</a>
+                                <p>Mon - Sat, 8:00 AM - 6:00 PM (GMT+7)</p>
+                            </div>
+                        </div>
+                        <div class="glass-card c-card reveal">
+                            <div class="c-icon">📘</div>
+                            <div>
+                                <h4>Facebook</h4><a href="https://www.facebook.com/phu.trankim.319/"
+                                    target="_blank">Message us on Facebook</a>
+                                <p>Online 8:00 AM - 10:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="glass-card c-card reveal">
+                            <div class="c-icon">📍</div>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Gia Lai, Vietnam</p>
+                                <p>Working remotely worldwide</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <form class="glass-card contact-form-page reveal" action="https://api.web3forms.com/submit"
+                        method="POST">
+                        <input type="hidden" name="access_key" value="6f64258c-1684-46d3-8dda-ef36faa3cf5b">
+                        <input type="hidden" name="subject" value="New inquiry from VietWebPro EN">
+                        <h3>Send a Request</h3>
+                        <p>Fill in the form — we'll get back to you within 24 hours</p>
+                        <div class="form-group"><label>Full Name *</label><input type="text" name="name"
+                                placeholder="John Doe" required></div>
+                        <div class="form-group"><label>Email *</label><input type="email" name="email"
+                                placeholder="john@example.com" required></div>
+                        <div class="form-group"><label>Website Type</label><select name="type">
+                                <option value="">-- Select type --</option>
+                                <option>Landing Page</option>
+                                <option>Business Website</option>
+                                <option>E-Commerce</option>
+                                <option>Portfolio</option>
+                                <option>Blog</option>
+                                <option>Other</option>
+                            </select></div>
+                        <div class="form-group"><label>Budget (USD)</label><select name="budget">
+                                <option value="">-- Select range --</option>
+                                <option>$200 - $500</option>
+                                <option>$500 - $1,000</option>
+                                <option>$1,000 - $2,000</option>
+                                <option>$2,000+</option>
+                            </select></div>
+                        <div class="form-group"><label>Project Description</label><textarea name="message"
+                                placeholder="Describe your project, timeline, and goals..." rows="4"></textarea></div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send
+                            Request →</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><span>© 2026 VietWebPro. All rights reserved.</span>
+                <div class="footer-social"><a href="https://www.facebook.com/phu.trankim.319/" target="_blank">📘</a><a
+                        href="https://zalo.me/0355025126" target="_blank">💬</a></div>
+            </div>
+        </div>
+    </footer>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
