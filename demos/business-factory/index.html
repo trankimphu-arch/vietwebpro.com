@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenFactory | Demo Nhà Máy Xanh</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1a0f;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            transition: .3s
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 26, 15, .95);
+            backdrop-filter: blur(20px)
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800
+        }
+
+        .logo span {
+            color: #22c55e
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .7);
+            font-weight: 500;
+            transition: .2s
+        }
+
+        .nav-links a:hover {
+            color: #22c55e
+        }
+
+        .nav-links .cta {
+            padding: .6rem 1.5rem;
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            border-radius: 999px;
+            color: #fff !important
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -30%;
+            width: 160%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(34, 197, 94, .12) 0%, transparent 50%);
+            animation: drift 10s ease-in-out infinite alternate
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate(0, 0)
+            }
+
+            100% {
+                transform: translate(5%, -5%)
+            }
+        }
+
+        .hero .wrap {
+            position: relative;
+            z-index: 2
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem
+        }
+
+        .hero h1 .hl {
+            color: #22c55e
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, .65);
+            max-width: 560px;
+            line-height: 1.7;
+            margin-bottom: 2rem
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap
+        }
+
+        .btn-fill {
+            padding: .9rem 2rem;
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            transition: .3s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer
+        }
+
+        .btn-fill:hover {
+            box-shadow: 0 0 40px rgba(34, 197, 94, .4);
+            transform: translateY(-2px)
+        }
+
+        .btn-ghost {
+            padding: .9rem 2rem;
+            border: 2px solid rgba(34, 197, 94, .4);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #22c55e;
+            transition: .3s
+        }
+
+        .btn-ghost:hover {
+            background: rgba(34, 197, 94, .1)
+        }
+
+        .section {
+            padding: 6rem 0
+        }
+
+        .sec-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem
+        }
+
+        .sec-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, .6);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem
+        }
+
+        .feat {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(34, 197, 94, .1);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: .3s;
+            text-align: center
+        }
+
+        .feat:hover {
+            border-color: rgba(34, 197, 94, .3);
+            transform: translateY(-4px);
+            background: rgba(34, 197, 94, .05)
+        }
+
+        .feat .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem
+        }
+
+        .feat h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .feat p {
+            color: rgba(255, 255, 255, .55);
+            font-size: .9rem;
+            line-height: 1.6
+        }
+
+        .process {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            text-align: center
+        }
+
+        .step {
+            position: relative;
+            padding: 2rem 1rem
+        }
+
+        .step .num {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: 800;
+            font-size: 1.2rem
+        }
+
+        .step h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .step p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(34, 197, 94, .1);
+            border-bottom: 1px solid rgba(34, 197, 94, .1)
+        }
+
+        .stat .num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #22c55e
+        }
+
+        .stat .lab {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, rgba(34, 197, 94, .08), rgba(22, 163, 74, .03));
+            border-radius: 24px;
+            margin: 2rem;
+            border: 1px solid rgba(34, 197, 94, .1)
+        }
+
+        .cta-section h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, .6);
+            margin-bottom: 2rem
+        }
+
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            padding: 2rem 0;
+            margin-top: 2rem
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, .4);
+            font-size: .85rem
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(10, 26, 15, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 999px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: #16a34a;
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:768px) {
+
+            .process,
+            .stats {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../portfolio.html" class="back-btn">← Quay lại</a>
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="logo"><span>Green</span>Factory</div>
+            <div class="nav-links">
+                <a href="#features">Giải Pháp</a>
+                <a href="#process">Quy Trình</a>
+                <a href="#stats">Thành Tựu</a>
+                <a href="#cta" class="cta">Liên Hệ</a>
+            </div>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="wrap">
+            <h1>Sản Xuất <span class="hl">Xanh</span><br>Cho Tương Lai</h1>
+            <p>GreenFactory tiên phong trong sản xuất bền vững, kết hợp công nghệ hiện đại với trách nhiệm môi trường.
+            </p>
+            <div class="hero-btns">
+                <a href="#features" class="btn-fill">🌱 Khám Phá Giải Pháp</a>
+                <a href="#process" class="btn-ghost">Quy Trình Sản Xuất</a>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="features" style="background:rgba(34,197,94,.03)">
+        <div class="wrap">
+            <h2 class="sec-title">Giải Pháp <span style="color:#22c55e">Bền Vững</span></h2>
+            <p class="sec-sub">Công nghệ sản xuất thân thiện môi trường</p>
+            <div class="features">
+                <div class="feat">
+                    <div class="icon">♻️</div>
+                    <h3>Tái Chế 100%</h3>
+                    <p>Quy trình khép kín, tái sử dụng toàn bộ phế liệu sản xuất</p>
+                </div>
+                <div class="feat">
+                    <div class="icon">☀️</div>
+                    <h3>Năng Lượng Mặt Trời</h3>
+                    <p>Nhà máy vận hành 60% bằng năng lượng tái tạo</p>
+                </div>
+                <div class="feat">
+                    <div class="icon">💧</div>
+                    <h3>Tiết Kiệm Nước</h3>
+                    <p>Hệ thống xử lý và tái sử dụng nước tiên tiến</p>
+                </div>
+                <div class="feat">
+                    <div class="icon">🤖</div>
+                    <h3>Tự Động Hóa</h3>
+                    <p>Dây chuyền sản xuất thông minh, giảm 80% lãng phí</p>
+                </div>
+                <div class="feat">
+                    <div class="icon">📦</div>
+                    <h3>Bao Bì Xanh</h3>
+                    <p>Sử dụng 100% bao bì phân hủy sinh học</p>
+                </div>
+                <div class="feat">
+                    <div class="icon">🌿</div>
+                    <h3>Carbon Neutral</h3>
+                    <p>Cam kết trung hòa carbon vào năm 2028</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="process">
+        <div class="wrap">
+            <h2 class="sec-title">Quy Trình <span style="color:#22c55e">Sản Xuất</span></h2>
+            <p class="sec-sub">4 bước tạo nên sản phẩm xanh</p>
+            <div class="process">
+                <div class="step">
+                    <div class="num">1</div>
+                    <h4>Nguyên Liệu</h4>
+                    <p>Nguồn nguyên liệu hữu cơ, truy xuất nguồn gốc</p>
+                </div>
+                <div class="step">
+                    <div class="num">2</div>
+                    <h4>Sản Xuất</h4>
+                    <p>Dây chuyền tự động, kiểm soát chất lượng AI</p>
+                </div>
+                <div class="step">
+                    <div class="num">3</div>
+                    <h4>Kiểm Định</h4>
+                    <p>Qua 5 lớp kiểm tra chất lượng nghiêm ngặt</p>
+                </div>
+                <div class="step">
+                    <div class="num">4</div>
+                    <h4>Phân Phối</h4>
+                    <p>Logistics xanh, tối ưu lộ trình vận chuyển</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="stats">
+        <div class="wrap">
+            <div class="stats">
+                <div class="stat">
+                    <div class="num">50+</div>
+                    <div class="lab">Sản phẩm xanh</div>
+                </div>
+                <div class="stat">
+                    <div class="num">80%</div>
+                    <div class="lab">Giảm carbon</div>
+                </div>
+                <div class="stat">
+                    <div class="num">200+</div>
+                    <div class="lab">Đối tác</div>
+                </div>
+                <div class="stat">
+                    <div class="num">5⭐</div>
+                    <div class="lab">Chứng nhận ISO</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="cta">
+        <div class="wrap">
+            <div class="cta-section">
+                <h2>Cùng Xây Dựng <span style="color:#22c55e">Tương Lai Xanh</span></h2>
+                <p>Liên hệ ngay để tìm hiểu giải pháp sản xuất bền vững</p>
+                <a href="mailto:info@greenfactory.vn" class="btn-fill">🌱 Liên Hệ Ngay</a>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="wrap"><span>© 2026 GreenFactory. Demo by VietWebPro.</span></div>
+    </footer>
+    <script>window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) })</script>
+</body>
+
+</html>

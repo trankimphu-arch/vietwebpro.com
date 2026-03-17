@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangMaster | Demo Trung Tâm Ngoại Ngữ</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1005;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        :root {
+            --orange: #f59e0b;
+            --warm: #fbbf24
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            transition: .3s
+        }
+
+        .nav.scrolled {
+            background: rgba(26, 16, 5, .95);
+            backdrop-filter: blur(20px)
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800
+        }
+
+        .logo span {
+            color: var(--orange)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .7);
+            font-weight: 500;
+            transition: .2s
+        }
+
+        .nav-links a:hover {
+            color: var(--orange)
+        }
+
+        .nav-links .cta {
+            padding: .6rem 1.5rem;
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            border-radius: 999px;
+            color: #fff !important
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 70% 40%, rgba(245, 158, 11, .08) 0%, transparent 50%)
+        }
+
+        .hero .wrap {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem
+        }
+
+        .hero h1 .hl {
+            color: var(--orange)
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, .6);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem
+        }
+
+        .btn-fill {
+            padding: .9rem 2rem;
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #fff;
+            transition: .3s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .btn-fill:hover {
+            box-shadow: 0 0 30px rgba(245, 158, 11, .4);
+            transform: translateY(-2px)
+        }
+
+        .langs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem
+        }
+
+        .lang {
+            background: rgba(245, 158, 11, .05);
+            border: 1px solid rgba(245, 158, 11, .1);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: .3s;
+            cursor: pointer
+        }
+
+        .lang:hover {
+            border-color: rgba(245, 158, 11, .3);
+            transform: translateY(-2px)
+        }
+
+        .lang .flag {
+            font-size: 2rem;
+            flex-shrink: 0
+        }
+
+        .lang h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: .95rem
+        }
+
+        .lang p {
+            color: rgba(255, 255, 255, .4);
+            font-size: .75rem
+        }
+
+        .section {
+            padding: 6rem 0
+        }
+
+        .sec-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem
+        }
+
+        .sec-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 3rem
+        }
+
+        .courses {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem
+        }
+
+        .course {
+            background: rgba(245, 158, 11, .03);
+            border: 1px solid rgba(245, 158, 11, .1);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: .3s
+        }
+
+        .course:hover {
+            border-color: rgba(245, 158, 11, .3);
+            transform: translateY(-3px)
+        }
+
+        .course .level {
+            display: inline-block;
+            padding: .2rem .7rem;
+            background: rgba(245, 158, 11, .15);
+            color: var(--orange);
+            border-radius: 999px;
+            font-size: .7rem;
+            font-weight: 600;
+            margin-bottom: .75rem
+        }
+
+        .course h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .course p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem;
+            line-height: 1.6;
+            margin-bottom: .75rem
+        }
+
+        .course .meta {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, .4);
+            font-size: .8rem
+        }
+
+        .course .meta .price {
+            color: var(--orange);
+            font-weight: 700;
+            font-size: 1rem
+        }
+
+        .method {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem
+        }
+
+        .meth {
+            background: rgba(245, 158, 11, .03);
+            border: 1px solid rgba(245, 158, 11, .08);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: .3s
+        }
+
+        .meth:hover {
+            border-color: rgba(245, 158, 11, .2)
+        }
+
+        .meth .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem
+        }
+
+        .meth h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .meth p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem;
+            line-height: 1.6
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, rgba(245, 158, 11, .06), rgba(217, 119, 6, .03));
+            border-radius: 16px;
+            margin: 2rem;
+            border: 1px solid rgba(245, 158, 11, .1)
+        }
+
+        .cta-section h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 2rem
+        }
+
+        .footer {
+            border-top: 1px solid rgba(245, 158, 11, .08);
+            padding: 2rem 0;
+            margin-top: 2rem
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, .3);
+            font-size: .85rem
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(26, 16, 5, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(245, 158, 11, .15);
+            border-radius: 999px;
+            color: #fff;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: var(--orange);
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:768px) {
+            .hero .wrap {
+                grid-template-columns: 1fr
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../portfolio.html" class="back-btn">← Quay lại</a>
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="logo"><span>Lang</span>Master</div>
+            <div class="nav-links"><a href="#courses">Khóa Học</a><a href="#method">Phương Pháp</a><a href="#cta"
+                    class="cta">🌍 Đăng Ký</a></div>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="wrap">
+            <div>
+                <h1>Chinh Phục <span class="hl">Ngôn Ngữ</span><br>Vươn Tầm Thế Giới</h1>
+                <p>LangMaster - trung tâm ngoại ngữ với phương pháp giảng dạy immersive, giúp bạn tự tin giao tiếp trong
+                    6 tháng.</p><a href="#courses" class="btn-fill">🌍 Xem Khóa Học</a>
+            </div>
+            <div class="langs">
+                <div class="lang"><span class="flag">🇬🇧</span>
+                    <div>
+                        <h4>Tiếng Anh</h4>
+                        <p>IELTS • TOEIC • Giao Tiếp</p>
+                    </div>
+                </div>
+                <div class="lang"><span class="flag">🇯🇵</span>
+                    <div>
+                        <h4>Tiếng Nhật</h4>
+                        <p>JLPT N5-N1 • Du Học</p>
+                    </div>
+                </div>
+                <div class="lang"><span class="flag">🇰🇷</span>
+                    <div>
+                        <h4>Tiếng Hàn</h4>
+                        <p>TOPIK I-II • Giao Tiếp</p>
+                    </div>
+                </div>
+                <div class="lang"><span class="flag">🇨🇳</span>
+                    <div>
+                        <h4>Tiếng Trung</h4>
+                        <p>HSK 1-6 • Thương Mại</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="courses" style="background:rgba(245,158,11,.02)">
+        <div class="wrap">
+            <h2 class="sec-title">Khóa Học <span style="color:var(--orange)">Phổ Biến</span></h2>
+            <div class="courses">
+                <div class="course"><span class="level">IELTS</span>
+                    <h3>IELTS Target 7.0+</h3>
+                    <p>Luyện thi IELTS chuyên sâu 4 kỹ năng, cam kết đầu ra</p>
+                    <div class="meta"><span>4 tháng • 48 buổi</span><span class="price">8.500.000đ</span></div>
+                </div>
+                <div class="course"><span class="level">TOEIC</span>
+                    <h3>TOEIC 800+</h3>
+                    <p>Ôn thi TOEIC cấp tốc cho dân đi làm</p>
+                    <div class="meta"><span>3 tháng • 36 buổi</span><span class="price">5.500.000đ</span></div>
+                </div>
+                <div class="course"><span class="level">JLPT</span>
+                    <h3>Tiếng Nhật N3</h3>
+                    <p>Từ zero đến N3, sẵn sàng du học Nhật</p>
+                    <div class="meta"><span>6 tháng • 72 buổi</span><span class="price">7.000.000đ</span></div>
+                </div>
+                <div class="course"><span class="level">Giao Tiếp</span>
+                    <h3>English Conversation</h3>
+                    <p>Luyện nói với giáo viên bản ngữ 1:1</p>
+                    <div class="meta"><span>3 tháng • 24 buổi</span><span class="price">6.000.000đ</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="method">
+        <div class="wrap">
+            <h2 class="sec-title">Phương Pháp <span style="color:var(--orange)">Đặc Biệt</span></h2>
+            <div class="method">
+                <div class="meth">
+                    <div class="icon">🎯</div>
+                    <h4>Immersive Learning</h4>
+                    <p>Học qua trải nghiệm, thực hành 80% thời gian</p>
+                </div>
+                <div class="meth">
+                    <div class="icon">🤖</div>
+                    <h4>AI-Powered</h4>
+                    <p>Ứng dụng AI cá nhân hóa lộ trình học tập</p>
+                </div>
+                <div class="meth">
+                    <div class="icon">👨‍🏫</div>
+                    <h4>Native Teacher</h4>
+                    <p>100% giáo viên bản ngữ cho lớp giao tiếp</p>
+                </div>
+                <div class="meth">
+                    <div class="icon">📱</div>
+                    <h4>Học Mọi Lúc</h4>
+                    <p>App mobile ôn luyện từ vựng và nghe</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="cta">
+        <div class="wrap">
+            <div class="cta-section">
+                <h2>Học Thử <span style="color:var(--orange)">Miễn Phí</span></h2>
+                <p>2 buổi học thử miễn phí + Kiểm tra trình độ đầu vào</p><a href="#" class="btn-fill">🌍 Đăng Ký Học
+                    Thử</a>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="wrap"><span>© 2026 LangMaster. Demo by VietWebPro.</span></div>
+    </footer>
+    <script>window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) })</script>
+</body>
+
+</html>

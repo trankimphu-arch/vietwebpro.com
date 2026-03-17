@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IslandResort | Demo Resort Biển</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #071318;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        :root {
+            --aqua: #06b6d4;
+            --gold: #d4a853;
+            --teal: #0891b2
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            transition: .3s
+        }
+
+        .nav.scrolled {
+            background: rgba(7, 19, 24, .95);
+            backdrop-filter: blur(20px)
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: .05em
+        }
+
+        .logo span {
+            color: var(--aqua)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .6);
+            font-weight: 500;
+            transition: .2s
+        }
+
+        .nav-links a:hover {
+            color: var(--aqua)
+        }
+
+        .nav-links .cta {
+            padding: .6rem 1.5rem;
+            background: linear-gradient(135deg, #0891b2, #06b6d4);
+            border-radius: 999px;
+            color: #fff !important
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: radial-gradient(ellipse at 50% 100%, rgba(6, 182, 212, .1) 0%, transparent 60%)
+        }
+
+        .hero .wrap {
+            position: relative;
+            z-index: 2
+        }
+
+        .hero .tag {
+            display: inline-block;
+            padding: .4rem 1.5rem;
+            border: 1px solid rgba(6, 182, 212, .3);
+            color: var(--aqua);
+            font-size: .75rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            border-radius: 999px
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 1.5rem
+        }
+
+        .hero h1 .hl {
+            color: var(--aqua)
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--gold)
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, .5);
+            font-size: 1.1rem;
+            max-width: 550px;
+            margin: 0 auto 2.5rem
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .btn-fill {
+            padding: .9rem 2rem;
+            background: linear-gradient(135deg, #0891b2, #06b6d4);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #fff;
+            transition: .3s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .btn-fill:hover {
+            box-shadow: 0 0 40px rgba(6, 182, 212, .4);
+            transform: translateY(-2px)
+        }
+
+        .btn-ghost {
+            padding: .9rem 2rem;
+            border: 1px solid rgba(212, 168, 83, .3);
+            border-radius: 999px;
+            font-weight: 600;
+            color: var(--gold);
+            transition: .3s
+        }
+
+        .btn-ghost:hover {
+            background: rgba(212, 168, 83, .1)
+        }
+
+        .section {
+            padding: 6rem 0
+        }
+
+        .sec-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem
+        }
+
+        .sec-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 3rem
+        }
+
+        .rooms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem
+        }
+
+        .room {
+            background: rgba(6, 182, 212, .03);
+            border: 1px solid rgba(6, 182, 212, .1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: .3s
+        }
+
+        .room:hover {
+            border-color: rgba(6, 182, 212, .3);
+            transform: translateY(-4px)
+        }
+
+        .room-img {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem
+        }
+
+        .r1 {
+            background: linear-gradient(135deg, rgba(6, 182, 212, .1), rgba(6, 182, 212, .03))
+        }
+
+        .r2 {
+            background: linear-gradient(135deg, rgba(212, 168, 83, .1), rgba(212, 168, 83, .03))
+        }
+
+        .room-info {
+            padding: 1.5rem
+        }
+
+        .room-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .room-info p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem;
+            margin-bottom: .75rem
+        }
+
+        .room-info .price {
+            color: var(--aqua);
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            font-size: 1.2rem
+        }
+
+        .room-info .per {
+            color: rgba(255, 255, 255, .3);
+            font-size: .8rem
+        }
+
+        .amenities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem
+        }
+
+        .amenity {
+            background: rgba(6, 182, 212, .03);
+            border: 1px solid rgba(6, 182, 212, .06);
+            border-radius: 12px;
+            padding: 1.75rem;
+            text-align: center;
+            transition: .3s
+        }
+
+        .amenity:hover {
+            border-color: rgba(6, 182, 212, .2)
+        }
+
+        .amenity .icon {
+            font-size: 2rem;
+            margin-bottom: .75rem
+        }
+
+        .amenity h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: .25rem;
+            font-size: .95rem
+        }
+
+        .amenity p {
+            color: rgba(255, 255, 255, .4);
+            font-size: .8rem
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .75rem
+        }
+
+        .gal {
+            height: 180px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 1px solid rgba(6, 182, 212, .08);
+            transition: .3s
+        }
+
+        .gal:hover {
+            transform: scale(1.03);
+            border-color: rgba(6, 182, 212, .3)
+        }
+
+        .ga {
+            background: linear-gradient(135deg, rgba(6, 182, 212, .08), rgba(6, 182, 212, .02))
+        }
+
+        .gb {
+            background: linear-gradient(135deg, rgba(212, 168, 83, .08), rgba(212, 168, 83, .02))
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, .06), rgba(212, 168, 83, .03));
+            border-radius: 16px;
+            margin: 2rem;
+            border: 1px solid rgba(6, 182, 212, .1)
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 2rem
+        }
+
+        .footer {
+            border-top: 1px solid rgba(6, 182, 212, .06);
+            padding: 2rem 0;
+            margin-top: 2rem
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, .3);
+            font-size: .85rem
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(7, 19, 24, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(6, 182, 212, .15);
+            border-radius: 999px;
+            color: #fff;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: var(--aqua);
+            color: #071318;
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:768px) {
+            .gallery {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../portfolio.html" class="back-btn">← Quay lại</a>
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="logo"><span>Island</span>Resort</div>
+            <div class="nav-links"><a href="#rooms">Phòng</a><a href="#amenities">Tiện Ích</a><a
+                    href="#gallery">Gallery</a><a href="#cta" class="cta">🏝️ Đặt Phòng</a></div>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="wrap"><span class="tag">✨ Luxury Tropical Resort</span>
+            <h1>Thiên Đường<br><span class="hl">Nhiệt Đới</span></h1>
+            <p>IslandResort - khu nghỉ dưỡng 5 sao trên đảo riêng tại Phú Quốc. Bãi biển cát trắng, nước biển trong xanh
+                và dịch vụ đẳng cấp quốc tế.</p>
+            <div class="hero-btns"><a href="#rooms" class="btn-fill">🏝️ Xem Phòng</a><a href="#gallery"
+                    class="btn-ghost">Gallery</a></div>
+        </div>
+    </section>
+    <section class="section" id="rooms" style="background:rgba(6,182,212,.02)">
+        <div class="wrap">
+            <h2 class="sec-title">Phòng & <span style="color:var(--aqua)">Villa</span></h2>
+            <p class="sec-sub">Mỗi phòng đều có view biển tuyệt đẹp</p>
+            <div class="rooms">
+                <div class="room">
+                    <div class="room-img r1">🛏️</div>
+                    <div class="room-info">
+                        <h3>Deluxe Ocean View</h3>
+                        <p>45m² • King bed • Ban công view biển</p><span class="price">4.500.000đ</span> <span
+                            class="per">/đêm</span>
+                    </div>
+                </div>
+                <div class="room">
+                    <div class="room-img r2">🏡</div>
+                    <div class="room-info">
+                        <h3>Beach Villa</h3>
+                        <p>120m² • 2 phòng ngủ • Hồ bơi riêng</p><span class="price">12.000.000đ</span> <span
+                            class="per">/đêm</span>
+                    </div>
+                </div>
+                <div class="room">
+                    <div class="room-img r1">👑</div>
+                    <div class="room-info">
+                        <h3>Presidential Suite</h3>
+                        <p>250m² • 3 phòng ngủ • Butler 24/7</p><span class="price">25.000.000đ</span> <span
+                            class="per">/đêm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="amenities">
+        <div class="wrap">
+            <h2 class="sec-title">Tiện Ích <span style="color:var(--aqua)">5 Sao</span></h2>
+            <div class="amenities">
+                <div class="amenity">
+                    <div class="icon">🏊</div>
+                    <h4>Infinity Pool</h4>
+                    <p>Hồ bơi vô cực view đại dương</p>
+                </div>
+                <div class="amenity">
+                    <div class="icon">🧖</div>
+                    <h4>Spa & Sauna</h4>
+                    <p>Liệu pháp spa cao cấp</p>
+                </div>
+                <div class="amenity">
+                    <div class="icon">🍽️</div>
+                    <h4>Fine Dining</h4>
+                    <p>3 nhà hàng quốc tế</p>
+                </div>
+                <div class="amenity">
+                    <div class="icon">🤿</div>
+                    <h4>Diving Center</h4>
+                    <p>Trung tâm lặn PADI</p>
+                </div>
+                <div class="amenity">
+                    <div class="icon">🛥️</div>
+                    <h4>Yacht Tour</h4>
+                    <p>Tour du thuyền đảo</p>
+                </div>
+                <div class="amenity">
+                    <div class="icon">🎾</div>
+                    <h4>Sports Club</h4>
+                    <p>Tennis, golf, gym</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="gallery" style="background:rgba(6,182,212,.02)">
+        <div class="wrap">
+            <h2 class="sec-title">Resort <span style="color:var(--aqua)">Gallery</span></h2>
+            <div class="gallery">
+                <div class="gal ga">🏝️</div>
+                <div class="gal gb">🌅</div>
+                <div class="gal ga">🏊</div>
+                <div class="gal gb">🍹</div>
+                <div class="gal gb">🌊</div>
+                <div class="gal ga">🧖</div>
+                <div class="gal gb">🍽️</div>
+                <div class="gal ga">⛵</div>
+            </div>
+        </div>
+    </section>
+    <section id="cta">
+        <div class="wrap">
+            <div class="cta-section">
+                <h2>Trải Nghiệm <span style="color:var(--aqua)">Thiên Đường</span></h2>
+                <p>Đặt sớm 60 ngày giảm 25% • Gói honeymoon từ 8.900.000đ/2 đêm</p><a href="#" class="btn-fill">🏝️ Đặt
+                    Phòng Ngay</a>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="wrap"><span>© 2026 IslandResort. Demo by VietWebPro.</span></div>
+    </footer>
+    <script>window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) })</script>
+</body>
+
+</html>

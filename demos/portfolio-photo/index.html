@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelArt | Demo Portfolio Nhiếp Ảnh</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.25rem 0;
+            transition: .3s
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 10, 10, .95);
+            backdrop-filter: blur(20px)
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: .05em
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .6);
+            font-weight: 400;
+            font-size: .9rem;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            transition: .2s
+        }
+
+        .nav-links a:hover {
+            color: #fff
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 1rem;
+            letter-spacing: -.02em
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            font-weight: 400
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, .5);
+            max-width: 500px;
+            margin: 0 auto 2.5rem;
+            letter-spacing: .03em
+        }
+
+        .hero-scroll {
+            width: 1px;
+            height: 60px;
+            background: rgba(255, 255, 255, .15);
+            margin: 0 auto;
+            position: relative
+        }
+
+        .hero-scroll::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 1px;
+            height: 20px;
+            background: #fff;
+            animation: scrollDown 1.5s ease-in-out infinite
+        }
+
+        @keyframes scrollDown {
+            0% {
+                top: 0;
+                opacity: 1
+            }
+
+            100% {
+                top: 40px;
+                opacity: 0
+            }
+        }
+
+        .section {
+            padding: 5rem 0
+        }
+
+        .sec-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -.01em
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .5rem
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer
+        }
+
+        .gallery-item .placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: .4s
+        }
+
+        .gallery-item:hover .placeholder {
+            transform: scale(1.05)
+        }
+
+        .gallery-item .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: .3s
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1
+        }
+
+        .gallery-item .overlay span {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            border-bottom: 1px solid #fff;
+            padding-bottom: .25rem
+        }
+
+        .g1 {
+            background: linear-gradient(135deg, #1a1a2e, #16213e)
+        }
+
+        .g2 {
+            background: linear-gradient(135deg, #232526, #414345)
+        }
+
+        .g3 {
+            background: linear-gradient(135deg, #0f0c29, #302b63)
+        }
+
+        .g4 {
+            background: linear-gradient(135deg, #1c1c1c, #383838)
+        }
+
+        .g5 {
+            background: linear-gradient(135deg, #141e30, #243b55)
+        }
+
+        .g6 {
+            background: linear-gradient(135deg, #0f2027, #203a43)
+        }
+
+        .g7 {
+            background: linear-gradient(135deg, #1d1d1d, #2c2c2c)
+        }
+
+        .g8 {
+            background: linear-gradient(135deg, #16222a, #3a6073)
+        }
+
+        .g9 {
+            background: linear-gradient(135deg, #1a1a1a, #333333)
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            align-items: center
+        }
+
+        .about-photo {
+            width: 100%;
+            height: 400px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem
+        }
+
+        .about-text p {
+            color: rgba(255, 255, 255, .6);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: .95rem
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, .06)
+        }
+
+        .about-stat .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 800
+        }
+
+        .about-stat .lab {
+            color: rgba(255, 255, 255, .4);
+            font-size: .8rem;
+            text-transform: uppercase;
+            letter-spacing: .05em
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem
+        }
+
+        .svc {
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, .06);
+            transition: .3s
+        }
+
+        .svc:hover {
+            border-color: rgba(255, 255, 255, .15)
+        }
+
+        .svc .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, .2);
+            margin-bottom: 1rem
+        }
+
+        .svc h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .svc p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem;
+            line-height: 1.6
+        }
+
+        .contact {
+            text-align: center;
+            padding: 5rem 0
+        }
+
+        .contact h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem
+        }
+
+        .contact p {
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 2rem
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 1rem 3rem;
+            border: 1px solid #fff;
+            color: #fff;
+            font-weight: 500;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            font-size: .85rem;
+            transition: .3s
+        }
+
+        .contact-btn:hover {
+            background: #fff;
+            color: #0a0a0a
+        }
+
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            padding: 2rem 0
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, .3);
+            font-size: .8rem
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(10, 10, 10, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 999px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: #fff;
+            color: #0a0a0a;
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:768px) {
+            .gallery {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr
+            }
+
+            .services {
+                grid-template-columns: 1fr
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../portfolio.html" class="back-btn">← Quay lại</a>
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="logo">PIXELART</div>
+            <div class="nav-links"><a href="#gallery">Gallery</a><a href="#about">About</a><a
+                    href="#services">Services</a><a href="#contact">Contact</a></div>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="wrap">
+            <h1>Capturing<br><em>Moments</em></h1>
+            <p>Photography is the art of frozen time — capturing the beauty that passes unnoticed</p>
+            <div class="hero-scroll"></div>
+        </div>
+    </section>
+    <section class="section" id="gallery">
+        <div class="wrap">
+            <h2 class="sec-title">Selected Works</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <div class="placeholder g1">📸</div>
+                    <div class="overlay"><span>Wedding</span></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder g2">🏔️</div>
+                    <div class="overlay"><span>Landscape</span></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder g3">👤</div>
+                    <div class="overlay"><span>Portrait</span></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder g4">🏙️</div>
+                    <div class="overlay"><span>Urban</span></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder g5">🌊</div>
+                    <div class="overlay"><span>Nature</span></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder g6">🍽️</div>
+                    <div class="overlay"><span>Food</span></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder g7">👗</div>
+                    <div class="overlay"><span>Fashion</span></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder g8">🎭</div>
+                    <div class="overlay"><span>Event</span></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="placeholder g9">🏠</div>
+                    <div class="overlay"><span>Interior</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="about" style="background:rgba(255,255,255,.01)">
+        <div class="wrap">
+            <div class="about-grid">
+                <div class="about-photo">📷</div>
+                <div class="about-text">
+                    <h2>Trần Minh Đức</h2>
+                    <p>Nhiếp ảnh gia chuyên nghiệp với hơn 8 năm kinh nghiệm trong lĩnh vực chụp ảnh cưới, thời trang và
+                        phong cảnh.</p>
+                    <p>Tôi tin rằng mỗi khoảnh khắc đều xứng đáng được lưu giữ một cách đẹp nhất.</p>
+                    <div class="about-stats">
+                        <div class="about-stat">
+                            <div class="num">500+</div>
+                            <div class="lab">Projects</div>
+                        </div>
+                        <div class="about-stat">
+                            <div class="num">8</div>
+                            <div class="lab">Years</div>
+                        </div>
+                        <div class="about-stat">
+                            <div class="num">50+</div>
+                            <div class="lab">Awards</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="services">
+        <div class="wrap">
+            <h2 class="sec-title">Services</h2>
+            <div class="services">
+                <div class="svc">
+                    <div class="num">01</div>
+                    <h3>Wedding Photography</h3>
+                    <p>Gói chụp cưới trọn gói từ pre-wedding đến tiệc cưới</p>
+                </div>
+                <div class="svc">
+                    <div class="num">02</div>
+                    <h3>Portrait Session</h3>
+                    <p>Chụp ảnh cá nhân, gia đình và doanh nghiệp</p>
+                </div>
+                <div class="svc">
+                    <div class="num">03</div>
+                    <h3>Commercial</h3>
+                    <p>Chụp ảnh sản phẩm, thương mại và quảng cáo</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="contact">
+        <h2>Let's Work Together</h2>
+        <p>Liên hệ để trao đổi về dự án của bạn</p><a href="mailto:hello@pixelart.vn" class="contact-btn">Get in Touch
+            →</a>
+    </section>
+    <footer class="footer">
+        <div class="wrap"><span>© 2026 PixelArt Photography. Demo by VietWebPro.</span><span>Ho Chi Minh City</span>
+        </div>
+    </footer>
+    <script>window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) })</script>
+</body>
+
+</html>

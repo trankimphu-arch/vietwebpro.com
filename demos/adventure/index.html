@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MountainEscape | Demo Du Lịch Mạo Hiểm</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1510;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        :root {
+            --forest: #059669;
+            --earth: #92400e;
+            --leaf: #10b981
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            transition: .3s
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 21, 16, .95);
+            backdrop-filter: blur(20px)
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800
+        }
+
+        .logo span {
+            color: var(--leaf)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .7);
+            font-weight: 500;
+            transition: .2s
+        }
+
+        .nav-links a:hover {
+            color: var(--leaf)
+        }
+
+        .nav-links .cta {
+            padding: .6rem 1.5rem;
+            background: linear-gradient(135deg, #047857, #059669);
+            border-radius: 999px;
+            color: #fff !important
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, #0a1510, transparent);
+            z-index: 1
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 60%, rgba(5, 150, 105, .08) 0%, transparent 50%)
+        }
+
+        .hero .wrap {
+            position: relative;
+            z-index: 2
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 1.5rem
+        }
+
+        .hero h1 .hl {
+            color: var(--leaf)
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, .6);
+            font-size: 1.1rem;
+            max-width: 550px;
+            margin: 0 auto 2rem;
+            line-height: 1.7
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .btn-fill {
+            padding: .9rem 2rem;
+            background: linear-gradient(135deg, #047857, #059669);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #fff;
+            transition: .3s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .btn-fill:hover {
+            box-shadow: 0 0 30px rgba(5, 150, 105, .4);
+            transform: translateY(-2px)
+        }
+
+        .btn-ghost {
+            padding: .9rem 2rem;
+            border: 2px solid rgba(16, 185, 129, .3);
+            border-radius: 999px;
+            font-weight: 600;
+            color: var(--leaf);
+            transition: .3s
+        }
+
+        .btn-ghost:hover {
+            background: rgba(16, 185, 129, .1)
+        }
+
+        .section {
+            padding: 6rem 0
+        }
+
+        .sec-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem
+        }
+
+        .sec-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 3rem
+        }
+
+        .tours {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem
+        }
+
+        .tour {
+            background: rgba(5, 150, 105, .03);
+            border: 1px solid rgba(5, 150, 105, .1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: .3s
+        }
+
+        .tour:hover {
+            border-color: rgba(5, 150, 105, .3);
+            transform: translateY(-4px)
+        }
+
+        .tour-img {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative
+        }
+
+        .t1 {
+            background: linear-gradient(135deg, rgba(5, 150, 105, .1), rgba(5, 150, 105, .03))
+        }
+
+        .t2 {
+            background: linear-gradient(135deg, rgba(146, 64, 14, .1), rgba(146, 64, 14, .03))
+        }
+
+        .tour-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: .3rem .8rem;
+            background: var(--forest);
+            color: #fff;
+            border-radius: 999px;
+            font-size: .7rem;
+            font-weight: 700
+        }
+
+        .tour-info {
+            padding: 1.5rem
+        }
+
+        .tour-info h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            margin-bottom: .5rem;
+            font-size: 1.15rem
+        }
+
+        .tour-info p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem;
+            line-height: 1.6;
+            margin-bottom: 1rem
+        }
+
+        .tour-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .tour-meta .price {
+            color: var(--leaf);
+            font-weight: 700;
+            font-size: 1.15rem
+        }
+
+        .tour-meta .details {
+            color: rgba(255, 255, 255, .4);
+            font-size: .8rem;
+            display: flex;
+            gap: .75rem
+        }
+
+        .why {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem
+        }
+
+        .why-card {
+            background: rgba(5, 150, 105, .03);
+            border: 1px solid rgba(5, 150, 105, .08);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: .3s
+        }
+
+        .why-card:hover {
+            border-color: rgba(5, 150, 105, .2)
+        }
+
+        .why-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem
+        }
+
+        .why-card h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .why-card p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, rgba(5, 150, 105, .06), rgba(16, 185, 129, .03));
+            border-radius: 16px;
+            margin: 2rem;
+            border: 1px solid rgba(5, 150, 105, .1)
+        }
+
+        .cta-section h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 2rem
+        }
+
+        .footer {
+            border-top: 1px solid rgba(5, 150, 105, .08);
+            padding: 2rem 0;
+            margin-top: 2rem
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, .3);
+            font-size: .85rem
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(10, 21, 16, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(5, 150, 105, .15);
+            border-radius: 999px;
+            color: #fff;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: var(--forest);
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:768px) {
+            .nav-links {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../portfolio.html" class="back-btn">← Quay lại</a>
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="logo">🏔️ <span>Mountain</span>Escape</div>
+            <div class="nav-links"><a href="#tours">Tour</a><a href="#why">Về Chúng Tôi</a><a href="#cta" class="cta">🎒
+                    Đặt Tour</a></div>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="wrap">
+            <h1>Khám Phá<br><span class="hl">Đại Ngàn</span></h1>
+            <p>MountainEscape - tour du lịch mạo hiểm Tây Bắc, leo núi trekking, và trải nghiệm văn hóa bản địa
+                authentic nhất Việt Nam.</p>
+            <div class="hero-btns"><a href="#tours" class="btn-fill">🏔️ Xem Tour</a><a href="#why" class="btn-ghost">Vì
+                    Sao Chọn Chúng Tôi</a></div>
+        </div>
+    </section>
+    <section class="section" id="tours" style="background:rgba(5,150,105,.02)">
+        <div class="wrap">
+            <h2 class="sec-title">Tour <span style="color:var(--leaf)">Nổi Bật</span></h2>
+            <p class="sec-sub">Trải nghiệm thiên nhiên Việt Nam hoang sơ nhất</p>
+            <div class="tours">
+                <div class="tour">
+                    <div class="tour-img t1">🏔️<span class="tour-badge">Best Seller</span></div>
+                    <div class="tour-info">
+                        <h3>Fansipan Summit Trek</h3>
+                        <p>Chinh phục nóc nhà Đông Dương 3143m. Trekking 2 ngày 1 đêm qua rừng nguyên sinh.</p>
+                        <div class="tour-meta"><span class="price">2.500.000đ</span><span
+                                class="details"><span>2N1Đ</span><span>Level 3/5</span></span></div>
+                    </div>
+                </div>
+                <div class="tour">
+                    <div class="tour-img t2">🌄<span class="tour-badge">Mới</span></div>
+                    <div class="tour-info">
+                        <h3>Tà Xùa Săn Mây</h3>
+                        <p>3 ngày 2 đêm khám phá xứ sở mây trên đỉnh Tà Xùa, Sơn La. Camping dưới bầu trời sao.</p>
+                        <div class="tour-meta"><span class="price">3.200.000đ</span><span
+                                class="details"><span>3N2Đ</span><span>Level 2/5</span></span></div>
+                    </div>
+                </div>
+                <div class="tour">
+                    <div class="tour-img t1">🏞️<span class="tour-badge">Hot</span></div>
+                    <div class="tour-info">
+                        <h3>Hà Giang Loop</h3>
+                        <p>4 ngày 3 đêm touring Hà Giang bằng xe máy. Đèo Mã Pì Lèng, Cung đường Hạnh Phúc.</p>
+                        <div class="tour-meta"><span class="price">4.500.000đ</span><span
+                                class="details"><span>4N3Đ</span><span>Level 2/5</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="why">
+        <div class="wrap">
+            <h2 class="sec-title">Vì Sao <span style="color:var(--leaf)">MountainEscape</span></h2>
+            <div class="why">
+                <div class="why-card">
+                    <div class="icon">🧭</div>
+                    <h4>Guide Bản Địa</h4>
+                    <p>100% hướng dẫn viên là người dân tộc địa phương</p>
+                </div>
+                <div class="why-card">
+                    <div class="icon">🏕️</div>
+                    <h4>Trải Nghiệm Thật</h4>
+                    <p>Homestay, ăn cùng người dân, không tour du lịch đại trà</p>
+                </div>
+                <div class="why-card">
+                    <div class="icon">🌿</div>
+                    <h4>Du Lịch Xanh</h4>
+                    <p>Cam kết bảo vệ môi trường, giảm rác thải nhựa</p>
+                </div>
+                <div class="why-card">
+                    <div class="icon">🛡️</div>
+                    <h4>An Toàn Tuyệt Đối</h4>
+                    <p>Trang bị đầy đủ, bảo hiểm du lịch quốc tế</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="cta">
+        <div class="wrap">
+            <div class="cta-section">
+                <h2>Sẵn Sàng <span style="color:var(--leaf)">Phiêu Lưu</span>?</h2>
+                <p>Đặt tour trước 30 ngày giảm 15% • Nhóm 4+ giảm thêm 10%</p><a href="#" class="btn-fill">🎒 Đặt Tour
+                    Ngay</a>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="wrap"><span>© 2026 MountainEscape. Demo by VietWebPro.</span></div>
+    </footer>
+    <script>window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) })</script>
+</body>
+
+</html>

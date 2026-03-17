@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevFolio | Demo Portfolio Developer</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        code,
+        .mono {
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .green {
+            color: #3fb950
+        }
+
+        .blue {
+            color: #58a6ff
+        }
+
+        .purple {
+            color: #bc8cff
+        }
+
+        .orange {
+            color: #f0883e
+        }
+
+        .red {
+            color: #f85149
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            transition: .3s;
+            border-bottom: 1px solid rgba(48, 54, 61, .5)
+        }
+
+        .nav.scrolled {
+            background: rgba(13, 17, 23, .95);
+            backdrop-filter: blur(20px)
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700
+        }
+
+        .logo .cursor {
+            animation: blink 1s step-end infinite;
+            color: #3fb950
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: #8b949e;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .8rem;
+            transition: .2s
+        }
+
+        .nav-links a:hover {
+            color: #58a6ff
+        }
+
+        .nav-links .cta {
+            padding: .5rem 1.2rem;
+            background: #238636;
+            border-radius: 6px;
+            color: #fff !important;
+            font-size: .8rem
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 4rem
+        }
+
+        .hero .wrap {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3rem;
+            align-items: center
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #fff
+        }
+
+        .hero p {
+            color: #8b949e;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 2rem
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem
+        }
+
+        .btn-green {
+            padding: .75rem 1.5rem;
+            background: #238636;
+            border-radius: 6px;
+            color: #fff;
+            font-weight: 600;
+            transition: .3s;
+            font-size: .9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .btn-green:hover {
+            background: #2ea043;
+            box-shadow: 0 0 20px rgba(35, 134, 54, .3)
+        }
+
+        .btn-outline {
+            padding: .75rem 1.5rem;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-weight: 600;
+            transition: .3s;
+            font-size: .9rem
+        }
+
+        .btn-outline:hover {
+            border-color: #8b949e
+        }
+
+        .code-window {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            overflow: hidden
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .75rem 1rem;
+            background: #0d1117;
+            border-bottom: 1px solid #30363d
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #30363d
+        }
+
+        .dot.r {
+            background: #f85149
+        }
+
+        .dot.y {
+            background: #f0883e
+        }
+
+        .dot.g {
+            background: #3fb950
+        }
+
+        .code-header span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .75rem;
+            color: #8b949e;
+            margin-left: .5rem
+        }
+
+        .code-body {
+            padding: 1.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .8rem;
+            line-height: 1.8
+        }
+
+        .code-body .ln {
+            color: #484f58;
+            margin-right: 1rem;
+            user-select: none
+        }
+
+        .section {
+            padding: 5rem 0
+        }
+
+        .sec-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: .5rem;
+            color: #fff
+        }
+
+        .sec-sub {
+            color: #8b949e;
+            margin-bottom: 2.5rem
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem
+        }
+
+        .skill {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1.25rem;
+            transition: .3s
+        }
+
+        .skill:hover {
+            border-color: #58a6ff;
+            transform: translateY(-2px)
+        }
+
+        .skill h4 {
+            font-weight: 700;
+            margin-bottom: .5rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .skill-bar {
+            height: 6px;
+            background: #21262d;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: .5rem
+        }
+
+        .skill-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #238636, #3fb950)
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem
+        }
+
+        .project {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: .3s
+        }
+
+        .project:hover {
+            border-color: #58a6ff;
+            transform: translateY(-3px)
+        }
+
+        .project h3 {
+            font-weight: 700;
+            margin-bottom: .5rem;
+            color: #fff
+        }
+
+        .project p {
+            color: #8b949e;
+            font-size: .85rem;
+            line-height: 1.6;
+            margin-bottom: 1rem
+        }
+
+        .project-tags {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap
+        }
+
+        .project-tag {
+            padding: .2rem .6rem;
+            border: 1px solid #30363d;
+            border-radius: 999px;
+            font-size: .7rem;
+            color: #8b949e;
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .project-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: .8rem;
+            color: #8b949e
+        }
+
+        .exp {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem
+        }
+
+        .exp-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-left: 2px solid #30363d;
+            position: relative
+        }
+
+        .exp-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #238636;
+            border-radius: 50%;
+            position: absolute;
+            left: -7px;
+            top: 1.5rem
+        }
+
+        .exp-item h4 {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: .25rem
+        }
+
+        .exp-item .period {
+            color: #58a6ff;
+            font-size: .8rem;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: .5rem
+        }
+
+        .exp-item p {
+            color: #8b949e;
+            font-size: .85rem;
+            line-height: 1.6
+        }
+
+        .contact {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            margin: 2rem
+        }
+
+        .contact h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #fff
+        }
+
+        .contact p {
+            color: #8b949e;
+            margin-bottom: 2rem
+        }
+
+        .footer {
+            border-top: 1px solid #21262d;
+            padding: 2rem 0;
+            margin-top: 2rem
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            color: #484f58;
+            font-size: .8rem;
+            font-family: 'JetBrains Mono', monospace
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(13, 17, 23, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .8rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: #238636;
+            border-color: #238636;
+            color: #fff;
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:768px) {
+            .hero .wrap {
+                grid-template-columns: 1fr
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../portfolio.html" class="back-btn">← Quay lại</a>
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="logo">~/devfolio<span class="cursor">_</span></div>
+            <div class="nav-links"><a href="#skills">skills</a><a href="#projects">projects</a><a
+                    href="#exp">experience</a><a href="#contact" class="cta">hire me</a></div>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="wrap">
+            <div>
+                <h1>Hi, I'm <span class="green">Lê Quang Huy</span> 👋</h1>
+                <p>Full-stack developer đam mê xây dựng sản phẩm web hiện đại. Chuyên môn React, Node.js, TypeScript và
+                    Cloud Architecture.</p>
+                <div class="hero-btns"><a href="#projects" class="btn-green">📂 Xem Projects</a><a href="#contact"
+                        class="btn-outline">💬 Liên Hệ</a></div>
+            </div>
+            <div class="code-window">
+                <div class="code-header">
+                    <div class="dot r"></div>
+                    <div class="dot y"></div>
+                    <div class="dot g"></div><span>developer.ts</span>
+                </div>
+                <div class="code-body">
+                    <div><span class="ln">1</span><span class="purple">const</span> <span class="blue">developer</span>
+                        = {</div>
+                    <div><span class="ln">2</span> name: <span class="orange">"Lê Quang Huy"</span>,</div>
+                    <div><span class="ln">3</span> role: <span class="orange">"Full-Stack Dev"</span>,</div>
+                    <div><span class="ln">4</span> skills: [<span class="orange">"React"</span>, <span
+                            class="orange">"Node"</span>, <span class="orange">"TS"</span>],</div>
+                    <div><span class="ln">5</span> passion: <span class="orange">"Building cool stuff"</span></div>
+                    <div><span class="ln">6</span>};</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="skills">
+        <div class="wrap">
+            <h2 class="sec-title">Tech Stack</h2>
+            <p class="sec-sub">Các công nghệ tôi sử dụng hàng ngày</p>
+            <div class="skills">
+                <div class="skill">
+                    <h4>⚛️ React / Next.js</h4>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width:95%"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h4>🟢 Node.js</h4>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width:90%"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h4>📘 TypeScript</h4>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width:92%"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h4>🐍 Python</h4>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width:80%"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h4>🐳 Docker / K8s</h4>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width:85%"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h4>☁️ AWS / GCP</h4>
+                    <div class="skill-bar">
+                        <div class="skill-fill" style="width:82%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="projects" style="background:rgba(56,139,253,.02)">
+        <div class="wrap">
+            <h2 class="sec-title">Featured Projects</h2>
+            <p class="sec-sub">Một số dự án nổi bật</p>
+            <div class="projects">
+                <div class="project">
+                    <h3>🚀 SaaS Dashboard</h3>
+                    <p>Dashboard phân tích dữ liệu real-time cho startup SaaS, xử lý 1M+ events/day</p>
+                    <div class="project-tags"><span class="project-tag">React</span><span
+                            class="project-tag">D3.js</span><span class="project-tag">Node.js</span><span
+                            class="project-tag">Redis</span></div>
+                    <div class="project-stats"><span>⭐ 234</span><span>🔀 45</span></div>
+                </div>
+                <div class="project">
+                    <h3>🛒 E-Commerce Platform</h3>
+                    <p>Nền tảng thương mại điện tử đa vendor với hệ thống thanh toán tích hợp</p>
+                    <div class="project-tags"><span class="project-tag">Next.js</span><span
+                            class="project-tag">Stripe</span><span class="project-tag">PostgreSQL</span></div>
+                    <div class="project-stats"><span>⭐ 189</span><span>🔀 32</span></div>
+                </div>
+                <div class="project">
+                    <h3>🤖 AI Chatbot</h3>
+                    <p>Chatbot AI hỗ trợ khách hàng tự động, giảm 60% ticket support</p>
+                    <div class="project-tags"><span class="project-tag">Python</span><span
+                            class="project-tag">LangChain</span><span class="project-tag">GPT-4</span></div>
+                    <div class="project-stats"><span>⭐ 456</span><span>🔀 78</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="exp">
+        <div class="wrap">
+            <h2 class="sec-title">Experience</h2>
+            <p class="sec-sub">Hành trình phát triển của tôi</p>
+            <div class="exp">
+                <div class="exp-item">
+                    <div>
+                        <h4>Senior Full-Stack Developer</h4>
+                        <div class="period">2023 - Hiện tại • TechCo Vietnam</div>
+                        <p>Lead team 5 developer, phát triển microservices architecture.</p>
+                    </div>
+                </div>
+                <div class="exp-item">
+                    <div>
+                        <h4>Full-Stack Developer</h4>
+                        <div class="period">2020 - 2023 • StartupXYZ</div>
+                        <p>Xây dựng MVP cho 3 sản phẩm SaaS từ đầu đến production.</p>
+                    </div>
+                </div>
+                <div class="exp-item">
+                    <div>
+                        <h4>Junior Developer</h4>
+                        <div class="period">2018 - 2020 • AgencyABC</div>
+                        <p>Phát triển website và web app cho khách hàng doanh nghiệp.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="contact">
+        <div class="contact">
+            <h2>Let's Build Something <span class="green">Great</span></h2>
+            <p>Sẵn sàng cho dự án tiếp theo? Hãy liên hệ!</p><a href="mailto:huy@devfolio.dev" class="btn-green">📧 Gửi
+                Email</a>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="wrap"><span>© 2026 devfolio.dev</span><span>built with ❤️ by VietWebPro</span></div>
+    </footer>
+    <script>window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) })</script>
+</body>
+
+</html>

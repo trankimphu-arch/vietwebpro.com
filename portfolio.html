@@ -9,8 +9,7 @@
     <meta name="keywords" content="mẫu website, demo website, portfolio thiết kế web, website doanh nghiệp mẫu">
     <title>Dự Án | VietWebPro</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon"
-        href="images/favicon.svg">
+    <link rel="icon" href="images/favicon.svg">
     <style>
         .page-banner {
             position: relative;
@@ -265,7 +264,8 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="nav-logo">
-                <img src="images/logo.png" alt="VietWebPro" style="height:32px;border-radius:6px"> <span>VietWebPro</span>
+                <img src="images/logo.png" alt="VietWebPro" style="height:32px;border-radius:6px">
+                <span>VietWebPro</span>
             </a>
             <div class="nav-links" id="navLinks"><a href="about.html">Giới Thiệu</a><a href="services.html">Dịch
                     Vụ</a><a href="portfolio.html">Dự Án</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a
@@ -297,8 +297,10 @@
                 <span class="filter-tab">Du lịch</span>
             </div>
 
-            <div class="portfolio-grid">
-                <a target="_blank" href="demos/business/index.html" class="port-card reveal">
+            <div class="portfolio-grid" id="portfolioGrid">
+                <!-- DOANH NGHIỆP -->
+                <a target="_blank" href="demos/business/index.html" class="port-card reveal"
+                    data-category="doanh-nghiep">
                     <div class="port-thumb"><img src="images/demo-business.png" alt="TechVision Corp">
                         <div class="port-overlay"><span class="btn btn-primary"
                                 style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
@@ -309,7 +311,33 @@
                         <div class="port-tech"><span>HTML/CSS</span><span>JavaScript</span><span>Responsive</span></div>
                     </div>
                 </a>
-                <a target="_blank" href="demos/ecommerce/index.html" class="port-card reveal">
+                <a target="_blank" href="demos/business-consulting/index.html" class="port-card reveal"
+                    data-category="doanh-nghiep">
+                    <div class="port-thumb"><img src="images/demo-business-consulting.png" alt="SaigonConsult">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Doanh Nghiệp</span>
+                        <h3>SaigonConsult</h3>
+                        <p>Tư vấn chiến lược doanh nghiệp với tông navy & gold</p>
+                        <div class="port-tech"><span>Consulting</span><span>Testimonial</span><span>CTA</span></div>
+                    </div>
+                </a>
+                <a target="_blank" href="demos/business-factory/index.html" class="port-card reveal"
+                    data-category="doanh-nghiep">
+                    <div class="port-thumb"><img src="images/demo-business-factory.png" alt="GreenFactory">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Doanh Nghiệp</span>
+                        <h3>GreenFactory</h3>
+                        <p>Nhà máy sản xuất xanh, bền vững & thân thiện môi trường</p>
+                        <div class="port-tech"><span>Eco</span><span>Process</span><span>Statistics</span></div>
+                    </div>
+                </a>
+                <!-- E-COMMERCE -->
+                <a target="_blank" href="demos/ecommerce/index.html" class="port-card reveal"
+                    data-category="e-commerce">
                     <div class="port-thumb"><img src="images/demo-ecommerce.png" alt="LuxeStyle Fashion">
                         <div class="port-overlay"><span class="btn btn-primary"
                                 style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
@@ -320,7 +348,32 @@
                         <div class="port-tech"><span>E-Commerce</span><span>Thanh Toán</span><span>SEO</span></div>
                     </div>
                 </a>
-                <a target="_blank" href="demos/portfolio/index.html" class="port-card reveal">
+                <a target="_blank" href="demos/ecommerce-grocery/index.html" class="port-card reveal"
+                    data-category="e-commerce">
+                    <div class="port-thumb"><img src="images/demo-ecommerce-grocery.png" alt="FreshMart">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">E-Commerce</span>
+                        <h3>FreshMart</h3>
+                        <p>Thực phẩm tươi sạch online, giao hàng nhanh 2 giờ</p>
+                        <div class="port-tech"><span>Grocery</span><span>Cart</span><span>Delivery</span></div>
+                    </div>
+                </a>
+                <a target="_blank" href="demos/ecommerce-gadget/index.html" class="port-card reveal"
+                    data-category="e-commerce">
+                    <div class="port-thumb"><img src="images/demo-ecommerce-gadget.png" alt="GadgetHub">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">E-Commerce</span>
+                        <h3>GadgetHub</h3>
+                        <p>Cửa hàng công nghệ với thiết kế neon futuristic</p>
+                        <div class="port-tech"><span>Tech</span><span>Flash Sale</span><span>Trả Góp</span></div>
+                    </div>
+                </a>
+                <!-- PORTFOLIO -->
+                <a target="_blank" href="demos/portfolio/index.html" class="port-card reveal" data-category="portfolio">
                     <div class="port-thumb"><img src="images/demo-portfolio.png" alt="Creative Studio">
                         <div class="port-overlay"><span class="btn btn-primary"
                                 style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
@@ -331,7 +384,32 @@
                         <div class="port-tech"><span>React</span><span>Animation</span><span>Dark Mode</span></div>
                     </div>
                 </a>
-                <a target="_blank" href="demos/restaurant/index.html" class="port-card reveal">
+                <a target="_blank" href="demos/portfolio-photo/index.html" class="port-card reveal"
+                    data-category="portfolio">
+                    <div class="port-thumb"><img src="images/demo-portfolio-photo.png" alt="PixelArt">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Portfolio</span>
+                        <h3>PixelArt Photography</h3>
+                        <p>Portfolio nhiếp ảnh minimalist đen trắng tinh tế</p>
+                        <div class="port-tech"><span>Gallery</span><span>Minimal</span><span>Art</span></div>
+                    </div>
+                </a>
+                <a target="_blank" href="demos/portfolio-dev/index.html" class="port-card reveal"
+                    data-category="portfolio">
+                    <div class="port-thumb"><img src="images/demo-portfolio-dev.png" alt="DevFolio">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Portfolio</span>
+                        <h3>DevFolio</h3>
+                        <p>Portfolio lập trình viên phong cách terminal/GitHub</p>
+                        <div class="port-tech"><span>Terminal</span><span>GitHub</span><span>Code</span></div>
+                    </div>
+                </a>
+                <!-- F&B -->
+                <a target="_blank" href="demos/restaurant/index.html" class="port-card reveal" data-category="fb">
                     <div class="port-thumb"><img src="images/demo-restaurant.png" alt="Golden Kitchen">
                         <div class="port-overlay"><span class="btn btn-primary"
                                 style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
@@ -342,7 +420,32 @@
                         <div class="port-tech"><span>Booking</span><span>Menu Online</span><span>SEO Local</span></div>
                     </div>
                 </a>
-                <a target="_blank" href="demos/realestate/index.html" class="port-card reveal">
+                <a target="_blank" href="demos/cafe/index.html" class="port-card reveal" data-category="fb">
+                    <div class="port-thumb"><img src="images/demo-cafe.png" alt="BrewCafe">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">F&B</span>
+                        <h3>BrewCafe</h3>
+                        <p>Quán cà phê đặc sản với tông nâu ấm cúng</p>
+                        <div class="port-tech"><span>Menu</span><span>Story</span><span>Atmosphere</span></div>
+                    </div>
+                </a>
+                <a target="_blank" href="demos/sushi/index.html" class="port-card reveal" data-category="fb">
+                    <div class="port-thumb"><img src="images/demo-sushi.png" alt="SushiZen">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">F&B</span>
+                        <h3>SushiZen</h3>
+                        <p>Nhà hàng Nhật Bản cao cấp, phong cách đỏ-đen sang trọng</p>
+                        <div class="port-tech"><span>Japanese</span><span>Fine Dining</span><span>Reservation</span>
+                        </div>
+                    </div>
+                </a>
+                <!-- BẤT ĐỘNG SẢN -->
+                <a target="_blank" href="demos/realestate/index.html" class="port-card reveal"
+                    data-category="bat-dong-san">
                     <div class="port-thumb"><img src="images/demo-realestate.png" alt="DreamHome Realty">
                         <div class="port-overlay"><span class="btn btn-primary"
                                 style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
@@ -353,7 +456,31 @@
                         <div class="port-tech"><span>Search</span><span>Listing</span><span>Map</span></div>
                     </div>
                 </a>
-                <a target="_blank" href="demos/spa/index.html" class="port-card reveal">
+                <a target="_blank" href="demos/apartment/index.html" class="port-card reveal"
+                    data-category="bat-dong-san">
+                    <div class="port-thumb"><img src="images/demo-apartment.png" alt="SkyTower">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">BĐS</span>
+                        <h3>SkyTower Residences</h3>
+                        <p>Căn hộ cao cấp 45 tầng, phong cách gold luxury</p>
+                        <div class="port-tech"><span>Luxury</span><span>Floor Plan</span><span>Amenities</span></div>
+                    </div>
+                </a>
+                <a target="_blank" href="demos/villa/index.html" class="port-card reveal" data-category="bat-dong-san">
+                    <div class="port-thumb"><img src="images/demo-villa.png" alt="VillaParadise">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">BĐS</span>
+                        <h3>VillaParadise</h3>
+                        <p>Biệt thự biển Phú Quốc, thiết kế nhiệt đới hiện đại</p>
+                        <div class="port-tech"><span>Beach</span><span>Villa</span><span>Resort</span></div>
+                    </div>
+                </a>
+                <!-- SPA -->
+                <a target="_blank" href="demos/spa/index.html" class="port-card reveal" data-category="spa">
                     <div class="port-thumb"><img src="images/demo-spa.png" alt="GlowSpa">
                         <div class="port-overlay"><span class="btn btn-primary"
                                 style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
@@ -364,7 +491,30 @@
                         <div class="port-tech"><span>Booking</span><span>Gallery</span><span>Bảng Giá</span></div>
                     </div>
                 </a>
-                <a target="_blank" href="demos/education/index.html" class="port-card reveal">
+                <a target="_blank" href="demos/wellness/index.html" class="port-card reveal" data-category="spa">
+                    <div class="port-thumb"><img src="images/demo-wellness.png" alt="ZenWellness">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Spa</span>
+                        <h3>ZenWellness</h3>
+                        <p>Yoga & wellness center, tông tím pastel thư giãn</p>
+                        <div class="port-tech"><span>Yoga</span><span>Schedule</span><span>Pricing</span></div>
+                    </div>
+                </a>
+                <a target="_blank" href="demos/nailsalon/index.html" class="port-card reveal" data-category="spa">
+                    <div class="port-thumb"><img src="images/demo-nailsalon.png" alt="NailArt Studio">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Spa</span>
+                        <h3>NailArt Studio</h3>
+                        <p>Nail salon nghệ thuật với tông hồng-gold glamorous</p>
+                        <div class="port-tech"><span>Nail Art</span><span>Gallery</span><span>Team</span></div>
+                    </div>
+                </a>
+                <!-- GIÁO DỤC -->
+                <a target="_blank" href="demos/education/index.html" class="port-card reveal" data-category="giao-duc">
                     <div class="port-thumb"><img src="images/demo-education.png" alt="EduStar">
                         <div class="port-overlay"><span class="btn btn-primary"
                                 style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
@@ -375,7 +525,30 @@
                         <div class="port-tech"><span>E-Learning</span><span>Payment</span><span>Dashboard</span></div>
                     </div>
                 </a>
-                <a target="_blank" href="demos/travel/index.html" class="port-card reveal">
+                <a target="_blank" href="demos/tutoring/index.html" class="port-card reveal" data-category="giao-duc">
+                    <div class="port-thumb"><img src="images/demo-tutoring.png" alt="MathGenius">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Giáo Dục</span>
+                        <h3>MathGenius</h3>
+                        <p>Trung tâm luyện thi Toán, cam kết kết quả đầu ra</p>
+                        <div class="port-tech"><span>Courses</span><span>Teachers</span><span>Results</span></div>
+                    </div>
+                </a>
+                <a target="_blank" href="demos/language/index.html" class="port-card reveal" data-category="giao-duc">
+                    <div class="port-thumb"><img src="images/demo-language.png" alt="LangMaster">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Giáo Dục</span>
+                        <h3>LangMaster</h3>
+                        <p>Trung tâm ngoại ngữ đa ngôn ngữ, phong cách quốc tế</p>
+                        <div class="port-tech"><span>IELTS</span><span>TOEIC</span><span>JLPT</span></div>
+                    </div>
+                </a>
+                <!-- DU LỊCH -->
+                <a target="_blank" href="demos/travel/index.html" class="port-card reveal" data-category="du-lich">
                     <div class="port-thumb"><img src="images/demo-travel.png" alt="VietTravel">
                         <div class="port-overlay"><span class="btn btn-primary"
                                 style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
@@ -384,6 +557,28 @@
                         <h3>VietTravel</h3>
                         <p>Đặt tour du lịch Việt Nam trọn gói</p>
                         <div class="port-tech"><span>Search</span><span>Booking</span><span>Review</span></div>
+                    </div>
+                </a>
+                <a target="_blank" href="demos/adventure/index.html" class="port-card reveal" data-category="du-lich">
+                    <div class="port-thumb"><img src="images/demo-adventure.png" alt="MountainEscape">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Du Lịch</span>
+                        <h3>MountainEscape</h3>
+                        <p>Tour du lịch mạo hiểm Tây Bắc & trekking</p>
+                        <div class="port-tech"><span>Adventure</span><span>Trekking</span><span>Eco</span></div>
+                    </div>
+                </a>
+                <a target="_blank" href="demos/resort/index.html" class="port-card reveal" data-category="du-lich">
+                    <div class="port-thumb"><img src="images/demo-resort.png" alt="IslandResort">
+                        <div class="port-overlay"><span class="btn btn-primary"
+                                style="font-size:.85rem;padding:.5rem 1.2rem">Xem Demo →</span></div>
+                    </div>
+                    <div class="port-info"><span class="port-tag">Du Lịch</span>
+                        <h3>IslandResort</h3>
+                        <p>Resort 5 sao trên đảo, thiết kế aqua sang trọng</p>
+                        <div class="port-tech"><span>Luxury</span><span>Rooms</span><span>Spa</span></div>
                     </div>
                 </a>
             </div>
@@ -434,7 +629,8 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="nav-logo">
-                        <img src="images/logo.png" alt="VietWebPro" style="height:32px;border-radius:6px"> <span>VietWebPro</span>
+                        <img src="images/logo.png" alt="VietWebPro" style="height:32px;border-radius:6px">
+                        <span>VietWebPro</span>
                     </div>
                     <p>Biến ý tưởng thành website chuyên nghiệp.</p>
                 </div>
@@ -444,8 +640,9 @@
                 </div>
                 <div class="footer-col">
                     <h4>Mẫu Website</h4><a target="_blank" href="demos/business/index.html">Doanh nghiệp</a><a
-                        target="_blank" href="demos/ecommerce/index.html">E-commerce</a><a
-                        target="_blank" href="demos/portfolio/index.html">Portfolio</a><a target="_blank" href="demos/restaurant/index.html">Nhà
+                        target="_blank" href="demos/ecommerce/index.html">E-commerce</a><a target="_blank"
+                        href="demos/portfolio/index.html">Portfolio</a><a target="_blank"
+                        href="demos/restaurant/index.html">Nhà
                         hàng</a>
                 </div>
                 <div class="footer-col">
@@ -460,7 +657,52 @@
         </div>
     </footer>
     <script src="js/main.js"></script>
-    <script>document.querySelectorAll('.filter-tab').forEach(t => { t.addEventListener('click', () => { document.querySelectorAll('.filter-tab').forEach(x => x.classList.remove('active')); t.classList.add('active') }) })</script>
+    <script>
+        (function () {
+            const categoryMap = {
+                'Tất cả': 'all',
+                'Doanh nghiệp': 'doanh-nghiep',
+                'E-Commerce': 'e-commerce',
+                'Portfolio': 'portfolio',
+                'F&B': 'fb',
+                'Bất động sản': 'bat-dong-san',
+                'Spa': 'spa',
+                'Giáo dục': 'giao-duc',
+                'Du lịch': 'du-lich'
+            };
+            const tabs = document.querySelectorAll('.filter-tab');
+            const cards = document.querySelectorAll('.port-card');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(x => x.classList.remove('active'));
+                    tab.classList.add('active');
+                    const cat = categoryMap[tab.textContent.trim()] || 'all';
+                    cards.forEach(card => {
+                        if (cat === 'all' || card.dataset.category === cat) {
+                            card.style.display = '';
+                            card.style.animation = 'fadeUp .4s ease forwards';
+                        } else {
+                            card.style.display = 'none';
+                            card.style.animation = '';
+                        }
+                    });
+                });
+            });
+        })();
+    </script>
+    <style>
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+    </style>
 </body>
 
 </html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NailArt Studio | Demo Nail Salon</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a0f18;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        :root {
+            --pink: #f472b6;
+            --gold: #d4a853;
+            --rose: #fda4af
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            transition: .3s
+        }
+
+        .nav.scrolled {
+            background: rgba(26, 15, 24, .95);
+            backdrop-filter: blur(20px)
+        }
+
+        .nav .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 800
+        }
+
+        .logo span {
+            color: var(--pink)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, .6);
+            font-weight: 500;
+            transition: .2s
+        }
+
+        .nav-links a:hover {
+            color: var(--pink)
+        }
+
+        .nav-links .cta {
+            padding: .6rem 1.5rem;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            border-radius: 999px;
+            color: #fff !important
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 30%, rgba(244, 114, 182, .06) 0%, transparent 50%)
+        }
+
+        .hero .wrap {
+            position: relative;
+            z-index: 2
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem
+        }
+
+        .hero h1 .hl {
+            color: var(--pink)
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--gold)
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, .5);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.7
+        }
+
+        .btn-fill {
+            padding: .9rem 2rem;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            border-radius: 999px;
+            font-weight: 600;
+            color: #fff;
+            transition: .3s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .btn-fill:hover {
+            box-shadow: 0 0 40px rgba(244, 114, 182, .4);
+            transform: translateY(-2px)
+        }
+
+        .section {
+            padding: 6rem 0
+        }
+
+        .sec-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem
+        }
+
+        .sec-sub {
+            text-align: center;
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 3rem
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: .75rem
+        }
+
+        .gal-item {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 1px solid rgba(244, 114, 182, .1);
+            transition: .3s;
+            cursor: pointer
+        }
+
+        .gal-item:hover {
+            border-color: rgba(244, 114, 182, .4);
+            transform: scale(1.03)
+        }
+
+        .g1 {
+            background: linear-gradient(135deg, rgba(244, 114, 182, .1), rgba(244, 114, 182, .03))
+        }
+
+        .g2 {
+            background: linear-gradient(135deg, rgba(212, 168, 83, .1), rgba(212, 168, 83, .03))
+        }
+
+        .g3 {
+            background: linear-gradient(135deg, rgba(253, 164, 175, .1), rgba(253, 164, 175, .03))
+        }
+
+        .g4 {
+            background: linear-gradient(135deg, rgba(236, 72, 153, .1), rgba(236, 72, 153, .03))
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem
+        }
+
+        .svc {
+            background: rgba(244, 114, 182, .03);
+            border: 1px solid rgba(244, 114, 182, .1);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: .3s
+        }
+
+        .svc:hover {
+            border-color: rgba(244, 114, 182, .3);
+            transform: translateY(-3px)
+        }
+
+        .svc .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem
+        }
+
+        .svc h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: .5rem
+        }
+
+        .svc p {
+            color: rgba(255, 255, 255, .5);
+            font-size: .85rem;
+            line-height: 1.6;
+            margin-bottom: .75rem
+        }
+
+        .svc .price {
+            color: var(--pink);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.1rem
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem
+        }
+
+        .pricing-table th {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(244, 114, 182, .15);
+            color: var(--pink);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: .9rem
+        }
+
+        .pricing-table td {
+            padding: .75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .04);
+            color: rgba(255, 255, 255, .6);
+            font-size: .85rem
+        }
+
+        .pricing-table td:last-child {
+            color: var(--gold);
+            font-weight: 700;
+            text-align: right
+        }
+
+        .pricing-table tr:hover td {
+            background: rgba(244, 114, 182, .03)
+        }
+
+        .team {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem
+        }
+
+        .member {
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid rgba(244, 114, 182, .08);
+            border-radius: 16px;
+            transition: .3s
+        }
+
+        .member:hover {
+            border-color: rgba(244, 114, 182, .2)
+        }
+
+        .member .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem
+        }
+
+        .member h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: .25rem
+        }
+
+        .member .role {
+            color: var(--pink);
+            font-size: .8rem;
+            font-weight: 600
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, rgba(244, 114, 182, .06), rgba(212, 168, 83, .03));
+            border-radius: 24px;
+            margin: 2rem;
+            border: 1px solid rgba(244, 114, 182, .1)
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: 2rem
+        }
+
+        .footer {
+            border-top: 1px solid rgba(244, 114, 182, .08);
+            padding: 2rem 0;
+            margin-top: 2rem
+        }
+
+        .footer .wrap {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, .3);
+            font-size: .85rem
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            padding: .6rem 1.2rem;
+            background: rgba(26, 15, 24, .9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(244, 114, 182, .15);
+            border-radius: 999px;
+            color: #fff;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .back-btn:hover {
+            background: var(--pink);
+            color: #fff;
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:768px) {
+            .gallery {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../portfolio.html" class="back-btn">← Quay lại</a>
+    <nav class="nav" id="nav">
+        <div class="wrap">
+            <div class="logo"><span>Nail</span>Art Studio</div>
+            <div class="nav-links"><a href="#gallery">Gallery</a><a href="#services">Dịch Vụ</a><a href="#team">Nghệ
+                    Nhân</a><a href="#cta" class="cta">💅 Đặt Lịch</a></div>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="wrap">
+            <h1>Nghệ Thuật<br><span class="hl">Nail</span> <em>Đỉnh Cao</em></h1>
+            <p>NailArt Studio - salon nail nghệ thuật hàng đầu Sài Gòn. Mỗi bộ nail là một tác phẩm nghệ thuật thu nhỏ.
+            </p><a href="#gallery" class="btn-fill">💅 Xem Gallery</a>
+        </div>
+    </section>
+    <section class="section" id="gallery" style="background:rgba(244,114,182,.02)">
+        <div class="wrap">
+            <h2 class="sec-title">Gallery <span style="color:var(--pink)">Tác Phẩm</span></h2>
+            <p class="sec-sub">Những thiết kế nail trending được yêu thích nhất</p>
+            <div class="gallery">
+                <div class="gal-item g1">💅</div>
+                <div class="gal-item g2">✨</div>
+                <div class="gal-item g3">🌸</div>
+                <div class="gal-item g4">💎</div>
+                <div class="gal-item g3">🎀</div>
+                <div class="gal-item g1">🦋</div>
+                <div class="gal-item g4">🌺</div>
+                <div class="gal-item g2">💖</div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="services">
+        <div class="wrap">
+            <h2 class="sec-title">Dịch Vụ <span style="color:var(--pink)">Của Chúng Tôi</span></h2>
+            <div class="services">
+                <div class="svc">
+                    <div class="icon">💅</div>
+                    <h3>Gel Nail Art</h3>
+                    <p>Vẽ nail gel nghệ thuật, bền đẹp 3-4 tuần</p><span class="price">Từ 350K</span>
+                </div>
+                <div class="svc">
+                    <div class="icon">💎</div>
+                    <h3>Crystal & Charm</h3>
+                    <p>Đính đá Swarovski, charm cao cấp</p><span class="price">Từ 500K</span>
+                </div>
+                <div class="svc">
+                    <div class="icon">🌸</div>
+                    <h3>Hand Spa</h3>
+                    <p>Chăm sóc tay chuyên sâu, paraffin wax</p><span class="price">Từ 200K</span>
+                </div>
+                <div class="svc">
+                    <div class="icon">✨</div>
+                    <h3>Extension</h3>
+                    <p>Đắp móng gel, acrylic, polygel</p><span class="price">Từ 450K</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="team" style="background:rgba(244,114,182,.02)">
+        <div class="wrap">
+            <h2 class="sec-title">Đội Ngũ <span style="color:var(--pink)">Nghệ Nhân</span></h2>
+            <p class="sec-sub">Những nail artist giỏi nhất Sài Gòn</p>
+            <div class="team">
+                <div class="member">
+                    <div class="avatar">👩‍🎨</div>
+                    <h4>Trần Thị Mai</h4>
+                    <div class="role">Lead Artist • 8 năm KN</div>
+                </div>
+                <div class="member">
+                    <div class="avatar">👩‍🎨</div>
+                    <h4>Nguyễn Hồng Nhung</h4>
+                    <div class="role">Senior Artist • 6 năm KN</div>
+                </div>
+                <div class="member">
+                    <div class="avatar">👩‍🎨</div>
+                    <h4>Lê Phương Anh</h4>
+                    <div class="role">Artist • 4 năm KN</div>
+                </div>
+                <div class="member">
+                    <div class="avatar">👩‍🎨</div>
+                    <h4>Phạm Thanh Hà</h4>
+                    <div class="role">Artist • 3 năm KN</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="cta">
+        <div class="wrap">
+            <div class="cta-section">
+                <h2>Đặt Lịch <span style="color:var(--pink)">Hôm Nay</span></h2>
+                <p>Ưu đãi 20% cho khách hàng mới • Tặng 1 buổi hand spa</p><a href="#" class="btn-fill">💅 Đặt Lịch
+                    Ngay</a>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="wrap"><span>© 2026 NailArt Studio. Demo by VietWebPro.</span></div>
+    </footer>
+    <script>window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50) })</script>
+</body>
+
+</html>
