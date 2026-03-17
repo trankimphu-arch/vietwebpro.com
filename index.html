@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
     content="Dịch vụ thiết kế website chuyên nghiệp - Landing page, thương mại điện tử, portfolio, nhà hàng, bất động sản. Giao diện đẹp, tốc độ nhanh, chuẩn SEO.">
-    <meta name="keywords" content="thiết kế website, làm website, dịch vụ thiết kế web, thiết kế web Gia Lai, VietWebPro">
+  <meta name="keywords" content="thiết kế website, làm website, dịch vụ thiết kế web, thiết kế web Gia Lai, VietWebPro">
   <title>VietWebPro | Dịch Vụ Thiết Kế Website Chuyên Nghiệp</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="images/favicon.svg">
@@ -22,12 +22,14 @@
         <span>VietWebPro</span>
       </a>
       <div class="nav-links" id="navLinks">
-        <a href="about.html">Giới Thiệu</a>
-        <a href="services.html">Dịch Vụ</a>
-        <a href="portfolio.html">Dự Án</a>
-        <a href="blog.html">Blog</a>
-        <a href="faq.html">FAQ</a>
-        <a href="contact.html" class="nav-cta">Liên Hệ</a>
+        <a href="about.html" data-i18n="nav.about">Giới Thiệu</a>
+        <a href="services.html" data-i18n="nav.services">Dịch Vụ</a>
+        <a href="portfolio.html" data-i18n="nav.portfolio">Dự Án</a>
+        <a href="blog.html" data-i18n="nav.blog">Blog</a>
+        <a href="faq.html" data-i18n="nav.faq">FAQ</a>
+        <a href="contact.html" class="nav-cta" data-i18n="nav.contact">Liên Hệ</a>
+        <button id="langToggle" onclick="toggleLang()"
+          style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;cursor:pointer;letter-spacing:.05em">EN</button>
       </div>
       <div class="mobile-toggle" id="mobileToggle">
         <span></span>
@@ -49,33 +51,33 @@
     <div class="container">
       <div class="hero-badge">
         <span class="dot"></span>
-        Đang nhận dự án mới
+        <span data-i18n="hero.badge">Đang nhận dự án mới</span>
       </div>
       <h1>
-        Thiết Kế Website<br>
-        <span class="gradient-text">Chuyên Nghiệp</span> &
+        <span data-i18n="hero.title1">Thiết Kế Website</span><br>
+        <span class="gradient-text" data-i18n="hero.title2">Chuyên Nghiệp</span> &
         <span class="accent-text">Sáng Tạo</span>
       </h1>
-      <p class="hero-desc">
+      <p class="hero-desc" data-i18n="hero.desc">
         Chúng tôi tạo ra những website đẹp mắt, tốc độ nhanh, chuẩn SEO và tối ưu trải nghiệm người dùng. Từ landing
         page đến thương mại điện tử — tất cả đều hoàn hảo.
       </p>
       <div class="hero-buttons">
-        <a href="#demos" class="btn btn-primary">🎨 Xem Mẫu Website</a>
-        <a href="#contact" class="btn btn-outline">💬 Tư Vấn Miễn Phí</a>
+        <a href="#demos" class="btn btn-primary" data-i18n="hero.cta1">🎨 Xem Mẫu Website</a>
+        <a href="#contact" class="btn btn-outline" data-i18n="hero.cta2">💬 Tư Vấn Miễn Phí</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
           <div class="number" data-count="10" data-suffix="+">0</div>
-          <div class="label">Mẫu website sẵn sàng</div>
+          <div class="label" data-i18n="hero.stat1.label">Mẫu website sẵn sàng</div>
         </div>
         <div class="hero-stat">
           <div class="number" data-count="10" data-suffix="+ năm">0</div>
-          <div class="label">Kinh nghiệm làm web</div>
+          <div class="label" data-i18n="hero.stat2.label">Kinh nghiệm làm web</div>
         </div>
         <div class="hero-stat">
           <div class="number" data-count="3" data-suffix=" người">0</div>
-          <div class="label">Đội ngũ chuyên môn</div>
+          <div class="label" data-i18n="hero.stat3.label">Đội ngũ chuyên môn</div>
         </div>
       </div>
     </div>
@@ -84,8 +86,9 @@
   <!-- ============ SERVICES ============ -->
   <section class="section" id="services">
     <div class="container">
-      <h2 class="section-title reveal">Dịch Vụ Của Chúng Tôi</h2>
-      <p class="section-subtitle reveal">Giải pháp website toàn diện cho mọi nhu cầu kinh doanh của bạn</p>
+      <h2 class="section-title reveal" data-i18n="services.title">Dịch Vụ Của Chúng Tôi</h2>
+      <p class="section-subtitle reveal" data-i18n="services.subtitle">Giải pháp website toàn diện cho mọi nhu cầu kinh
+        doanh của bạn</p>
 
       <div class="services-grid">
         <div class="glass-card service-card reveal">

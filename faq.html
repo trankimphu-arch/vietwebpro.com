@@ -191,7 +191,9 @@
             </a>
             <div class="nav-links" id="navLinks"><a href="about.html">Giới Thiệu</a><a href="services.html">Dịch
                     Vụ</a><a href="portfolio.html">Dự Án</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a
-                    href="contact.html" class="nav-cta">Liên Hệ</a></div>
+                    href="contact.html" class="nav-cta">Liên Hệ</a>
+        <button id="langToggle" onclick="toggleLang()" style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;cursor:pointer;letter-spacing:.05em">EN</button>
+        <button id="langToggle" onclick="toggleLang()" style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;cursor:pointer;letter-spacing:.05em">EN</button><button id="langToggle" onclick="toggleLang()" style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;cursor:pointer;letter-spacing:.05em">EN</button></div>
             <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
         </div>
     </nav>
@@ -369,6 +371,7 @@
         </div>
     </footer>
     <script src="js/main.js"></script>
+    <script src="js/lang.js"></script>
     <script>
         document.querySelectorAll('.faq-question').forEach(q => {
             q.addEventListener('click', () => {
