@@ -204,14 +204,15 @@
                 <img src="images/logo.png" alt="VietWebPro" style="height:32px;border-radius:6px">
                 <span>VietWebPro</span>
             </a>
-                        <div class="nav-links" id="navLinks">
+            <div class="nav-links" id="navLinks">
                 <a href="about.html">Giới Thiệu</a>
                 <a href="services.html">Dịch Vụ</a>
                 <a href="portfolio.html">Dự Án</a>
                 <a href="blog.html">Blog</a>
                 <a href="faq.html">FAQ</a>
                 <a href="contact.html" class="nav-cta">Liên Hệ</a>
-                <a href="en/index.html" style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;letter-spacing:.05em">EN</a>
+                <a href="en/index.html"
+                    style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;letter-spacing:.05em">EN</a>
             </div>
             <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
         </div>
@@ -250,9 +251,18 @@
                         <div class="glass-card c-card reveal">
                             <div class="c-icon">💬</div>
                             <div>
-                                <h4>Zalo / Messenger</h4>
+                                <h4>Zalo</h4>
                                 <p><a href="https://zalo.me/0355025126" target="_blank">Chat ngay qua Zalo</a></p>
                                 <p style="font-size:.8rem;color:var(--text-muted)">Online 8:00 - 22:00</p>
+                            </div>
+                        </div>
+                        <div class="glass-card c-card reveal">
+                            <div class="c-icon">📘</div>
+                            <div>
+                                <h4>Facebook</h4>
+                                <p><a href="https://www.facebook.com/phu.trankim.319/" target="_blank">Nhắn tin qua
+                                        Facebook</a></p>
+                                <p style="font-size:.8rem;color:var(--text-muted)">Phản hồi nhanh qua Messenger</p>
                             </div>
                         </div>
                         <div class="glass-card c-card reveal">
@@ -263,75 +273,74 @@
                                 <p>Gia Lai, Việt Nam</p>
                             </div>
                         </div>
+                        <div class="social-links reveal">
+                            <a href="https://www.facebook.com/phu.trankim.319/" target="_blank" class="social-link"
+                                title="Facebook">📘</a>
+                            <a href="https://zalo.me/0355025126" target="_blank" class="social-link" title="Zalo">💬</a>
+                            <a href="mailto:kimphu1988@gmail.com" class="social-link" title="Email">📧</a>
+                            <a href="tel:0355025126" class="social-link" title="Hotline">📞</a>
+                        </div>
+
+                        <!-- Map hidden temporarily -->
                     </div>
 
-                    <div class="social-links reveal">
-                        <a href="https://www.facebook.com/phu.trankim.319/" target="_blank" class="social-link"
-                            title="Facebook">📘</a>
-                        <a href="https://zalo.me/0355025126" target="_blank" class="social-link" title="Zalo">💬</a>
-                        <a href="mailto:kimphu1988@gmail.com" class="social-link" title="Email">📧</a>
-                        <a href="tel:0355025126" class="social-link" title="Hotline">📞</a>
-                    </div>
-
-                    <!-- Map hidden temporarily -->
-                </div>
-
-                <form class="glass-card contact-form-page contact-form-el reveal"
-                    action="https://api.web3forms.com/submit" method="POST">
-                    <input type="hidden" name="access_key" value="6f64258c-1684-46d3-8dda-ef36faa3cf5b">
-                    <input type="hidden" name="subject" value="Yêu cầu tư vấn từ VietWebPro (trang Liên Hệ)">
-                    <input type="hidden" name="from_name" value="VietWebPro Website">
-                    <h3>Gửi Yêu Cầu Tư Vấn</h3>
-                    <p class="desc">Điền thông tin bên dưới, chúng tôi sẽ liên hệ tư vấn miễn phí</p>
-                    <div class="form-row">
-                        <div class="form-group"><label>Họ và tên *</label><input type="text" name="name"
-                                placeholder="Nguyễn Văn A" required></div>
-                        <div class="form-group"><label>Email *</label><input type="email" name="email"
-                                placeholder="email@company.com" required></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Số điện thoại</label><input type="tel" name="phone"
-                                placeholder="0355 025 126"></div>
-                        <div class="form-group"><label>Ngân sách dự kiến</label>
-                            <select name="budget">
+                    <form class="glass-card contact-form-page contact-form-el reveal"
+                        action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="6f64258c-1684-46d3-8dda-ef36faa3cf5b">
+                        <input type="hidden" name="subject" value="Yêu cầu tư vấn từ VietWebPro (trang Liên Hệ)">
+                        <input type="hidden" name="from_name" value="VietWebPro Website">
+                        <h3>Gửi Yêu Cầu Tư Vấn</h3>
+                        <p class="desc">Điền thông tin bên dưới, chúng tôi sẽ liên hệ tư vấn miễn phí</p>
+                        <div class="form-row">
+                            <div class="form-group"><label>Họ và tên *</label><input type="text" name="name"
+                                    placeholder="Nguyễn Văn A" required></div>
+                            <div class="form-group"><label>Email *</label><input type="email" name="email"
+                                    placeholder="email@company.com" required></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Số điện thoại</label><input type="tel" name="phone"
+                                    placeholder="0355 025 126"></div>
+                            <div class="form-group"><label>Ngân sách dự kiến</label>
+                                <select name="budget">
+                                    <option value="">-- Chọn --</option>
+                                    <option>Dưới 5 triệu</option>
+                                    <option>5 - 15 triệu</option>
+                                    <option>15 - 35 triệu</option>
+                                    <option>Trên 35 triệu</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group"><label>Loại website cần làm</label>
+                            <select name="website_type">
                                 <option value="">-- Chọn --</option>
-                                <option>Dưới 5 triệu</option>
-                                <option>5 - 15 triệu</option>
-                                <option>15 - 35 triệu</option>
-                                <option>Trên 35 triệu</option>
+                                <option>Landing Page</option>
+                                <option>Website doanh nghiệp</option>
+                                <option>Thương mại điện tử</option>
+                                <option>Portfolio</option>
+                                <option>Blog / Tin tức</option>
+                                <option>Nhà hàng / F&B</option>
+                                <option>Bất động sản</option>
+                                <option>Khác</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="form-group"><label>Loại website cần làm</label>
-                        <select name="website_type">
-                            <option value="">-- Chọn --</option>
-                            <option>Landing Page</option>
-                            <option>Website doanh nghiệp</option>
-                            <option>Thương mại điện tử</option>
-                            <option>Portfolio</option>
-                            <option>Blog / Tin tức</option>
-                            <option>Nhà hàng / F&B</option>
-                            <option>Bất động sản</option>
-                            <option>Khác</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label>Mô tả chi tiết yêu cầu</label><textarea name="message"
-                            placeholder="Mô tả website bạn muốn: mục đích, tính năng, tham khảo mẫu nào..."></textarea>
-                    </div>
-                    <div class="form-group"><label>Bạn biết đến chúng tôi qua đâu?</label>
-                        <select name="source">
-                            <option value="">-- Chọn --</option>
-                            <option>Google</option>
-                            <option>Facebook</option>
-                            <option>Bạn bè giới thiệu</option>
-                            <option>Khác</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-accent" style="width:100%;justify-content:center">Gửi Yêu Cầu
-                        Tư Vấn →</button>
-                </form>
+                        <div class="form-group"><label>Mô tả chi tiết yêu cầu</label><textarea name="message"
+                                placeholder="Mô tả website bạn muốn: mục đích, tính năng, tham khảo mẫu nào..."></textarea>
+                        </div>
+                        <div class="form-group"><label>Bạn biết đến chúng tôi qua đâu?</label>
+                            <select name="source">
+                                <option value="">-- Chọn --</option>
+                                <option>Google</option>
+                                <option>Facebook</option>
+                                <option>Bạn bè giới thiệu</option>
+                                <option>Khác</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-accent" style="width:100%;justify-content:center">Gửi Yêu
+                            Cầu
+                            Tư Vấn →</button>
+                    </form>
+                </div>
             </div>
-        </div>
     </section>
 
     <footer class="footer">
