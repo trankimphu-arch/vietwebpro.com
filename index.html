@@ -362,11 +362,21 @@
       }
     }
 
+    /* Fix mobile overflow */
+    html,
+    body {
+      overflow-x: hidden;
+    }
+
     /* Mobile: stack hero columns */
-    @media(max-width:768px) {
+    @media(max-width:968px) {
       .hero .container {
         grid-template-columns: 1fr !important;
         text-align: center;
+      }
+
+      .hero .container>div:last-child {
+        display: none !important;
       }
 
       .hero-desc {
