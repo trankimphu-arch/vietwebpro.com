@@ -505,67 +505,36 @@
             return 'Cảm ơn bạn đã quan tâm! 😊 Để được tư vấn chi tiết nhất, vui lòng:\n📞 Gọi: 0909 123 456\n💬 Zalo: 0909 123 456\n\nHoặc hỏi tôi về: giá namecard, banner, bao bì, brochure, địa chỉ xưởng in.';
         }
 
-        const GROQ_KEY = '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';
-        const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
-        const chatHistory = [{
-            role: 'system', content: `Bạn là PrintBot - trợ lý AI thân thiện của PrintPlus, công ty in ấn chuyên nghiệp tại Biên Hòa, Đồng Nai.
-
-THÔNG TIN CÔNG TY:
-- Tên: PrintPlus
-- Địa chỉ: 123 Nguyễn Ái Quốc, P. Tân Hiệp, TP. Biên Hòa, Đồng Nai
-- Hotline: 0909 123 456 (Mr. Phú), 0918 789 012 (Ms. Linh)
-- Zalo: 0909 123 456
-- Email: info@printplus.vn
-- Giờ làm việc: T2-T7: 7:30-18:00, CN: 8:00-12:00
-
-BẢNG GIÁ:
-- Namecard 200 tấm 2 mặt, couché 300gsm, cán mờ: 500.000đ
-- Ép nhũ vàng/bạc: +100.000đ
-- Tờ rơi A4: từ 1.500đ/tờ
-- Brochure gấp 3: từ 3.000đ/tờ
-- Catalogue: từ 25.000đ/cuốn
-- Banner/hiflex: từ 80.000đ/m²
-- Hộp giấy: từ 3.000đ/hộp (SL 500+)
-- Túi giấy: từ 5.000đ/túi
-- Combo Doanh Nghiệp (500 namecard + 200 tờ rơi + 50 brochure): 3.500.000đ
-
-DỊCH VỤ: In namecard, thiệp cưới, brochure, catalogue, bao bì, banner, standee, backdrop, billboard, in trên áo/ly/USB, thiết kế logo & nhận diện thương hiệu.
-
-QUY TẮC TRẢ LỜI:
-- Trả lời bằng tiếng Việt, ngắn gọn (tối đa 3-4 câu)
-- Thân thiện, chuyên nghiệp, dùng emoji phù hợp
-- Luôn gợi ý liên hệ hotline hoặc Zalo để tư vấn thêm
-- Nếu khách hỏi ngoài lĩnh vực in ấn, nhẹ nhàng đưa về chủ đề dịch vụ` }];
+        const GEMINI_KEY = 'AIzaSyBnLpqSIPWuu_Gddb5LOPeZD-NkDe2T_bU';
+        const chatHistory = [];
 
         async function fetchBotResponse(text) {
             try {
-                chatHistory.push({ role: 'user', content: text });
+                chatHistory.push({ role: 'user', parts: [{ text: text }] });
 
-                const response = await fetch(GROQ_URL, {
+                const sysPrompt = 'Bạn là PrintBot - trợ lý AI của PrintPlus, công ty in ấn tại Biên Hòa, Đồng Nai. Địa chỉ: 123 Nguyễn Ái Quốc, P.Tân Hiệp. Hotline: 0909 123 456. Zalo: 0909 123 456. Giờ làm việc: T2-T7: 7:30-18:00, CN: 8:00-12:00. BẢNG GIÁ: Namecard 200 tấm 500K, ép nhũ +100K, tờ rơi A4 từ 1.500đ/tờ, brochure gấp 3 từ 3.000đ/tờ, catalogue từ 25K/cuốn, banner/hiflex từ 80K/m², hộp giấy từ 3K/hộp (SL500+), túi giấy từ 5K/túi, combo DN 3.5 triệu. Dịch vụ: namecard, thiệp cưới, brochure, catalogue, bao bì, banner, standee, billboard, in áo/ly/USB, thiết kế logo. Trả lời tiếng Việt, ngắn gọn 3-4 câu, dùng emoji, gợi ý liên hệ hotline/Zalo.';
+
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${GROQ_KEY}`
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        model: 'llama-3.3-70b-versatile',
-                        messages: chatHistory,
-                        max_tokens: 300,
-                        temperature: 0.7
+                        system_instruction: { parts: [{ text: sysPrompt }] },
+                        contents: chatHistory,
+                        generationConfig: { maxOutputTokens: 300, temperature: 0.7 }
                     })
                 });
 
                 if (response.ok) {
                     const data = await response.json();
-                    const reply = data.choices[0].message.content;
-                    chatHistory.push({ role: 'assistant', content: reply });
+                    const reply = data.candidates[0].content.parts[0].text;
+                    chatHistory.push({ role: 'model', parts: [{ text: reply }] });
                     removeTyping();
                     addMsg(reply, 'bot');
                 } else {
-                    throw new Error('Groq API error');
+                    throw new Error('API ' + response.status);
                 }
             } catch (e) {
-                console.error('API error:', e);
+                console.error('Chat error:', e);
                 removeTyping();
                 addMsg(localReply(text), 'bot');
             }
