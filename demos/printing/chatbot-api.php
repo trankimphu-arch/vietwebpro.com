@@ -1,64 +1,46 @@
 <?php
-// PrintPlus Chatbot API Proxy
-// Upload file này vào thư mục public_html trên hosting cPanel
-header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
+header('Content-Type: application/json');
 
-// Handle preflight CORS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
     exit;
 }
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['error' => 'POST only']);
-    exit;
+    die('{"error":"POST only"}');
 }
 
-// OpenRouter API Key - an toàn vì nằm trên server
-$API_KEY = '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';
-
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
-
-if (!$data || !isset($data['messages'])) {
-    echo json_encode(['error' => 'Invalid request']);
-    exit;
+$input = json_decode(file_get_contents('php://input'), true);
+if (!$input || !isset($input['messages'])) {
+    die('{"error":"bad request"}');
 }
 
-// System prompt cho PrintBot
-$systemMsg = [
-    'role' => 'system',
-    'content' => 'Bạn là PrintBot - trợ lý AI của PrintPlus, công ty in ấn tại Biên Hòa, Đồng Nai. Địa chỉ: 123 Nguyễn Ái Quốc, P.Tân Hiệp. Hotline: 0909 123 456. Zalo: 0909 123 456. Giờ: T2-T7 7:30-18:00, CN 8:00-12:00. GIÁ: Namecard 200 tấm 500K, ép nhũ +100K, tờ rơi A4 1.500đ/tờ, brochure gấp 3 3.000đ/tờ, catalogue 25K/cuốn, banner/hiflex 80K/m², hộp giấy 3K/hộp (SL500+), túi giấy 5K/túi, combo DN 3.5 triệu. Dịch vụ: namecard, thiệp cưới, brochure, catalogue, bao bì, banner, standee, billboard, in áo/ly/USB, thiết kế logo. Trả lời tiếng Việt ngắn gọn 2-3 câu, dùng emoji, gợi ý gọi hotline/Zalo.'
-];
+$sys = array('role' => 'system', 'content' => 'Ban la PrintBot tro ly AI cua PrintPlus in an Bien Hoa Dong Nai. Dia chi 123 Nguyen Ai Quoc. Hotline 0909123456. Gia namecard 200 tam 500K, to roi A4 1500d, brochure 3000d, catalogue 25K, banner 80K/m2. Tra loi tieng Viet ngan gon.');
+$msgs = array_merge(array($sys), $input['messages']);
 
-// Thêm system prompt vào đầu messages
-$messages = array_merge([$systemMsg], $data['messages']);
+$data = json_encode(array(
+    'model' => 'google/gemma-3-27b-it:free',
+    'messages' => $msgs,
+    'max_tokens' => 200
+));
 
-$ch = curl_init('https://openrouter.ai/api/v1/chat/completions');
-curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_HTTPHEADER => [
-        'Content-Type: application/json',
-        'Authorization: Bearer ' . $API_KEY,
-        'HTTP-Referer: https://vietwebpro.com',
-        'X-Title: PrintPlus Chatbot'
-    ],
-    CURLOPT_POSTFIELDS => json_encode([
-        'model' => 'google/gemma-3-27b-it:free',
-        'messages' => $messages,
-        'max_tokens' => 250,
-        'temperature' => 0.7
-    ]),
-    CURLOPT_TIMEOUT => 30
-]);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://openrouter.ai/api/v1/chat/completions');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Content-Type: application/json',
+    'Authorization: Bearer YOUR_OPENROUTER_KEY_HERE'
+));
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$result = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo '{"error":"' . curl_error($ch) . '"}';
+} else {
+    echo $result;
+}
 curl_close($ch);
-
-http_response_code($httpCode);
-echo $response;
