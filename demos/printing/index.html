@@ -505,13 +505,10 @@
             return 'Cảm ơn bạn đã quan tâm! 😊 Để được tư vấn chi tiết nhất, vui lòng:\n📞 Gọi: 0909 123 456\n💬 Zalo: 0909 123 456\n\nHoặc hỏi tôi về: giá namecard, banner, bao bì, brochure, địa chỉ xưởng in.';
         }
 
-        const GEMINI_KEY = 'AIzaSyDpO9d0z-vkh9GXUmqN32raHHyQwEg-YlU';
-        const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
-        const chatHistory = [];
-
-        async function fetchBotResponse(text) {
-            try {
-                const systemInstruction = `Bạn là PrintBot - trợ lý AI thân thiện của PrintPlus, công ty in ấn chuyên nghiệp tại Biên Hòa, Đồng Nai.
+        const GROQ_KEY = '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';
+        const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+        const chatHistory = [{
+            role: 'system', content: `Bạn là PrintBot - trợ lý AI thân thiện của PrintPlus, công ty in ấn chuyên nghiệp tại Biên Hòa, Đồng Nai.
 
 THÔNG TIN CÔNG TY:
 - Tên: PrintPlus
@@ -538,31 +535,37 @@ QUY TẮC TRẢ LỜI:
 - Trả lời bằng tiếng Việt, ngắn gọn (tối đa 3-4 câu)
 - Thân thiện, chuyên nghiệp, dùng emoji phù hợp
 - Luôn gợi ý liên hệ hotline hoặc Zalo để tư vấn thêm
-- Nếu khách hỏi ngoài lĩnh vực in ấn, nhẹ nhàng đưa về chủ đề dịch vụ`;
+- Nếu khách hỏi ngoài lĩnh vực in ấn, nhẹ nhàng đưa về chủ đề dịch vụ` }];
 
-                chatHistory.push({ role: 'user', parts: [{ text: text }] });
+        async function fetchBotResponse(text) {
+            try {
+                chatHistory.push({ role: 'user', content: text });
 
-                const response = await fetch(GEMINI_URL, {
+                const response = await fetch(GROQ_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${GROQ_KEY}`
+                    },
                     body: JSON.stringify({
-                        system_instruction: { parts: [{ text: systemInstruction }] },
-                        contents: chatHistory,
-                        generationConfig: { maxOutputTokens: 300, temperature: 0.7 }
+                        model: 'llama-3.3-70b-versatile',
+                        messages: chatHistory,
+                        max_tokens: 300,
+                        temperature: 0.7
                     })
                 });
 
                 if (response.ok) {
                     const data = await response.json();
-                    const reply = data.candidates[0].content.parts[0].text;
-                    chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+                    const reply = data.choices[0].message.content;
+                    chatHistory.push({ role: 'assistant', content: reply });
                     removeTyping();
                     addMsg(reply, 'bot');
                 } else {
-                    throw new Error('Gemini API error');
+                    throw new Error('Groq API error');
                 }
             } catch (e) {
-                console.error('Gemini error:', e);
+                console.error('API error:', e);
                 removeTyping();
                 addMsg(localReply(text), 'bot');
             }
