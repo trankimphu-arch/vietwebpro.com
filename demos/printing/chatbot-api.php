@@ -16,13 +16,13 @@ if (!$input || !isset($input['messages'])) {
     die('{"error":"bad request"}');
 }
 
-$sys = array('role' => 'system', 'content' => 'Ban la PrintBot tro ly AI cua PrintPlus in an Bien Hoa Dong Nai. Dia chi 123 Nguyen Ai Quoc. Hotline 0909123456. Gia namecard 200 tam 500K, to roi A4 1500d, brochure 3000d, catalogue 25K, banner 80K/m2. Tra loi tieng Viet ngan gon.');
+$sys = array('role' => 'user', 'content' => 'Ban la PrintBot tro ly AI cua PrintPlus in an Bien Hoa Dong Nai. Dia chi 123 Nguyen Ai Quoc. Hotline 0909123456. Gia namecard 200 tam 500K, to roi A4 1500d, brochure 3000d, catalogue 25K, banner 80K/m2. Tra loi tieng Viet ngan gon.');
 $msgs = array_merge(array($sys), $input['messages']);
 
 $data = json_encode(array(
-    'model' => 'google/gemma-3-27b-it:free',
+    'model' => 'stepfun/step-3.5-flash:free',
     'messages' => $msgs,
-    'max_tokens' => 200
+    'max_tokens' => 500
 ));
 
 $ch = curl_init();
@@ -35,7 +35,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     'Authorization: Bearer YOUR_OPENROUTER_KEY_HERE'
 ));
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+curl_setopt($ch, CURLOPT_TIMEOUT, 300);
 
 $result = curl_exec($ch);
 if (curl_errno($ch)) {
