@@ -517,9 +517,13 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (data.choices && data.choices[0]) {
-                        removeTyping();
-                        addMsg(data.choices[0].message.content, 'bot');
-                        return;
+                        const msg = data.choices[0].message;
+                        const reply = msg.content || msg.reasoning || '';
+                        if (reply) {
+                            removeTyping();
+                            addMsg(reply, 'bot');
+                            return;
+                        }
                     }
                 }
                 throw new Error('API error');
