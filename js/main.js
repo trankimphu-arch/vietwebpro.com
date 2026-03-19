@@ -126,21 +126,44 @@ function animateCounter(el, start, end, duration, suffix) {
 }
 
 // ----------------------------------------
-// Form submission (prevent default)
+// Form submission (Web3Forms API)
 // ----------------------------------------
 document.addEventListener('submit', (e) => {
     if (e.target.classList.contains('contact-form-el')) {
         e.preventDefault();
-        const btn = e.target.querySelector('button[type="submit"]');
-        if (btn) {
-            const originalText = btn.textContent;
-            btn.textContent = '✓ Đã gửi thành công!';
-            btn.style.background = 'var(--gradient-accent)';
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '';
-                e.target.reset();
-            }, 3000);
-        }
+        const form = e.target;
+        const btn = form.querySelector('button[type="submit"]');
+        if (!btn) return;
+
+        const originalText = btn.textContent;
+        btn.textContent = '⏳ Đang gửi...';
+        btn.disabled = true;
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    btn.textContent = '✓ Đã gửi thành công!';
+                    btn.style.background = 'linear-gradient(135deg, #00b894, #00cec9)';
+                    form.reset();
+                } else {
+                    btn.textContent = '✗ Gửi thất bại, thử lại!';
+                    btn.style.background = 'linear-gradient(135deg, #e17055, #d63031)';
+                }
+            })
+            .catch(() => {
+                btn.textContent = '✗ Lỗi kết nối, thử lại!';
+                btn.style.background = 'linear-gradient(135deg, #e17055, #d63031)';
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            });
     }
 });
