@@ -1067,11 +1067,12 @@
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="email@example.com" required>
+            <input type="email" id="email" name="email" placeholder="email@example.com">
           </div>
           <div class="form-group">
-            <label for="phone">Số điện thoại</label>
-            <input type="tel" id="phone" name="phone" placeholder="0355 025 126">
+            <label for="phone">Số điện thoại *</label>
+            <input type="tel" id="phone" name="phone" placeholder="0355 025 126" pattern="[0-9]{10,11}"
+              title="Nhập 10-11 số" required>
           </div>
           <div class="form-group">
             <label for="package">Gói dịch vụ quan tâm</label>
