@@ -389,7 +389,7 @@
         </div>
         <p style="font-size:.78rem;color:#7088aa">Đây là lý do tại sao không thể dự báo thời tiết chính xác quá 2 tuần.
         </p>
-        <button onclick="document.getElementById('explOverlay').style.display='none'">▶ Bắt Đầu Quan Sát</button>
+        <button id="btnStartObserve">▶ Bắt Đầu Quan Sát</button>
     </div>
 
     <div class="controls">
@@ -483,6 +483,9 @@
         document.getElementById('btnReset').addEventListener('click', () => { initTrails(); totalSteps = 0; });
         document.getElementById('btnExplain').addEventListener('click', () => {
             document.getElementById('explOverlay').style.display = 'block';
+        });
+        document.getElementById('btnStartObserve').addEventListener('click', () => {
+            document.getElementById('explOverlay').style.display = 'none';
         });
 
         function toggleBtn(id, get, set) { const el = document.getElementById(id); el.addEventListener('click', () => { set(!get()); el.classList.toggle('on', get()); }) }
