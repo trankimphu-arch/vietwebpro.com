@@ -206,6 +206,135 @@
                 display: none
             }
         }
+
+        .divergence-bar {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            z-index: 20;
+            background: rgba(6, 6, 18, .85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 255, 136, .12);
+            border-radius: 12px;
+            padding: 14px 18px;
+            width: 200px;
+            font-size: .75rem;
+            color: #8090a0;
+        }
+
+        .divergence-bar h4 {
+            color: #00ff88;
+            font-size: .8rem;
+            margin-bottom: 8px;
+        }
+
+        .div-meter {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 6px 0;
+        }
+
+        .div-meter-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width .3s, background .3s;
+        }
+
+        .div-phase {
+            text-align: center;
+            font-weight: 700;
+            font-size: .85rem;
+            padding: 4px 0;
+            border-radius: 6px;
+            margin-top: 6px;
+        }
+
+        .explanation-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 25;
+            background: rgba(6, 6, 18, .92);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 255, 136, .2);
+            border-radius: 20px;
+            padding: 30px 36px;
+            max-width: 480px;
+            text-align: center;
+            animation: fadeIn .5s ease;
+        }
+
+        .explanation-overlay h2 {
+            font-size: 1.4rem;
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .explanation-overlay p {
+            font-size: .88rem;
+            color: #a0b0c0;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .explanation-overlay .key-point {
+            background: rgba(0, 255, 136, .06);
+            border-left: 3px solid #00ff88;
+            padding: 10px 14px;
+            border-radius: 0 8px 8px 0;
+            text-align: left;
+            font-size: .82rem;
+            color: #90ccaa;
+            margin: 14px 0;
+        }
+
+        .explanation-overlay button {
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            border: none;
+            color: #060612;
+            font-family: inherit;
+            font-size: .9rem;
+            font-weight: 700;
+            padding: 10px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform .2s;
+        }
+
+        .explanation-overlay button:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @media(max-width:600px) {
+            .divergence-bar {
+                display: none;
+            }
+
+            .explanation-overlay {
+                max-width: 90vw;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -236,6 +365,33 @@
         </div>
     </div>
 
+    <div class="divergence-bar" id="divBar">
+        <h4>📏 Độ Phân Kỳ</h4>
+        <div style="display:flex;justify-content:space-between;font-size:.7rem"><span>Khoảng cách giữa các
+                hạt:</span><span id="divDist" style="color:#00d4ff;font-family:'JetBrains Mono',monospace">0.000</span>
+        </div>
+        <div class="div-meter">
+            <div class="div-meter-fill" id="divFill" style="width:0%;background:#00ff88"></div>
+        </div>
+        <div class="div-phase" id="divPhase" style="background:rgba(0,255,136,.1);color:#00ff88">🟢 Gần nhau</div>
+        <div style="font-size:.65rem;color:#607080;margin-top:6px;text-align:center" id="divNote">5 hạt khởi đầu chỉ
+            cách nhau 0.001</div>
+    </div>
+
+    <div class="explanation-overlay" id="explOverlay">
+        <h2>🦋 Hiệu Ứng Cánh Bướm là gì?</h2>
+        <p>Năm 1963, nhà khí tượng <strong>Edward Lorenz</strong> phát hiện điều kỳ lạ: khi ông nhập lại dữ liệu thời
+            tiết chỉ <strong>làm tròn từ 0.506127 thành 0.506</strong>, kết quả dự báo thay đổi <strong>hoàn
+                toàn</strong>!</p>
+        <div class="key-point">
+            💡 <strong>Bạn sắp thấy:</strong> 5 hạt bắt đầu gần như cùng một chỗ (chỉ khác 0.001). Ban đầu chúng chạy
+            cùng nhau — nhưng rồi sẽ <strong>tách ra hoàn toàn</strong>.
+        </div>
+        <p style="font-size:.78rem;color:#7088aa">Đây là lý do tại sao không thể dự báo thời tiết chính xác quá 2 tuần.
+        </p>
+        <button onclick="document.getElementById('explOverlay').style.display='none'">▶ Bắt Đầu Quan Sát</button>
+    </div>
+
     <div class="controls">
         <label>σ <input type="range" id="rSigma" min="1" max="30" step="0.5" value="10"></label>
         <label>ρ <input type="range" id="rRho" min="1" max="60" step="0.5" value="28"></label>
@@ -244,6 +400,7 @@
         <button class="ctrl-btn" id="btnReset">↺ Reset</button>
         <button class="ctrl-btn on" id="btnMulti">Multi hạt</button>
         <button class="ctrl-btn on" id="btnGlow">✧ Phát sáng</button>
+        <button class="ctrl-btn" id="btnExplain">❓ Giải thích</button>
     </div>
 
     <script>
@@ -323,7 +480,10 @@
         document.getElementById('rRho').oninput = e => { rho = +e.target.value; document.getElementById('sRho').textContent = rho; };
         document.getElementById('rBeta').oninput = e => { beta = +e.target.value; document.getElementById('sBeta').textContent = beta.toFixed(3); };
         document.getElementById('rSpeed').oninput = e => { speed = +e.target.value; };
-        document.getElementById('btnReset').addEventListener('click', () => { initTrails(); });
+        document.getElementById('btnReset').addEventListener('click', () => { initTrails(); totalSteps = 0; });
+        document.getElementById('btnExplain').addEventListener('click', () => {
+            document.getElementById('explOverlay').style.display = 'block';
+        });
 
         function toggleBtn(id, get, set) { const el = document.getElementById(id); el.addEventListener('click', () => { set(!get()); el.classList.toggle('on', get()); }) }
         toggleBtn('btnMulti', () => showMulti, v => {
@@ -379,6 +539,7 @@
         // FPS
         let fpsF = 0, fpsL = performance.now(), fpsD = 60;
         let lastTime = 0;
+        let totalSteps = 0;
 
         function render(time) {
             requestAnimationFrame(render);
@@ -458,6 +619,76 @@
                     ctx.shadowBlur = 0;
                 }
             }
+
+            // ── Divergence measurement ──
+            if (trails.length >= 2) {
+                // Calculate max distance between any two particles
+                let maxDist = 0;
+                for (let i = 0; i < trails.length; i++) {
+                    for (let j = i + 1; j < trails.length; j++) {
+                        const dx = trails[i].x - trails[j].x;
+                        const dy = trails[i].y - trails[j].y;
+                        const dz = trails[i].z - trails[j].z;
+                        const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                        if (d > maxDist) maxDist = d;
+                    }
+                }
+
+                // Update divergence display
+                const distEl = document.getElementById('divDist');
+                const fillEl = document.getElementById('divFill');
+                const phaseEl = document.getElementById('divPhase');
+                const noteEl = document.getElementById('divNote');
+
+                distEl.textContent = maxDist.toFixed(3);
+                const pct = Math.min(100, (maxDist / 50) * 100);
+                fillEl.style.width = pct + '%';
+
+                if (maxDist < 1) {
+                    fillEl.style.background = '#00ff88';
+                    phaseEl.style.background = 'rgba(0,255,136,.1)';
+                    phaseEl.style.color = '#00ff88';
+                    phaseEl.textContent = '🟢 Gần nhau — chưa phân kỳ';
+                    noteEl.textContent = 'Các hạt vẫn chạy cùng nhau...';
+                } else if (maxDist < 10) {
+                    fillEl.style.background = '#ffd700';
+                    phaseEl.style.background = 'rgba(255,215,0,.1)';
+                    phaseEl.style.color = '#ffd700';
+                    phaseEl.textContent = '🟡 Bắt đầu tách ra!';
+                    noteEl.textContent = 'Chú ý: các hạt đang rẽ lối khác nhau';
+                } else {
+                    fillEl.style.background = '#ff4444';
+                    phaseEl.style.background = 'rgba(255,68,68,.1)';
+                    phaseEl.style.color = '#ff4444';
+                    phaseEl.textContent = '🔴 HOÀN TOÀN KHÁC!';
+                    noteEl.textContent = 'Chỉ vì chênh 0.001 ban đầu → hoàn toàn khác biệt';
+                }
+
+                // Draw connecting lines between particles when close
+                if (maxDist < 15 && trails.length > 1) {
+                    for (let i = 0; i < trails.length; i++) {
+                        for (let j = i + 1; j < trails.length; j++) {
+                            const pi = trails[i].points;
+                            const pj = trails[j].points;
+                            if (pi.length > 0 && pj.length > 0) {
+                                const li = pi[pi.length - 1];
+                                const lj = pj[pj.length - 1];
+                                const alpha = Math.max(0, 0.3 * (1 - maxDist / 15));
+                                ctx.beginPath();
+                                ctx.moveTo(li[0], li[1]);
+                                ctx.lineTo(lj[0], lj[1]);
+                                ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+                                ctx.lineWidth = 0.5;
+                                ctx.setLineDash([3, 3]);
+                                ctx.stroke();
+                                ctx.setLineDash([]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            totalSteps++;
 
             // Update points count
             document.getElementById('sPoints').textContent = trails.reduce((s, t) => s + t.points.length, 0);
