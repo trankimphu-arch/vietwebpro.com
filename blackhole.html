@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hố Đen Vũ Trụ – Mô phỏng Gravitational Lensing</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            background: #000;
+            color: #e8e8f0;
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            height: 100vh
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh
+        }
+
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, .92) 60%, transparent);
+            z-index: 20;
+            pointer-events: none
+        }
+
+        .topbar>* {
+            pointer-events: auto
+        }
+
+        .topbar h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ff6b35, #ffd700, #ff4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        .info-panel {
+            position: fixed;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background: rgba(0, 0, 0, .75);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 107, 53, .15);
+            border-radius: 16px;
+            padding: 20px;
+            width: 230px;
+            font-size: .78rem;
+            color: #9090a0;
+            line-height: 1.7
+        }
+
+        .info-panel h3 {
+            font-size: .88rem;
+            color: #ffd700;
+            margin-bottom: 10px
+        }
+
+        .info-panel .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255, 200, 0, .08)
+        }
+
+        .info-panel .stat-val {
+            color: #ff6b35;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700
+        }
+
+        .info-panel .note {
+            margin-top: 14px;
+            padding: 10px;
+            background: rgba(255, 107, 53, .06);
+            border-radius: 8px;
+            border-left: 3px solid rgba(255, 107, 53, .3);
+            font-size: .72rem;
+            color: #aa9070
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            background: rgba(0, 0, 0, .8);
+            backdrop-filter: blur(20px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 107, 53, .15);
+            z-index: 20;
+            flex-wrap: wrap;
+            justify-content: center
+        }
+
+        .controls label {
+            font-size: .75rem;
+            color: #8888aa;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap
+        }
+
+        .controls input[type=range] {
+            -webkit-appearance: none;
+            width: 70px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #ff4500, #ffd700);
+            outline: none
+        }
+
+        .controls input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 6px rgba(255, 107, 53, .6);
+            cursor: pointer
+        }
+
+        .ctrl-btn {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 107, 53, .2);
+            color: #b0a090;
+            font-family: inherit;
+            font-size: .72rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all .25s
+        }
+
+        .ctrl-btn:hover,
+        .ctrl-btn.on {
+            background: linear-gradient(135deg, rgba(255, 69, 0, .2), rgba(255, 215, 0, .15));
+            border-color: rgba(255, 215, 0, .5);
+            color: #fff
+        }
+
+        .hint {
+            position: fixed;
+            top: 58px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: .72rem;
+            color: rgba(150, 150, 170, .4);
+            z-index: 20;
+            text-align: center;
+            pointer-events: none
+        }
+
+        .fps {
+            position: fixed;
+            top: 16px;
+            right: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            color: rgba(255, 107, 53, .3);
+            z-index: 20;
+            pointer-events: none
+        }
+
+        @media(max-width:860px) {
+            .info-panel {
+                display: none
+            }
+        }
+
+        @media(max-width:600px) {
+            .topbar h1 {
+                font-size: 1rem
+            }
+
+            .controls {
+                padding: 10px 16px;
+                gap: 8px
+            }
+
+            .controls input[type=range] {
+                width: 50px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+
+    <div class="topbar">
+        <h1>🕳️ HỐ ĐEN VŨ TRỤ</h1>
+    </div>
+    <p class="hint">Kéo chuột để di chuyển hố đen &bull; Cuộn để thay đổi khối lượng</p>
+    <div class="fps" id="fps">60 FPS</div>
+
+    <div class="info-panel">
+        <h3>🌌 Vật lý Hố Đen</h3>
+        <div class="stat"><span>Khối lượng</span><span class="stat-val" id="sMass">10 M☉</span></div>
+        <div class="stat"><span>Bán kính Schwarzschild</span><span class="stat-val" id="sRs">30 km</span></div>
+        <div class="stat"><span>Photon Sphere</span><span class="stat-val" id="sPs">45 km</span></div>
+        <div class="stat"><span>Nhiệt độ Hawking</span><span class="stat-val" id="sTemp">6.2 nK</span></div>
+        <div class="stat"><span>Sao bị hút</span><span class="stat-val" id="sStars">2000</span></div>
+        <div class="note">
+            <strong>Gravitational Lensing:</strong><br>
+            Ánh sáng bị bẻ cong khi đi gần hố đen theo Thuyết Tương Đối Rộng của Einstein (1915).<br><br>
+            <strong>Đĩa bồi tụ:</strong> Vật chất xoáy quanh hố đen ở tốc độ gần ánh sáng, bị nung nóng hàng triệu độ.
+        </div>
+    </div>
+
+    <div class="controls">
+        <label>Khối lượng <input type="range" id="rMass" min="1" max="50" step="0.5" value="10"></label>
+        <label>Sao nền <input type="range" id="rStars" min="500" max="5000" step="100" value="2000"></label>
+        <label>Tốc độ xoay <input type="range" id="rSpin" min="0" max="3" step="0.1" value="1"></label>
+        <button class="ctrl-btn on" id="toggleDisk">Đĩa bồi tụ</button>
+        <button class="ctrl-btn on" id="toggleLensing">Bẻ cong ánh sáng</button>
+        <button class="ctrl-btn on" id="toggleJets">Jet phản lực</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('c');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth * devicePixelRatio;
+            canvas.height = window.innerHeight * devicePixelRatio;
+            ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', () => { resize(); generateStars(); });
+
+        // State
+        let W, H, cx, cy;
+        let bhX, bhY; // black hole position
+        let mass = 10;
+        let numStars = 2000;
+        let spinSpeed = 1;
+        let showDisk = true, showLensing = true, showJets = true;
+        let dragging = false, lastMX = 0, lastMY = 0;
+
+        function updateDims() {
+            W = window.innerWidth; H = window.innerHeight;
+            cx = W / 2; cy = H / 2;
+            if (bhX === undefined) { bhX = cx; bhY = cy; }
+        }
+        updateDims();
+
+        // Stars
+        let stars = [];
+        function generateStars() {
+            updateDims();
+            stars = [];
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    r: 0.3 + Math.random() * 1.8,
+                    brightness: 0.3 + Math.random() * 0.7,
+                    color: Math.random() > 0.7 ? `hsl(${200 + Math.random() * 60},60%,80%)` :
+                        Math.random() > 0.5 ? `hsl(${30 + Math.random() * 20},80%,85%)` : '#fff',
+                    twinkleSpeed: 1 + Math.random() * 3,
+                    twinklePhase: Math.random() * Math.PI * 2,
+                });
+            }
+        }
+        generateStars();
+
+        // Accretion disk particles
+        const diskParticles = [];
+        const NUM_DISK = 600;
+        function generateDisk() {
+            diskParticles.length = 0;
+            for (let i = 0; i < NUM_DISK; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 60 + Math.random() * 180;
+                diskParticles.push({
+                    angle, dist,
+                    speed: (0.3 + Math.random() * 0.7) / Math.sqrt(dist / 80),
+                    size: 0.8 + Math.random() * 2.5,
+                    hue: Math.random() > 0.3 ? 30 + Math.random() * 30 : 200 + Math.random() * 40,
+                    brightness: 0.5 + Math.random() * 0.5,
+                    zTilt: (Math.random() - 0.5) * 0.3,
+                });
+            }
+        }
+        generateDisk();
+
+        // Jet particles
+        const jetParticles = [];
+        function spawnJetParticle(dir) {
+            jetParticles.push({
+                x: bhX + (Math.random() - 0.5) * 6,
+                y: bhY,
+                vx: (Math.random() - 0.5) * 1.5,
+                vy: dir * (4 + Math.random() * 8),
+                life: 1,
+                decay: 0.005 + Math.random() * 0.01,
+                size: 1 + Math.random() * 3,
+                hue: 200 + Math.random() * 40,
+            });
+        }
+
+        // Input
+        canvas.addEventListener('mousedown', e => { dragging = true; lastMX = e.clientX; lastMY = e.clientY; });
+        window.addEventListener('mouseup', () => dragging = false);
+        window.addEventListener('mousemove', e => {
+            if (!dragging) return;
+            bhX += e.clientX - lastMX;
+            bhY += e.clientY - lastMY;
+            lastMX = e.clientX; lastMY = e.clientY;
+        });
+        canvas.addEventListener('wheel', e => {
+            e.preventDefault();
+            mass = Math.max(1, Math.min(50, mass - e.deltaY * 0.02));
+            document.getElementById('rMass').value = mass;
+            updateInfo();
+        }, { passive: false });
+
+        canvas.addEventListener('touchstart', e => {
+            if (e.touches.length === 1) { dragging = true; lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY; }
+        });
+        window.addEventListener('touchend', () => dragging = false);
+        window.addEventListener('touchmove', e => {
+            if (!dragging || e.touches.length !== 1) return;
+            bhX += e.touches[0].clientX - lastMX;
+            bhY += e.touches[0].clientY - lastMY;
+            lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+        });
+
+        // Controls
+        document.getElementById('rMass').oninput = e => { mass = +e.target.value; updateInfo(); };
+        document.getElementById('rStars').oninput = e => { numStars = +e.target.value; generateStars(); updateInfo(); };
+        document.getElementById('rSpin').oninput = e => { spinSpeed = +e.target.value; };
+
+        function toggleBtn(id, get, set) { const el = document.getElementById(id); el.addEventListener('click', () => { set(!get()); el.classList.toggle('on', get()); }) }
+        toggleBtn('toggleDisk', () => showDisk, v => showDisk = v);
+        toggleBtn('toggleLensing', () => showLensing, v => showLensing = v);
+        toggleBtn('toggleJets', () => showJets, v => showJets = v);
+
+        function updateInfo() {
+            const rs = mass * 3; // Schwarzschild radius in km (simplified)
+            document.getElementById('sMass').textContent = mass.toFixed(1) + ' M☉';
+            document.getElementById('sRs').textContent = (rs).toFixed(0) + ' km';
+            document.getElementById('sPs').textContent = (rs * 1.5).toFixed(0) + ' km';
+            document.getElementById('sTemp').textContent = (6.17 / mass).toFixed(1) + ' nK';
+            document.getElementById('sStars').textContent = numStars;
+        }
+        updateInfo();
+
+        // FPS
+        let fpsF = 0, fpsL = performance.now(), fpsD = 60;
+
+        // ═══════════════════════════════════
+        //  RENDER
+        // ═══════════════════════════════════
+        let lastTime = 0;
+
+        function render(time) {
+            requestAnimationFrame(render);
+            const dt = Math.min((time - lastTime) / 1000, 0.1);
+            lastTime = time;
+
+            fpsF++;
+            if (time - fpsL > 500) { fpsD = Math.round(fpsF / ((time - fpsL) / 1000)); fpsF = 0; fpsL = time; document.getElementById('fps').textContent = fpsD + ' FPS'; }
+
+            updateDims();
+            const Rs = mass * 4; // visual Schwarzschild radius
+            const lensRadius = Rs * 6;
+
+            // Clear
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, W, H);
+
+            // ── Background stars with gravitational lensing ──
+            for (const s of stars) {
+                let sx = s.x, sy = s.y;
+                let finalBrightness = s.brightness;
+                let finalR = s.r;
+
+                if (showLensing) {
+                    const dx = sx - bhX, dy = sy - bhY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < Rs * 1.2) {
+                        // Star behind event horizon — invisible
+                        continue;
+                    }
+
+                    if (dist < lensRadius) {
+                        // Gravitational lensing: bend star position away from center
+                        const strength = (Rs * Rs * 3) / (dist * dist);
+                        const angle = Math.atan2(dy, dx);
+                        sx = bhX + Math.cos(angle) * (dist + strength * Rs);
+                        sy = bhY + Math.sin(angle) * (dist + strength * Rs);
+
+                        // Einstein ring amplification
+                        if (dist < Rs * 3) {
+                            finalBrightness = Math.min(2, s.brightness * (1 + (Rs * 2) / dist));
+                            finalR = Math.min(4, s.r * (1 + Rs / dist));
+                        }
+                    }
+                }
+
+                // Twinkle
+                const twinkle = 0.7 + 0.3 * Math.sin(time * 0.001 * s.twinkleSpeed + s.twinklePhase);
+                const alpha = finalBrightness * twinkle;
+
+                ctx.beginPath();
+                ctx.arc(sx, sy, finalR, 0, Math.PI * 2);
+                ctx.fillStyle = s.color;
+                ctx.globalAlpha = alpha;
+                ctx.fill();
+
+                // Star glow for bright ones
+                if (finalR > 1.5) {
+                    ctx.beginPath();
+                    ctx.arc(sx, sy, finalR * 3, 0, Math.PI * 2);
+                    ctx.fillStyle = s.color;
+                    ctx.globalAlpha = alpha * 0.1;
+                    ctx.fill();
+                }
+            }
+            ctx.globalAlpha = 1;
+
+            // ── Einstein ring ──
+            if (showLensing) {
+                const ringGrad = ctx.createRadialGradient(bhX, bhY, Rs * 2, bhX, bhY, Rs * 3.5);
+                ringGrad.addColorStop(0, 'transparent');
+                ringGrad.addColorStop(0.4, 'rgba(255,200,100,0.04)');
+                ringGrad.addColorStop(0.6, 'rgba(255,180,80,0.08)');
+                ringGrad.addColorStop(0.8, 'rgba(255,200,100,0.03)');
+                ringGrad.addColorStop(1, 'transparent');
+                ctx.fillStyle = ringGrad;
+                ctx.beginPath();
+                ctx.arc(bhX, bhY, Rs * 3.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // ── Accretion disk (behind) ──
+            if (showDisk) {
+                // Draw back half first
+                drawDiskHalf(time, dt, Rs, 'back');
+            }
+
+            // ── Black hole shadow ──
+            // Event horizon
+            const bhGrad = ctx.createRadialGradient(bhX, bhY, Rs * 0.5, bhX, bhY, Rs * 2.5);
+            bhGrad.addColorStop(0, '#000');
+            bhGrad.addColorStop(0.5, 'rgba(0,0,0,0.98)');
+            bhGrad.addColorStop(0.7, 'rgba(0,0,0,0.9)');
+            bhGrad.addColorStop(0.85, 'rgba(10,5,0,0.5)');
+            bhGrad.addColorStop(1, 'transparent');
+            ctx.fillStyle = bhGrad;
+            ctx.beginPath();
+            ctx.arc(bhX, bhY, Rs * 2.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Photon sphere ring
+            ctx.beginPath();
+            ctx.arc(bhX, bhY, Rs * 1.5, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(255,150,50,0.08)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // ── Accretion disk (front) ──
+            if (showDisk) {
+                drawDiskHalf(time, dt, Rs, 'front');
+            }
+
+            // ── Relativistic Jets ──
+            if (showJets) {
+                // Spawn jet particles
+                if (Math.random() < 0.4) spawnJetParticle(-1); // up
+                if (Math.random() < 0.4) spawnJetParticle(1);  // down
+
+                for (let i = jetParticles.length - 1; i >= 0; i--) {
+                    const p = jetParticles[i];
+                    p.x += p.vx * dt * 60;
+                    p.y += p.vy * dt * 60;
+                    p.life -= p.decay;
+                    if (p.life <= 0) { jetParticles.splice(i, 1); continue; }
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${p.hue},80%,70%,${p.life * 0.5})`;
+                    ctx.fill();
+                }
+
+                // Jet beam glow
+                for (const dir of [-1, 1]) {
+                    const jetGrad = ctx.createLinearGradient(bhX, bhY, bhX, bhY + dir * 300);
+                    jetGrad.addColorStop(0, 'rgba(100,180,255,0.15)');
+                    jetGrad.addColorStop(0.3, 'rgba(100,180,255,0.05)');
+                    jetGrad.addColorStop(1, 'transparent');
+                    ctx.fillStyle = jetGrad;
+                    ctx.beginPath();
+                    ctx.moveTo(bhX - 4, bhY);
+                    ctx.lineTo(bhX + 4, bhY);
+                    ctx.lineTo(bhX + 30, bhY + dir * 300);
+                    ctx.lineTo(bhX - 30, bhY + dir * 300);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+            }
+
+            // ── Gravitational lensing distortion ring ──
+            if (showLensing) {
+                ctx.beginPath();
+                ctx.arc(bhX, bhY, Rs * 2.2, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255,200,100,0.06)';
+                ctx.lineWidth = Rs * 0.3;
+                ctx.stroke();
+            }
+        }
+
+        function drawDiskHalf(time, dt, Rs, half) {
+            const tilt = 0.3; // disk tilt angle
+            for (const p of diskParticles) {
+                p.angle += p.speed * spinSpeed * dt;
+
+                const cosA = Math.cos(p.angle);
+                const sinA = Math.sin(p.angle);
+
+                // 3D position: disk in XZ plane, tilted
+                const x3 = cosA * p.dist;
+                const z3 = sinA * p.dist * tilt; // tilt
+                const y3 = sinA * p.dist * Math.sqrt(1 - tilt * tilt) + p.zTilt * 20;
+
+                // Skip based on half
+                if (half === 'back' && y3 > 0) continue;
+                if (half === 'front' && y3 <= 0) continue;
+
+                const px = bhX + x3;
+                const py = bhY + z3;
+
+                // Doppler beaming: particles moving towards us are brighter
+                const dopplerFactor = 1 + 0.5 * cosA;
+
+                // Distance from center determines temperature/color
+                const tempFactor = 1 - (p.dist - 60) / 200;
+                let hue = p.hue;
+                let lightness = 50 + tempFactor * 30;
+                let alpha = p.brightness * dopplerFactor * 0.6;
+
+                // Inner disk is hotter (bluer)
+                if (p.dist < 100) {
+                    hue = 200 + Math.random() * 20;
+                    lightness = 70;
+                    alpha *= 1.5;
+                }
+
+                ctx.beginPath();
+                ctx.arc(px, py, p.size * dopplerFactor, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${hue},90%,${lightness}%,${Math.min(1, alpha)})`;
+                ctx.fill();
+            }
+        }
+
+        requestAnimationFrame(render);
+    </script>
+</body>
+
+</html>

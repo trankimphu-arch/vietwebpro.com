@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lý Thuyết Hỗn Loạn – Lorenz Attractor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            background: #060612;
+            color: #e0e0f0;
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            height: 100vh
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh
+        }
+
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            background: linear-gradient(180deg, rgba(6, 6, 18, .92) 60%, transparent);
+            z-index: 20;
+            pointer-events: none
+        }
+
+        .topbar>* {
+            pointer-events: auto
+        }
+
+        .topbar h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #00ff88, #00d4ff, #aa66ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        .info-panel {
+            position: fixed;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background: rgba(6, 6, 18, .8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 136, .12);
+            border-radius: 16px;
+            padding: 20px;
+            width: 230px;
+            font-size: .78rem;
+            color: #8090a0;
+            line-height: 1.7
+        }
+
+        .info-panel h3 {
+            font-size: .88rem;
+            color: #00ff88;
+            margin-bottom: 10px
+        }
+
+        .info-panel .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(0, 255, 136, .08)
+        }
+
+        .info-panel .stat-val {
+            color: #00d4ff;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700
+        }
+
+        .info-panel .equations {
+            margin-top: 14px;
+            padding: 10px;
+            background: rgba(0, 255, 136, .04);
+            border-radius: 8px;
+            border-left: 3px solid rgba(0, 255, 136, .3);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            color: #60c090;
+            line-height: 2
+        }
+
+        .info-panel .note {
+            margin-top: 12px;
+            font-size: .72rem;
+            color: #7080a0
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            background: rgba(6, 6, 18, .8);
+            backdrop-filter: blur(20px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 255, 136, .12);
+            z-index: 20;
+            flex-wrap: wrap;
+            justify-content: center
+        }
+
+        .controls label {
+            font-size: .75rem;
+            color: #7088aa;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap
+        }
+
+        .controls input[type=range] {
+            -webkit-appearance: none;
+            width: 70px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            outline: none
+        }
+
+        .controls input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 6px rgba(0, 255, 136, .6);
+            cursor: pointer
+        }
+
+        .ctrl-btn {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(0, 255, 136, .2);
+            color: #80a0a0;
+            font-family: inherit;
+            font-size: .72rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all .25s
+        }
+
+        .ctrl-btn:hover,
+        .ctrl-btn.on {
+            background: linear-gradient(135deg, rgba(0, 255, 136, .15), rgba(0, 212, 255, .1));
+            border-color: rgba(0, 255, 136, .5);
+            color: #fff
+        }
+
+        .hint {
+            position: fixed;
+            top: 58px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: .72rem;
+            color: rgba(150, 170, 150, .4);
+            z-index: 20;
+            text-align: center;
+            pointer-events: none
+        }
+
+        .fps {
+            position: fixed;
+            top: 16px;
+            right: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            color: rgba(0, 255, 136, .3);
+            z-index: 20;
+            pointer-events: none
+        }
+
+        @media(max-width:860px) {
+            .info-panel {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+
+    <div class="topbar">
+        <h1>🦋 LÝ THUYẾT HỖN LOẠN — Lorenz Attractor</h1>
+    </div>
+    <p class="hint">Kéo chuột để xoay &bull; Cuộn để zoom &bull; Thay đổi σ, ρ, β để thấy hỗn loạn</p>
+    <div class="fps" id="fps">60 FPS</div>
+
+    <div class="info-panel">
+        <h3>🦋 Hiệu ứng Cánh Bướm</h3>
+        <div class="stat"><span>σ (Sigma)</span><span class="stat-val" id="sSigma">10</span></div>
+        <div class="stat"><span>ρ (Rho)</span><span class="stat-val" id="sRho">28</span></div>
+        <div class="stat"><span>β (Beta)</span><span class="stat-val" id="sBeta">2.667</span></div>
+        <div class="stat"><span>Hạt theo dõi</span><span class="stat-val" id="sTrails">3</span></div>
+        <div class="stat"><span>Điểm/vệt</span><span class="stat-val" id="sPoints">0</span></div>
+        <div class="equations">
+            dx/dt = σ(y − x)<br>
+            dy/dt = x(ρ − z) − y<br>
+            dz/dt = xy − βz
+        </div>
+        <div class="note">
+            Edward Lorenz (1963) phát hiện: thay đổi cực nhỏ trong điều kiện ban đầu → kết quả hoàn toàn khác biệt. "Một
+            cánh bướm vỗ ở Brazil có thể gây bão ở Texas."
+        </div>
+    </div>
+
+    <div class="controls">
+        <label>σ <input type="range" id="rSigma" min="1" max="30" step="0.5" value="10"></label>
+        <label>ρ <input type="range" id="rRho" min="1" max="60" step="0.5" value="28"></label>
+        <label>β <input type="range" id="rBeta" min="0.5" max="8" step="0.1" value="2.667"></label>
+        <label>Tốc độ <input type="range" id="rSpeed" min="0.1" max="5" step="0.1" value="1"></label>
+        <button class="ctrl-btn" id="btnReset">↺ Reset</button>
+        <button class="ctrl-btn on" id="btnMulti">Multi hạt</button>
+        <button class="ctrl-btn on" id="btnGlow">✧ Phát sáng</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('c');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth * devicePixelRatio;
+            canvas.height = window.innerHeight * devicePixelRatio;
+            ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // ── Parameters ──
+        let sigma = 10, rho = 28, beta = 8 / 3;
+        let speed = 1;
+        let showMulti = true, showGlow = true;
+
+        // ── Trails: each has slightly different initial conditions ──
+        const TRAIL_COLORS = [
+            { h: 160, s: 100, l: 65 }, // green
+            { h: 200, s: 100, l: 65 }, // cyan
+            { h: 280, s: 80, l: 70 },  // purple
+            { h: 40, s: 100, l: 65 },  // gold
+            { h: 340, s: 90, l: 65 },  // pink
+        ];
+
+        let trails = [];
+        function initTrails() {
+            trails = [];
+            const n = showMulti ? 5 : 1;
+            for (let i = 0; i < n; i++) {
+                trails.push({
+                    x: 1 + i * 0.001,
+                    y: 1,
+                    z: 1,
+                    points: [],
+                    color: TRAIL_COLORS[i],
+                    maxPoints: 8000,
+                });
+            }
+        }
+        initTrails();
+
+        // ── 3D Rotation (mouse) ──
+        let rotX = -0.6, rotZ = 0;
+        let dragging = false, lastMX = 0, lastMY = 0;
+        let zoom = 7;
+
+        canvas.addEventListener('mousedown', e => { dragging = true; lastMX = e.clientX; lastMY = e.clientY; });
+        window.addEventListener('mouseup', () => dragging = false);
+        window.addEventListener('mousemove', e => {
+            if (!dragging) return;
+            rotZ += (e.clientX - lastMX) * 0.005;
+            rotX += (e.clientY - lastMY) * 0.005;
+            lastMX = e.clientX; lastMY = e.clientY;
+        });
+        canvas.addEventListener('wheel', e => {
+            e.preventDefault();
+            zoom = Math.max(2, Math.min(30, zoom + e.deltaY * -0.01));
+        }, { passive: false });
+
+        canvas.addEventListener('touchstart', e => {
+            if (e.touches.length === 1) { dragging = true; lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY; }
+        });
+        window.addEventListener('touchend', () => dragging = false);
+        window.addEventListener('touchmove', e => {
+            if (!dragging || e.touches.length !== 1) return;
+            rotZ += (e.touches[0].clientX - lastMX) * 0.005;
+            rotX += (e.touches[0].clientY - lastMY) * 0.005;
+            lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+        });
+
+        // ── Controls ──
+        document.getElementById('rSigma').oninput = e => { sigma = +e.target.value; document.getElementById('sSigma').textContent = sigma; };
+        document.getElementById('rRho').oninput = e => { rho = +e.target.value; document.getElementById('sRho').textContent = rho; };
+        document.getElementById('rBeta').oninput = e => { beta = +e.target.value; document.getElementById('sBeta').textContent = beta.toFixed(3); };
+        document.getElementById('rSpeed').oninput = e => { speed = +e.target.value; };
+        document.getElementById('btnReset').addEventListener('click', () => { initTrails(); });
+
+        function toggleBtn(id, get, set) { const el = document.getElementById(id); el.addEventListener('click', () => { set(!get()); el.classList.toggle('on', get()); }) }
+        toggleBtn('btnMulti', () => showMulti, v => {
+            showMulti = v; initTrails();
+            document.getElementById('sTrails').textContent = showMulti ? 5 : 1;
+        });
+        toggleBtn('btnGlow', () => showGlow, v => showGlow = v);
+
+        document.getElementById('sTrails').textContent = showMulti ? 5 : 1;
+
+        // ── 3D → 2D projection ──
+        function project(x, y, z) {
+            // Center the attractor
+            x -= 0; y -= 0; z -= 25;
+
+            // Rotate around Z
+            const cz = Math.cos(rotZ), sz = Math.sin(rotZ);
+            const rx = x * cz - y * sz;
+            const ry = x * sz + y * cz;
+
+            // Rotate around X
+            const cx = Math.cos(rotX), sx = Math.sin(rotX);
+            const ry2 = ry * cx - z * sx;
+            const rz2 = ry * sx + z * cx;
+
+            return [rx * zoom, ry2 * zoom, rz2];
+        }
+
+        // ── Lorenz step (RK4) ──
+        function lorenzStep(x, y, z, dt) {
+            function dx(x, y, z) { return sigma * (y - x); }
+            function dy(x, y, z) { return x * (rho - z) - y; }
+            function dz(x, y, z) { return x * y - beta * z; }
+
+            const k1x = dx(x, y, z), k1y = dy(x, y, z), k1z = dz(x, y, z);
+            const k2x = dx(x + dt / 2 * k1x, y + dt / 2 * k1y, z + dt / 2 * k1z);
+            const k2y = dy(x + dt / 2 * k1x, y + dt / 2 * k1y, z + dt / 2 * k1z);
+            const k2z = dz(x + dt / 2 * k1x, y + dt / 2 * k1y, z + dt / 2 * k1z);
+            const k3x = dx(x + dt / 2 * k2x, y + dt / 2 * k2y, z + dt / 2 * k2z);
+            const k3y = dy(x + dt / 2 * k2x, y + dt / 2 * k2y, z + dt / 2 * k2z);
+            const k3z = dz(x + dt / 2 * k2x, y + dt / 2 * k2y, z + dt / 2 * k2z);
+            const k4x = dx(x + dt * k3x, y + dt * k3y, z + dt * k3z);
+            const k4y = dy(x + dt * k3x, y + dt * k3y, z + dt * k3z);
+            const k4z = dz(x + dt * k3x, y + dt * k3y, z + dt * k3z);
+
+            return [
+                x + dt / 6 * (k1x + 2 * k2x + 2 * k3x + k4x),
+                y + dt / 6 * (k1y + 2 * k2y + 2 * k3y + k4y),
+                z + dt / 6 * (k1z + 2 * k2z + 2 * k3z + k4z),
+            ];
+        }
+
+        // FPS
+        let fpsF = 0, fpsL = performance.now(), fpsD = 60;
+        let lastTime = 0;
+
+        function render(time) {
+            requestAnimationFrame(render);
+            const dt = Math.min((time - lastTime) / 1000, 0.05);
+            lastTime = time;
+
+            fpsF++;
+            if (time - fpsL > 500) { fpsD = Math.round(fpsF / ((time - fpsL) / 1000)); fpsF = 0; fpsL = time; document.getElementById('fps').textContent = fpsD + ' FPS'; }
+
+            const W = window.innerWidth, H = window.innerHeight;
+            const cx = W / 2, cy = H / 2;
+
+            // Clear
+            ctx.fillStyle = 'rgba(6,6,18,0.15)';
+            ctx.fillRect(0, 0, W, H);
+
+            // Background (occasional full clear)
+            if (Math.floor(time / 3000) % 100 === 0) {
+                ctx.fillStyle = '#060612';
+                ctx.fillRect(0, 0, W, H);
+            }
+
+            // ── Integrate and draw ──
+            const stepsPerFrame = Math.max(1, Math.round(4 * speed));
+            const stepDt = 0.005 * speed;
+
+            for (const trail of trails) {
+                for (let s = 0; s < stepsPerFrame; s++) {
+                    const [nx, ny, nz] = lorenzStep(trail.x, trail.y, trail.z, stepDt);
+                    trail.x = nx; trail.y = ny; trail.z = nz;
+
+                    const [px, py, pz] = project(nx, ny, nz);
+                    trail.points.push([cx + px, cy + py, pz]);
+
+                    if (trail.points.length > trail.maxPoints) trail.points.shift();
+                }
+
+                // Draw trail
+                const pts = trail.points;
+                const c = trail.color;
+
+                if (pts.length < 2) continue;
+
+                // Draw as connected segments with depth-based opacity
+                for (let i = 1; i < pts.length; i++) {
+                    const age = i / pts.length;
+                    const depthAlpha = 0.4 + 0.6 * ((pts[i][2] + 30) / 60);
+                    const alpha = Math.max(0.02, Math.min(1, age * depthAlpha * 0.8));
+
+                    ctx.beginPath();
+                    ctx.moveTo(pts[i - 1][0], pts[i - 1][1]);
+                    ctx.lineTo(pts[i][0], pts[i][1]);
+                    ctx.strokeStyle = `hsla(${c.h},${c.s}%,${c.l}%,${alpha.toFixed(3)})`;
+                    ctx.lineWidth = 0.8 + age * 1.2;
+                    ctx.stroke();
+                }
+
+                // Glow at current position
+                if (showGlow && pts.length > 0) {
+                    const last = pts[pts.length - 1];
+                    const glow = ctx.createRadialGradient(last[0], last[1], 0, last[0], last[1], 20);
+                    glow.addColorStop(0, `hsla(${c.h},${c.s}%,${c.l}%,0.6)`);
+                    glow.addColorStop(0.5, `hsla(${c.h},${c.s}%,${c.l}%,0.15)`);
+                    glow.addColorStop(1, 'transparent');
+                    ctx.fillStyle = glow;
+                    ctx.beginPath();
+                    ctx.arc(last[0], last[1], 20, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Head dot
+                    ctx.beginPath();
+                    ctx.arc(last[0], last[1], 3, 0, Math.PI * 2);
+                    ctx.fillStyle = '#fff';
+                    ctx.shadowColor = `hsla(${c.h},100%,70%,0.8)`;
+                    ctx.shadowBlur = 12;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+
+            // Update points count
+            document.getElementById('sPoints').textContent = trails.reduce((s, t) => s + t.points.length, 0);
+        }
+
+        requestAnimationFrame(render);
+    </script>
+</body>
+
+</html>
