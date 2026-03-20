@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesseract 4D – Mô phỏng Siêu Lập Phương</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #060612;
+            color: #e0e0f0;
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* ─── Top bar ─── */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 28px;
+            background: linear-gradient(180deg, rgba(6, 6, 18, 0.92) 60%, transparent);
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .topbar>* {
+            pointer-events: auto;
+        }
+
+        .topbar h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #7b5ea7, #00d4ff, #ff6ec7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .shape-switcher {
+            display: flex;
+            gap: 6px;
+        }
+
+        .shape-switcher button {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(123, 94, 167, 0.25);
+            color: #b0a8cc;
+            font-family: inherit;
+            font-size: .75rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all .25s;
+        }
+
+        .shape-switcher button.active,
+        .shape-switcher button:hover {
+            background: linear-gradient(135deg, rgba(123, 94, 167, 0.3), rgba(0, 212, 255, 0.2));
+            border-color: rgba(0, 212, 255, 0.5);
+            color: #fff;
+        }
+
+        /* ─── Info panel (left) ─── */
+        .info-panel {
+            position: fixed;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background: rgba(12, 12, 30, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(123, 94, 167, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            width: 220px;
+            font-size: .78rem;
+            color: #9090b0;
+            line-height: 1.6;
+        }
+
+        .info-panel h3 {
+            font-size: .9rem;
+            color: #e0d8f0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-panel .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(123, 94, 167, 0.1);
+        }
+
+        .info-panel .stat-val {
+            color: #00d4ff;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .info-panel .math-note {
+            margin-top: 14px;
+            padding: 10px;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid rgba(0, 212, 255, 0.3);
+            font-size: .72rem;
+            color: #8888bb;
+        }
+
+        .info-panel .cell-legend {
+            margin-top: 12px;
+        }
+
+        .info-panel .cell-legend .cell-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 2px 0;
+            font-size: .72rem;
+        }
+
+        .info-panel .cell-swatch {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        /* ─── Controls (bottom) ─── */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            background: rgba(12, 12, 30, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(123, 94, 167, 0.2);
+            z-index: 20;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .controls label {
+            font-size: .75rem;
+            font-weight: 400;
+            color: #8888aa;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        .controls input[type=range] {
+            -webkit-appearance: none;
+            width: 70px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #7b5ea7, #00d4ff);
+            outline: none;
+        }
+
+        .controls input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 6px rgba(0, 212, 255, 0.6);
+            cursor: pointer;
+        }
+
+        .ctrl-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(123, 94, 167, 0.25);
+            color: #b0a8cc;
+            font-family: inherit;
+            font-size: .72rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all .25s;
+        }
+
+        .ctrl-btn:hover,
+        .ctrl-btn.on {
+            background: linear-gradient(135deg, rgba(123, 94, 167, 0.3), rgba(0, 212, 255, 0.2));
+            border-color: rgba(0, 212, 255, 0.5);
+            color: #fff;
+        }
+
+        /* ─── Hint ─── */
+        .hint {
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: .72rem;
+            color: rgba(150, 150, 190, 0.5);
+            z-index: 20;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        /* ─── FPS ─── */
+        .fps {
+            position: fixed;
+            top: 16px;
+            right: 28px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            color: rgba(0, 212, 255, 0.4);
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 860px) {
+            .info-panel {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .topbar h1 {
+                font-size: 1rem;
+            }
+
+            .shape-switcher button {
+                font-size: .65rem;
+                padding: 4px 10px;
+            }
+
+            .controls {
+                padding: 10px 16px;
+                gap: 8px;
+            }
+
+            .controls input[type=range] {
+                width: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="c"></canvas>
+
+    <div class="topbar">
+        <h1>✦ TESSERACT 4D</h1>
+        <div class="shape-switcher">
+            <button class="active" data-shape="tesseract">Tesseract (8-cell)</button>
+            <button data-shape="cell16">16-cell</button>
+            <button data-shape="cell24">24-cell</button>
+            <button data-shape="cell5">5-cell</button>
+        </div>
+    </div>
+
+    <p class="hint">Kéo chuột để xoay 3D &bull; Cuộn để zoom &bull; Thanh trượt điều chỉnh xoay 4D</p>
+    <div class="fps" id="fps">60 FPS</div>
+
+    <div class="info-panel" id="infoPanel">
+        <h3>📐 Thông tin hình học</h3>
+        <div class="stat"><span>Đỉnh (Vertices)</span><span class="stat-val" id="sV">16</span></div>
+        <div class="stat"><span>Cạnh (Edges)</span><span class="stat-val" id="sE">32</span></div>
+        <div class="stat"><span>Mặt (Faces)</span><span class="stat-val" id="sF">24</span></div>
+        <div class="stat"><span>Khối (Cells)</span><span class="stat-val" id="sC">8</span></div>
+        <div class="stat"><span>Chiều (Dim)</span><span class="stat-val">4</span></div>
+        <div class="math-note" id="mathNote">
+            <strong>Phép chiếu phối cảnh:</strong><br>
+            Từ 4D → 3D: chia tọa độ (x,y,z) cho khoảng cách w.<br>
+            Từ 3D → 2D: tương tự camera thật.<br><br>
+            Đây là toán học thực, không phải tưởng tượng!
+        </div>
+        <div class="cell-legend" id="cellLegend"></div>
+    </div>
+
+    <div class="controls">
+        <label>XW <input type="range" id="rXW" min="0" max="6.28" step="0.01" value="0"></label>
+        <label>YW <input type="range" id="rYW" min="0" max="6.28" step="0.01" value="0"></label>
+        <label>ZW <input type="range" id="rZW" min="0" max="6.28" step="0.01" value="0"></label>
+        <label>Tốc độ <input type="range" id="speed" min="0" max="3" step="0.05" value="0.6"></label>
+        <button class="ctrl-btn on" id="toggleAuto">⟳ Tự động</button>
+        <button class="ctrl-btn on" id="toggleShadow">◌ Bóng đổ</button>
+        <button class="ctrl-btn on" id="toggleCells">▣ Khối</button>
+        <button class="ctrl-btn on" id="toggleTrails">✧ Vệt sáng</button>
+        <button class="ctrl-btn" id="toggleStereo">◉ Stereo</button>
+    </div>
+
+    <script>
+        /* ═══════════════════════════════════════════════════════════════
+           TESSERACT 4D  — Enhanced Visualization
+           Accurate mathematical projection with rich visual effects
+           ═══════════════════════════════════════════════════════════════ */
+
+        const canvas = document.getElementById('c');
+        const ctx = canvas.getContext('2d');
+
+        // ── Resize ──
+        function resize() {
+            canvas.width = window.innerWidth * devicePixelRatio;
+            canvas.height = window.innerHeight * devicePixelRatio;
+            ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // ═══════════════════════════════════════════════
+        //  4D GEOMETRY DEFINITIONS
+        // ═══════════════════════════════════════════════
+
+        // ── Tesseract (8-cell / Hypercube) ──
+        function makeTesseract() {
+            const verts = [];
+            for (let i = 0; i < 16; i++) {
+                verts.push([
+                    (i & 1 ? 1 : -1),
+                    (i & 2 ? 1 : -1),
+                    (i & 4 ? 1 : -1),
+                    (i & 8 ? 1 : -1)
+                ]);
+            }
+            const edges = [];
+            for (let i = 0; i < 16; i++)
+                for (let j = i + 1; j < 16; j++) {
+                    const x = i ^ j;
+                    if (x && (x & (x - 1)) === 0) edges.push([i, j]);
+                }
+            // 8 cubic cells
+            const cells = [
+                // Fix w = -1: vertices where bit3=0 → indices 0..7
+                [0, 1, 2, 3, 4, 5, 6, 7],
+                // Fix w = +1: vertices where bit3=1 → indices 8..15
+                [8, 9, 10, 11, 12, 13, 14, 15],
+                // Fix x = -1: bit0=0 → 0,2,4,6,8,10,12,14
+                [0, 2, 4, 6, 8, 10, 12, 14],
+                // Fix x = +1: bit0=1
+                [1, 3, 5, 7, 9, 11, 13, 15],
+                // Fix y = -1: bit1=0
+                [0, 1, 4, 5, 8, 9, 12, 13],
+                // Fix y = +1: bit1=1
+                [2, 3, 6, 7, 10, 11, 14, 15],
+                // Fix z = -1: bit2=0
+                [0, 1, 2, 3, 8, 9, 10, 11],
+                // Fix z = +1: bit2=1
+                [4, 5, 6, 7, 12, 13, 14, 15],
+            ];
+            const faces = [];
+            for (let i = 0; i < 16; i++)
+                for (let b1 = 0; b1 < 4; b1++)
+                    for (let b2 = b1 + 1; b2 < 4; b2++)
+                        if ((i >> b1 & 1) === 0 && (i >> b2 & 1) === 0)
+                            faces.push([i, i | (1 << b1), i | (1 << b1) | (1 << b2), i | (1 << b2)]);
+            return { name: 'Tesseract (8-cell)', verts, edges, faces, cells, nV: 16, nE: 32, nF: 24, nC: 8 };
+        }
+
+        // ── 16-cell (Hexadecachoron) ──
+        function make16Cell() {
+            const verts = [
+                [1, 0, 0, 0], [-1, 0, 0, 0],
+                [0, 1, 0, 0], [0, -1, 0, 0],
+                [0, 0, 1, 0], [0, 0, -1, 0],
+                [0, 0, 0, 1], [0, 0, 0, -1],
+            ];
+            const edges = [];
+            for (let i = 0; i < 8; i++)
+                for (let j = i + 1; j < 8; j++) {
+                    // Connected if they share no axis (i.e. they're on different axes)
+                    const dotAbs = Math.abs(verts[i][0] * verts[j][0] + verts[i][1] * verts[j][1] + verts[i][2] * verts[j][2] + verts[i][3] * verts[j][3]);
+                    if (dotAbs < 0.01) edges.push([i, j]);
+                }
+            const faces = [];
+            // Each triangular face: 3 mutually orthogonal vertices
+            for (let i = 0; i < 8; i++)
+                for (let j = i + 1; j < 8; j++)
+                    for (let k = j + 1; k < 8; k++) {
+                        const d1 = Math.abs(verts[i][0] * verts[j][0] + verts[i][1] * verts[j][1] + verts[i][2] * verts[j][2] + verts[i][3] * verts[j][3]);
+                        const d2 = Math.abs(verts[i][0] * verts[k][0] + verts[i][1] * verts[k][1] + verts[i][2] * verts[k][2] + verts[i][3] * verts[k][3]);
+                        const d3 = Math.abs(verts[j][0] * verts[k][0] + verts[j][1] * verts[k][1] + verts[j][2] * verts[k][2] + verts[j][3] * verts[k][3]);
+                        if (d1 < 0.01 && d2 < 0.01 && d3 < 0.01) faces.push([i, j, k]);
+                    }
+            return { name: '16-cell', verts, edges, faces, cells: [], nV: 8, nE: 24, nF: 32, nC: 16 };
+        }
+
+        // ── 24-cell ──
+        function make24Cell() {
+            const verts = [];
+            // 8 vertices from 16-cell
+            const axes = [[1, 0, 0, 0], [-1, 0, 0, 0], [0, 1, 0, 0], [0, -1, 0, 0], [0, 0, 1, 0], [0, 0, -1, 0], [0, 0, 0, 1], [0, 0, 0, -1]];
+            for (const a of axes) verts.push([...a]);
+            // 16 vertices: all permutations of (±1,±1,0,0) / sqrt(2) — wait, actually ±1 each
+            // The 24-cell vertices: permutations of (±1,±1,0,0)
+            for (let i = 0; i < 4; i++) for (let j = i + 1; j < 4; j++) {
+                for (let si of [-1, 1]) for (let sj of [-1, 1]) {
+                    const v = [0, 0, 0, 0]; v[i] = si; v[j] = sj;
+                    verts.push(v);
+                }
+            }
+            const edges = [];
+            const edgeLenSq = 2; // edges connect at distance sqrt(2)
+            for (let i = 0; i < verts.length; i++) for (let j = i + 1; j < verts.length; j++) {
+                let d2 = 0;
+                for (let k = 0; k < 4; k++) d2 += (verts[i][k] - verts[j][k]) ** 2;
+                if (Math.abs(d2 - edgeLenSq) < 0.01) edges.push([i, j]);
+            }
+            return { name: '24-cell', verts, edges, faces: [], cells: [], nV: 24, nE: 96, nF: 96, nC: 24 };
+        }
+
+        // ── 5-cell (Pentachoron / 4D Simplex) ──
+        function make5Cell() {
+            // 5 vertices of a regular 4-simplex
+            const phi = (1 + Math.sqrt(5)) / 2;
+            const verts = [
+                [1, 1, 1, -1 / Math.sqrt(5)],
+                [1, -1, -1, -1 / Math.sqrt(5)],
+                [-1, 1, -1, -1 / Math.sqrt(5)],
+                [-1, -1, 1, -1 / Math.sqrt(5)],
+                [0, 0, 0, Math.sqrt(5) - 1 / Math.sqrt(5)],
+            ];
+            // Normalize to unit distance from origin
+            const s = 1 / Math.sqrt(verts[0][0] ** 2 + verts[0][1] ** 2 + verts[0][2] ** 2 + verts[0][3] ** 2);
+            for (const v of verts) { v[0] *= s; v[1] *= s; v[2] *= s; v[3] *= s; }
+            const edges = [];
+            for (let i = 0; i < 5; i++) for (let j = i + 1; j < 5; j++) edges.push([i, j]);
+            const faces = [];
+            for (let i = 0; i < 5; i++) for (let j = i + 1; j < 5; j++) for (let k = j + 1; k < 5; k++) faces.push([i, j, k]);
+            return { name: '5-cell (Simplex)', verts, edges, faces, cells: [], nV: 5, nE: 10, nF: 10, nC: 5 };
+        }
+
+        // ═══════════════════════════════════════════════
+        //  ROTATION FUNCTIONS (6 rotation planes in 4D)
+        // ═══════════════════════════════════════════════
+        function rot(v, plane, a) {
+            const c = Math.cos(a), s = Math.sin(a);
+            const r = [...v];
+            const [i, j] = plane;
+            r[i] = v[i] * c - v[j] * s;
+            r[j] = v[i] * s + v[j] * c;
+            return r;
+        }
+
+        // ═══════════════════════════════════════════════
+        //  PROJECTION PIPELINE
+        // ═══════════════════════════════════════════════
+        function project4to3(v, d = 3.5) {
+            const w = d / (d - v[3]);
+            return [v[0] * w, v[1] * w, v[2] * w, w];
+        }
+        function project3to2(v, fov = 5) {
+            const w = fov / (fov - v[2]);
+            return [v[0] * w, v[1] * w, w];
+        }
+
+        // ═══════════════════════════════════════════════
+        //  STATE
+        // ═══════════════════════════════════════════════
+        let currentShape = makeTesseract();
+        let angleXW = 0, angleYW = 0, angleZW = 0;
+        let autoRotate = true, showShadow = true, showCells = true, showTrails = true, stereoMode = false;
+        let speedMul = 0.6;
+        let dragAx = 0.35, dragAy = 0.25;
+        let dragging = false, lastMX = 0, lastMY = 0;
+        let zoom = 1;
+
+        // Trail history
+        let trailHistory = [];
+        const MAX_TRAIL = 18;
+
+        // Particle system
+        const particles = [];
+        const MAX_PARTICLES = 80;
+
+        // FPS
+        let fpsFrames = 0, fpsLast = performance.now(), fpsDisplay = 60;
+
+        // Cell colours
+        const CELL_COLORS = [
+            { r: 0, g: 212, b: 255 },  // cyan
+            { r: 123, g: 94, b: 167 },  // purple
+            { r: 255, g: 110, b: 199 },  // pink
+            { r: 80, g: 255, b: 120 },  // green
+            { r: 255, g: 200, b: 60 },   // gold
+            { r: 255, g: 100, b: 80 },   // red
+            { r: 100, g: 180, b: 255 },  // blue
+            { r: 200, g: 150, b: 255 },  // lavender
+        ];
+
+        // ═══════════════════════════════════════════════
+        //  INPUT
+        // ═══════════════════════════════════════════════
+        canvas.addEventListener('mousedown', e => { dragging = true; lastMX = e.clientX; lastMY = e.clientY; });
+        window.addEventListener('mouseup', () => dragging = false);
+        window.addEventListener('mousemove', e => {
+            if (!dragging) return;
+            dragAy += (e.clientX - lastMX) * 0.005;
+            dragAx += (e.clientY - lastMY) * 0.005;
+            lastMX = e.clientX; lastMY = e.clientY;
+        });
+        canvas.addEventListener('wheel', e => {
+            e.preventDefault();
+            zoom = Math.max(0.3, Math.min(3.5, zoom - e.deltaY * 0.001));
+        }, { passive: false });
+
+        canvas.addEventListener('touchstart', e => {
+            if (e.touches.length === 1) { dragging = true; lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY; }
+        });
+        window.addEventListener('touchend', () => dragging = false);
+        window.addEventListener('touchmove', e => {
+            if (!dragging || e.touches.length !== 1) return;
+            dragAy += (e.touches[0].clientX - lastMX) * 0.005;
+            dragAx += (e.touches[0].clientY - lastMY) * 0.005;
+            lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+        });
+
+        // Controls
+        document.getElementById('rXW').oninput = e => { if (!autoRotate) angleXW = +e.target.value; };
+        document.getElementById('rYW').oninput = e => { if (!autoRotate) angleYW = +e.target.value; };
+        document.getElementById('rZW').oninput = e => { if (!autoRotate) angleZW = +e.target.value; };
+        document.getElementById('speed').oninput = e => { speedMul = +e.target.value; };
+
+        function toggleBtn(id, getter, setter) {
+            const el = document.getElementById(id);
+            el.addEventListener('click', () => {
+                setter(!getter());
+                el.classList.toggle('on', getter());
+            });
+        }
+        toggleBtn('toggleAuto', () => autoRotate, v => autoRotate = v);
+        toggleBtn('toggleShadow', () => showShadow, v => showShadow = v);
+        toggleBtn('toggleCells', () => showCells, v => showCells = v);
+        toggleBtn('toggleTrails', () => showTrails, v => showTrails = v);
+        toggleBtn('toggleStereo', () => stereoMode, v => stereoMode = v);
+
+        // Shape switcher
+        document.querySelectorAll('.shape-switcher button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.shape-switcher .active').classList.remove('active');
+                btn.classList.add('active');
+                const s = btn.dataset.shape;
+                if (s === 'tesseract') currentShape = makeTesseract();
+                else if (s === 'cell16') currentShape = make16Cell();
+                else if (s === 'cell24') currentShape = make24Cell();
+                else if (s === 'cell5') currentShape = make5Cell();
+                trailHistory = [];
+                updateInfoPanel();
+            });
+        });
+
+        function updateInfoPanel() {
+            document.getElementById('sV').textContent = currentShape.nV;
+            document.getElementById('sE').textContent = currentShape.nE;
+            document.getElementById('sF').textContent = currentShape.nF;
+            document.getElementById('sC').textContent = currentShape.nC;
+
+            // Cell legend
+            const leg = document.getElementById('cellLegend');
+            leg.innerHTML = '';
+            if (currentShape.cells && currentShape.cells.length > 0) {
+                const title = document.createElement('div');
+                title.style.cssText = 'font-size:.75rem; color:#b0a8cc; margin-bottom:4px; font-weight:600;';
+                title.textContent = '8 khối lập phương:';
+                leg.appendChild(title);
+                const cellNames = ['w = −1', 'w = +1', 'x = −1', 'x = +1', 'y = −1', 'y = +1', 'z = −1', 'z = +1'];
+                for (let i = 0; i < Math.min(currentShape.cells.length, 8); i++) {
+                    const item = document.createElement('div');
+                    item.className = 'cell-item';
+                    const sw = document.createElement('span');
+                    sw.className = 'cell-swatch';
+                    const c = CELL_COLORS[i];
+                    sw.style.background = `rgb(${c.r},${c.g},${c.b})`;
+                    item.appendChild(sw);
+                    item.appendChild(document.createTextNode(cellNames[i] || `Cell ${i}`));
+                    leg.appendChild(item);
+                }
+            }
+        }
+        updateInfoPanel();
+
+        // ═══════════════════════════════════════════════
+        //  PARTICLE SYSTEM
+        // ═══════════════════════════════════════════════
+        function spawnParticle(x, y) {
+            if (particles.length >= MAX_PARTICLES) return;
+            particles.push({
+                x, y,
+                vx: (Math.random() - 0.5) * 0.8,
+                vy: (Math.random() - 0.5) * 0.8,
+                life: 1,
+                decay: 0.008 + Math.random() * 0.015,
+                size: 1 + Math.random() * 2,
+                hue: Math.random() > 0.5 ? 190 : 270, // cyan or purple
+            });
+        }
+
+        function updateParticles() {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= p.decay;
+                if (p.life <= 0) particles.splice(i, 1);
+            }
+        }
+
+        function drawParticles() {
+            for (const p of particles) {
+                const a = p.life * 0.6;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${p.hue},80%,70%,${a})`;
+                ctx.fill();
+            }
+        }
+
+        // ═══════════════════════════════════════════════
+        //  MAIN RENDER
+        // ═══════════════════════════════════════════════
+        let lastTime = 0;
+
+        function render(time) {
+            requestAnimationFrame(render);
+            const dt = Math.min((time - lastTime) / 1000, 0.1);
+            lastTime = time;
+
+            // FPS
+            fpsFrames++;
+            if (time - fpsLast > 500) {
+                fpsDisplay = Math.round(fpsFrames / ((time - fpsLast) / 1000));
+                fpsFrames = 0; fpsLast = time;
+                document.getElementById('fps').textContent = fpsDisplay + ' FPS';
+            }
+
+            // Auto rotation
+            if (autoRotate) {
+                angleXW += dt * 0.45 * speedMul;
+                angleYW += dt * 0.30 * speedMul;
+                angleZW += dt * 0.20 * speedMul;
+                document.getElementById('rXW').value = angleXW % 6.28;
+                document.getElementById('rYW').value = angleYW % 6.28;
+                document.getElementById('rZW').value = angleZW % 6.28;
+            }
+
+            const W = window.innerWidth, H = window.innerHeight;
+            const cx = W / 2, cy = H / 2;
+            const scale = Math.min(W, H) * 0.2 * zoom;
+
+            // Clear with slight trail effect for motion blur
+            if (showTrails) {
+                ctx.fillStyle = 'rgba(6,6,18,0.25)';
+                ctx.fillRect(0, 0, W, H);
+            } else {
+                ctx.clearRect(0, 0, W, H);
+            }
+
+            // Background
+            if (!showTrails || (Math.floor(time / 2000) % 60 === 0)) {
+                const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * 0.7);
+                bg.addColorStop(0, '#0c0c22');
+                bg.addColorStop(1, '#060612');
+                ctx.fillStyle = bg;
+                ctx.fillRect(0, 0, W, H);
+            }
+
+            // Draw for one or two eyes (stereo)
+            const eyes = stereoMode ? [-1, 1] : [0];
+
+            for (const eye of eyes) {
+                ctx.save();
+                if (stereoMode) {
+                    const halfW = W / 2;
+                    ctx.beginPath();
+                    ctx.rect(eye < 0 ? 0 : halfW, 0, halfW, H);
+                    ctx.clip();
+                    ctx.translate(eye < 0 ? halfW / 2 : halfW + halfW / 2, cy);
+                } else {
+                    ctx.translate(cx, cy);
+                }
+
+                const eyeOffset = eye * 0.06; // subtle parallax
+
+                // ── Project vertices ──
+                const proj2D = [];
+                const proj3D = [];
+                const depths = [];
+
+                for (const v of currentShape.verts) {
+                    let r = [...v];
+                    // 4D rotations
+                    r = rot(r, [0, 3], angleXW);
+                    r = rot(r, [1, 3], angleYW);
+                    r = rot(r, [2, 3], angleZW);
+                    // gentle auto XY spin
+                    r = rot(r, [0, 1], time * 0.00008);
+                    // 3D rotations (mouse drag)
+                    r = rot(r, [0, 2], dragAy + eyeOffset);
+                    r = rot(r, [1, 2], dragAx);
+
+                    const p3 = project4to3(r, 3.5);
+                    proj3D.push([p3[0], p3[1], p3[2]]);
+                    const p2 = project3to2([p3[0], p3[1], p3[2]], 5);
+                    proj2D.push([p2[0] * scale, p2[1] * scale]);
+                    depths.push(p3[3]); // w factor from 4D projection
+                }
+
+                // ── Shadow ──
+                if (showShadow && !stereoMode) {
+                    const shadowY = scale * 1.4;
+                    const lightY = -scale * 4;
+
+                    // Shadow glow ellipse
+                    const sg = ctx.createRadialGradient(0, shadowY, 0, 0, shadowY, scale * 1.2);
+                    sg.addColorStop(0, 'rgba(123,94,167,0.08)');
+                    sg.addColorStop(1, 'transparent');
+                    ctx.fillStyle = sg;
+                    ctx.beginPath();
+                    ctx.ellipse(0, shadowY, scale * 1.2, scale * 0.1, 0, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Shadow edges
+                    ctx.globalAlpha = 0.1;
+                    for (const [a, b] of currentShape.edges) {
+                        const ay = proj2D[a][1], by = proj2D[b][1];
+                        const tA = (shadowY - lightY) / (ay - lightY + 0.001);
+                        const tB = (shadowY - lightY) / (by - lightY + 0.001);
+                        ctx.beginPath();
+                        ctx.moveTo(proj2D[a][0] * tA, shadowY);
+                        ctx.lineTo(proj2D[b][0] * tB, shadowY);
+                        ctx.strokeStyle = '#7b5ea7';
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+                    ctx.globalAlpha = 1;
+                }
+
+                // ── Draw cells (filled cubes with colour) ──
+                if (showCells && currentShape.cells && currentShape.cells.length > 0) {
+                    for (let ci = 0; ci < currentShape.cells.length; ci++) {
+                        const cell = currentShape.cells[ci];
+                        const clr = CELL_COLORS[ci % CELL_COLORS.length];
+
+                        // Find the faces that belong to this cell
+                        // A face belongs to a cell if all its vertices are in the cell
+                        const cellSet = new Set(cell);
+                        const cellFaces = currentShape.faces.filter(f => f.every(vi => cellSet.has(vi)));
+
+                        // Sort cell faces by depth
+                        const sorted = cellFaces.map(f => {
+                            const avgZ = f.reduce((s, vi) => s + proj3D[vi][2], 0) / f.length;
+                            return { f, avgZ };
+                        }).sort((a, b) => a.avgZ - b.avgZ);
+
+                        for (const { f } of sorted) {
+                            ctx.beginPath();
+                            ctx.moveTo(proj2D[f[0]][0], proj2D[f[0]][1]);
+                            for (let i = 1; i < f.length; i++) ctx.lineTo(proj2D[f[i]][0], proj2D[f[i]][1]);
+                            ctx.closePath();
+                            ctx.fillStyle = `rgba(${clr.r},${clr.g},${clr.b},0.04)`;
+                            ctx.fill();
+                        }
+                    }
+                }
+
+                // ── Draw faces (wireframe quads / triangles) ──
+                if (!showCells && currentShape.faces.length > 0) {
+                    const sortedFaces = currentShape.faces.map(f => {
+                        const avgZ = f.reduce((s, vi) => s + proj3D[vi][2], 0) / f.length;
+                        return { f, avgZ };
+                    }).sort((a, b) => a.avgZ - b.avgZ);
+
+                    for (const { f } of sortedFaces) {
+                        ctx.beginPath();
+                        ctx.moveTo(proj2D[f[0]][0], proj2D[f[0]][1]);
+                        for (let i = 1; i < f.length; i++) ctx.lineTo(proj2D[f[i]][0], proj2D[f[i]][1]);
+                        ctx.closePath();
+                        ctx.fillStyle = 'rgba(123,94,167,0.04)';
+                        ctx.fill();
+                    }
+                }
+
+                // ── Draw edges ──
+                const edgesSort = currentShape.edges.map(([a, b]) => ({
+                    a, b,
+                    avgZ: (proj3D[a][2] + proj3D[b][2]) / 2
+                })).sort((a, b) => a.avgZ - b.avgZ);
+
+                for (const { a, b, avgZ } of edgesSort) {
+                    const alpha = 0.3 + 0.6 * Math.max(0, Math.min(1, 1 - (avgZ + 1) / 2));
+
+                    // Determine edge color: if cells are shown, color by cell membership
+                    let edgeR = 0, edgeG = 180, edgeB = 255;
+                    if (showCells && currentShape.cells.length > 0) {
+                        // Find first cell containing both vertices
+                        for (let ci = 0; ci < currentShape.cells.length; ci++) {
+                            const cs = currentShape.cells[ci];
+                            if (cs.includes(a) && cs.includes(b)) {
+                                const clr = CELL_COLORS[ci];
+                                edgeR = clr.r; edgeG = clr.g; edgeB = clr.b;
+                                break;
+                            }
+                        }
+                    }
+
+                    // Glow
+                    ctx.beginPath();
+                    ctx.moveTo(proj2D[a][0], proj2D[a][1]);
+                    ctx.lineTo(proj2D[b][0], proj2D[b][1]);
+                    ctx.strokeStyle = `rgba(${edgeR},${edgeG},${edgeB},${(alpha * 0.2).toFixed(3)})`;
+                    ctx.lineWidth = 5;
+                    ctx.stroke();
+
+                    // Core edge
+                    const grad = ctx.createLinearGradient(
+                        proj2D[a][0], proj2D[a][1],
+                        proj2D[b][0], proj2D[b][1]
+                    );
+                    grad.addColorStop(0, `rgba(${edgeR},${edgeG},${edgeB},${alpha.toFixed(3)})`);
+                    grad.addColorStop(1, `rgba(${Math.min(255, edgeR + 60)},${Math.min(255, edgeG + 30)},${Math.min(255, edgeB + 30)},${(alpha * 0.8).toFixed(3)})`);
+                    ctx.beginPath();
+                    ctx.moveTo(proj2D[a][0], proj2D[a][1]);
+                    ctx.lineTo(proj2D[b][0], proj2D[b][1]);
+                    ctx.strokeStyle = grad;
+                    ctx.lineWidth = 1.6;
+                    ctx.stroke();
+                }
+
+                // ── Draw vertices ──
+                const vertOrder = [...Array(currentShape.verts.length).keys()]
+                    .sort((a, b) => proj3D[a][2] - proj3D[b][2]);
+
+                for (const i of vertOrder) {
+                    const [px, py] = proj2D[i];
+                    const d = depths[i];
+                    const r = 2 + d * 5;
+
+                    // Outer glow
+                    const glow = ctx.createRadialGradient(px, py, 0, px, py, r * 5);
+                    glow.addColorStop(0, 'rgba(0,212,255,0.2)');
+                    glow.addColorStop(0.4, 'rgba(123,94,167,0.06)');
+                    glow.addColorStop(1, 'transparent');
+                    ctx.fillStyle = glow;
+                    ctx.beginPath();
+                    ctx.arc(px, py, r * 5, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Core
+                    ctx.beginPath();
+                    ctx.arc(px, py, Math.max(1.2, r), 0, Math.PI * 2);
+                    ctx.fillStyle = '#fff';
+                    ctx.shadowColor = 'rgba(0,212,255,0.7)';
+                    ctx.shadowBlur = 10;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+
+                    // Spawn particles at vertices occasionally
+                    if (showTrails && Math.random() < 0.02) {
+                        spawnParticle(
+                            stereoMode ? px + (eye < 0 ? W / 4 : W * 3 / 4) : px + cx,
+                            py + cy
+                        );
+                    }
+                }
+
+                ctx.restore();
+            }
+
+            // Store trail snapshot
+            if (showTrails) {
+                const snapshot = currentShape.verts.map((v, i) => {
+                    let r = [...v];
+                    r = rot(r, [0, 3], angleXW);
+                    r = rot(r, [1, 3], angleYW);
+                    r = rot(r, [2, 3], angleZW);
+                    r = rot(r, [0, 1], time * 0.00008);
+                    r = rot(r, [0, 2], dragAy);
+                    r = rot(r, [1, 2], dragAx);
+                    const p3 = project4to3(r, 3.5);
+                    const p2 = project3to2([p3[0], p3[1], p3[2]], 5);
+                    return [cx + p2[0] * scale, cy + p2[1] * scale];
+                });
+                trailHistory.push(snapshot);
+                if (trailHistory.length > MAX_TRAIL) trailHistory.shift();
+
+                // Draw trails
+                for (let t = 0; t < trailHistory.length - 1; t++) {
+                    const alpha = (t / trailHistory.length) * 0.12;
+                    const snap = trailHistory[t];
+                    for (let vi = 0; vi < snap.length; vi++) {
+                        ctx.beginPath();
+                        ctx.arc(snap[vi][0], snap[vi][1], 1.2, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(0,212,255,${alpha})`;
+                        ctx.fill();
+                    }
+                }
+            }
+
+            // Update & draw particles
+            updateParticles();
+            drawParticles();
+
+            // Grid dots (very subtle)
+            if (!showTrails) {
+                ctx.fillStyle = 'rgba(100,100,160,0.04)';
+                const step = 40;
+                for (let gx = step; gx < W; gx += step)
+                    for (let gy = step; gy < H; gy += step) {
+                        ctx.beginPath();
+                        ctx.arc(gx, gy, 0.6, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+            }
+        }
+
+        requestAnimationFrame(render);
+    </script>
+</body>
+
+</html>
