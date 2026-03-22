@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -298,14 +298,15 @@
                 <img src="images/logo.png" alt="VietWebPro" style="height:32px;border-radius:6px">
                 <span>VietWebPro</span>
             </a>
-                        <div class="nav-links" id="navLinks">
+            <div class="nav-links" id="navLinks">
                 <a href="about.html">Giới Thiệu</a>
                 <a href="services.html">Dịch Vụ</a>
                 <a href="portfolio.html">Dự Án</a>
                 <a href="blog.html">Blog</a>
                 <a href="faq.html">FAQ</a>
                 <a href="contact.html" class="nav-cta">Liên Hệ</a>
-                <a href="en/index.html" style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;letter-spacing:.05em">EN</a>
+                <a href="en/index.html"
+                    style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;letter-spacing:.05em">EN</a>
             </div>
             <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
         </div>
@@ -438,12 +439,46 @@
                 </div>
             </div>
             <div class="footer-bottom"><span>© 2026 VietWebPro. All rights reserved.</span>
-                <div class="footer-social"><a href="https://www.facebook.com/phu.trankim.319/" target="_blank">📘</a><a href="#">📸</a><a href="#">💼</a><a href="#">🐙</a>
+                <div class="footer-social"><a href="https://zalo.me/0355025126" target="_blank">💬</a><a
+                        href="https://www.facebook.com/profile.php?id=61578533046307" target="_blank">📘</a>
                 </div>
             </div>
         </div>
     </footer>
+    <!-- Floating Contact Buttons -->
+    <div class="floating-cta">
+        <a href="https://m.me/61578533046307" target="_blank" class="fc-messenger"><span class="fc-tooltip">Nhắn
+                Messenger</span><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff">
+                <path
+                    d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.2 5.42 3.15 7.2V22l2.96-1.63c.84.23 1.72.36 2.64.36h.25c5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.05 13.04l-2.55-2.73L5.62 15l5.38-5.71 2.55 2.73L18.38 9l-5.33 6.04z" />
+            </svg></a>
+        <a href="https://zalo.me/0355025126" target="_blank" class="fc-zalo"><span class="fc-tooltip">Chat
+                Zalo</span><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><text x="3" y="19" font-size="18"
+                    font-weight="900" font-family="Arial,sans-serif">Z</text></svg></a>
+        <a href="tel:0977684687" class="fc-phone"><span class="fc-tooltip">Gọi 0977 684 687</span><svg width="24"
+                height="24" viewBox="0 0 24 24" fill="#fff">
+                <path
+                    d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.21 2.2z" />
+            </svg></a>
+    </div>
+
     <script src="js/main.js"></script>
+
+  <!-- Facebook Messenger Chat Plugin -->
+  <div id="fb-root"></div>
+  <div id="fb-customer-chat" class="fb-customerchat" attribution="biz_inbox" page_id="61578533046307" theme_color="#6C5CE7" logged_in_greeting="Xin chÃ o! VietWebPro cÃ³ thá»ƒ giÃºp gÃ¬ cho báº¡n?" logged_out_greeting="Xin chÃ o! VietWebPro cÃ³ thá»ƒ giÃºp gÃ¬ cho báº¡n?"></div>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({ xfbml: true, version: 'v18.0' });
+    };
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
 </body>
 
 </html>
