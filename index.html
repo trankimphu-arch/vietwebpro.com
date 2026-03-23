@@ -1345,22 +1345,441 @@
   <script src="js/main.js"></script>
   <script src="js/effects.js"></script>
 
-  <!-- Facebook Messenger Chat Plugin -->
-  <div id="fb-root"></div>
-  <div id="fb-customer-chat" class="fb-customerchat" attribution="biz_inbox" page_id="61578533046307"
-    theme_color="#6C5CE7" logged_in_greeting="Xin chÃ o! VietWebPro cÃ³ thá»ƒ giÃºp gÃ¬ cho báº¡n?"
-    logged_out_greeting="Xin chÃ o! VietWebPro cÃ³ thá»ƒ giÃºp gÃ¬ cho báº¡n?"></div>
+  <!-- VietWebPro AI Chatbot -->
+  <style>
+    .vwp-chat-toggle {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6C5CE7, #A29BFE);
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 9000;
+      box-shadow: 0 8px 30px rgba(108, 92, 231, .4);
+      transition: .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .vwp-chat-toggle:hover {
+      transform: scale(1.1)
+    }
+
+    .vwp-chat-toggle .badge-dot {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 12px;
+      height: 12px;
+      background: #22c55e;
+      border-radius: 50%;
+      border: 2px solid #0A0A1A;
+      animation: vwpPulse 2s infinite
+    }
+
+    @keyframes vwpPulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .5
+      }
+    }
+
+    .vwp-chatbox {
+      position: fixed;
+      bottom: 6rem;
+      left: 2rem;
+      width: 380px;
+      max-height: 520px;
+      background: rgba(10, 10, 26, .97);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(108, 92, 231, .2);
+      border-radius: 20px;
+      z-index: 9000;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, .5)
+    }
+
+    .vwp-chatbox.open {
+      display: flex
+    }
+
+    .vwp-chatbox-header {
+      padding: 1rem 1.2rem;
+      background: linear-gradient(135deg, rgba(108, 92, 231, .15), rgba(162, 155, 254, .05));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(108, 92, 231, .15)
+    }
+
+    .vwp-chatbox-header .ch-info {
+      display: flex;
+      align-items: center;
+      gap: .7rem
+    }
+
+    .vwp-chatbox-header .ch-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6C5CE7, #A29BFE);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem
+    }
+
+    .vwp-chatbox-header .ch-name {
+      font-weight: 700;
+      font-size: .9rem;
+      color: #fff
+    }
+
+    .vwp-chatbox-header .ch-status {
+      font-size: .72rem;
+      color: #22c55e
+    }
+
+    .vwp-chatbox-header .ch-close {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, .5);
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: .2s
+    }
+
+    .vwp-chatbox-header .ch-close:hover {
+      color: #fff
+    }
+
+    .vwp-chatbox-msgs {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+      max-height: 340px;
+      min-height: 250px
+    }
+
+    .vwp-chatbox-msgs::-webkit-scrollbar {
+      width: 4px
+    }
+
+    .vwp-chatbox-msgs::-webkit-scrollbar-thumb {
+      background: rgba(108, 92, 231, .3);
+      border-radius: 2px
+    }
+
+    .vwp-msg {
+      max-width: 85%;
+      padding: .7rem 1rem;
+      border-radius: 14px;
+      font-size: .85rem;
+      line-height: 1.6;
+      animation: vwpMsgIn .3s ease;
+      white-space: pre-line
+    }
+
+    @keyframes vwpMsgIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .vwp-msg.bot {
+      background: rgba(108, 92, 231, .1);
+      border: 1px solid rgba(108, 92, 231, .15);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      color: rgba(255, 255, 255, .85)
+    }
+
+    .vwp-msg.user {
+      background: linear-gradient(135deg, #6C5CE7, #A29BFE);
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      color: #fff
+    }
+
+    .vwp-msg .typing {
+      display: flex;
+      gap: 4px;
+      padding: 4px 0
+    }
+
+    .vwp-msg .typing span {
+      width: 6px;
+      height: 6px;
+      background: rgba(108, 92, 231, .6);
+      border-radius: 50%;
+      animation: vwpDot 1.4s infinite
+    }
+
+    .vwp-msg .typing span:nth-child(2) {
+      animation-delay: .2s
+    }
+
+    .vwp-msg .typing span:nth-child(3) {
+      animation-delay: .4s
+    }
+
+    @keyframes vwpDot {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0)
+      }
+
+      30% {
+        transform: translateY(-6px)
+      }
+    }
+
+    .vwp-quick {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      padding: .5rem 1rem
+    }
+
+    .vwp-quick button {
+      padding: .4rem .9rem;
+      background: rgba(108, 92, 231, .08);
+      border: 1px solid rgba(108, 92, 231, .2);
+      border-radius: 999px;
+      color: #A29BFE;
+      font-size: .78rem;
+      cursor: pointer;
+      transition: .2s;
+      font-family: inherit
+    }
+
+    .vwp-quick button:hover {
+      background: rgba(108, 92, 231, .18)
+    }
+
+    .vwp-chatbox-input {
+      display: flex;
+      gap: .5rem;
+      padding: .8rem 1rem;
+      border-top: 1px solid rgba(108, 92, 231, .1)
+    }
+
+    .vwp-chatbox-input input {
+      flex: 1;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(108, 92, 231, .15);
+      border-radius: 999px;
+      padding: .6rem 1rem;
+      color: #fff;
+      font-size: .85rem;
+      font-family: inherit;
+      outline: none
+    }
+
+    .vwp-chatbox-input input::placeholder {
+      color: rgba(255, 255, 255, .3)
+    }
+
+    .vwp-chatbox-input input:focus {
+      border-color: rgba(108, 92, 231, .4)
+    }
+
+    .vwp-chatbox-input button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6C5CE7, #A29BFE);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: .2s;
+      font-size: 1rem
+    }
+
+    .vwp-chatbox-input button:hover {
+      transform: scale(1.1)
+    }
+
+    @media(max-width:768px) {
+      .vwp-chatbox {
+        width: calc(100% - 2rem);
+        left: 1rem;
+        bottom: 5.5rem
+      }
+    }
+  </style>
+
+  <button class="vwp-chat-toggle" id="vwpChatToggle" onclick="vwpToggleChat()">
+    💬
+    <span class="badge-dot"></span>
+  </button>
+  <div class="vwp-chatbox" id="vwpChatbox">
+    <div class="vwp-chatbox-header">
+      <div class="ch-info">
+        <div class="ch-avatar">🤖</div>
+        <div>
+          <div class="ch-name">VietBot AI</div>
+          <div class="ch-status">● Đang hoạt động</div>
+        </div>
+      </div>
+      <button class="ch-close" onclick="vwpToggleChat()">✕</button>
+    </div>
+    <div class="vwp-chatbox-msgs" id="vwpChatMessages">
+      <div class="vwp-msg bot">Xin chào! 👋 Tôi là trợ lý AI của VietWebPro. Bạn cần tư vấn gì về dịch vụ thiết kế
+        website?</div>
+    </div>
+    <div class="vwp-quick" id="vwpQuickReplies">
+      <button onclick="vwpSendQuick('Bảng giá thiết kế website')">💰 Bảng Giá</button>
+      <button onclick="vwpSendQuick('Các dịch vụ của VietWebPro')">💻 Dịch Vụ</button>
+      <button onclick="vwpSendQuick('Xem mẫu website demo')">🎨 Xem Demo</button>
+      <button onclick="vwpSendQuick('Thông tin liên hệ')">📞 Liên Hệ</button>
+    </div>
+    <div class="vwp-chatbox-input">
+      <input type="text" id="vwpChatInput" placeholder="Nhập câu hỏi..."
+        onkeypress="if(event.key==='Enter')vwpSendMessage()">
+      <button onclick="vwpSendMessage()">➤</button>
+    </div>
+  </div>
+
   <script>
-    window.fbAsyncInit = function () {
-      FB.init({ xfbml: true, version: 'v18.0' });
+    // VietWebPro Chatbot
+    function vwpToggleChat() { document.getElementById('vwpChatbox').classList.toggle('open') }
+
+    function vwpSendQuick(text) {
+      document.getElementById('vwpQuickReplies').style.display = 'none';
+      vwpAddMsg(text, 'user');
+      vwpShowTyping();
+      setTimeout(() => { vwpRemoveTyping(); vwpBotReply(text) }, 1200);
+    }
+
+    function vwpSendMessage() {
+      const input = document.getElementById('vwpChatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      document.getElementById('vwpQuickReplies').style.display = 'none';
+      vwpAddMsg(text, 'user');
+      vwpShowTyping();
+      vwpFetchBotResponse(text);
+    }
+
+    function vwpAddMsg(text, type) {
+      const m = document.createElement('div');
+      m.className = 'vwp-msg ' + type;
+      m.textContent = text;
+      const box = document.getElementById('vwpChatMessages');
+      box.appendChild(m);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function vwpShowTyping() {
+      const m = document.createElement('div');
+      m.className = 'vwp-msg bot'; m.id = 'vwpTyping';
+      m.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+      const box = document.getElementById('vwpChatMessages');
+      box.appendChild(m); box.scrollTop = box.scrollHeight;
+    }
+    function vwpRemoveTyping() { const t = document.getElementById('vwpTyping'); if (t) t.remove() }
+
+    // Knowledge base for local fallback
+    const VWP_KB = {
+      'giá': '💰 Bảng giá thiết kế website VietWebPro:\n\n• Gói Cơ Bản: từ 3 triệu\n  Landing page 1 trang, responsive, SEO cơ bản\n  Bàn giao 5-7 ngày, hỗ trợ 30 ngày\n\n• Gói Nâng Cao: từ 5 triệu\n  Website 3-5 trang, hiệu ứng động, SEO nâng cao\n  Bàn giao 7-10 ngày, hỗ trợ 90 ngày\n\n• Gói Premium: từ 10 triệu\n  Website 5-10 trang, thiết kế riêng, Animation cao cấp\n  Bàn giao 10-15 ngày, hỗ trợ 365 ngày\n\nLiên hệ 0355 025 126 để được tư vấn!',
+      'báo giá': '💰 Bảng giá thiết kế website VietWebPro:\n• Gói Cơ Bản: từ 3 triệu\n• Gói Nâng Cao: từ 5 triệu\n• Gói Premium: từ 10 triệu\n\nGọi 0355 025 126 để báo giá chi tiết!',
+      'dịch vụ': '💻 Dịch vụ của VietWebPro:\n• Thiết kế UI/UX chuyên nghiệp\n• Phát triển Web (HTML, CSS, JS, React, Vue)\n• Responsive Design mọi thiết bị\n• Tối ưu SEO Google\n• Thương mại điện tử\n• Bảo trì & Hỗ trợ kỹ thuật\n\nBạn quan tâm dịch vụ nào?',
+      'demo': '🎨 Các mẫu website đã thực hiện:\n• TechVision Corp - Doanh nghiệp\n• LuxeStyle Fashion - E-Commerce\n• Creative Studio - Portfolio\n• Golden Spoon - Nhà hàng\n• Spa & Wellness - Thẩm mỹ\n• Adventure Travel - Du lịch\n\nXem tại: vietwebpro.com → phần "Mẫu Website"',
+      'mẫu': '🎨 VietWebPro có 10+ mẫu website đẹp cho nhiều ngành:\nDoanh nghiệp, E-commerce, Nhà hàng, Spa, Du lịch, Bất động sản, Giáo dục...\n\nXem ngay tại trang chủ!',
+      'liên hệ': '📞 Thông tin liên hệ VietWebPro:\n📍 Gia Lai, Việt Nam\n📱 Hotline: 0355 025 126 - 0977 684 687\n💬 Zalo: 0355 025 126\n✉️ Email: info@vietwebpro.com\n🌐 Website: vietwebpro.com\n\nChúng tôi sẵn sàng tư vấn miễn phí!',
+      'thời gian': '⏰ Thời gian bàn giao:\n• Gói Cơ Bản: 5-7 ngày\n• Gói Nâng Cao: 7-10 ngày\n• Gói Premium: 10-15 ngày\n\nCam kết đúng hẹn, cập nhật tiến độ liên tục!',
+      'công nghệ': '⚡ Công nghệ sử dụng:\nHTML5, CSS3, JavaScript, TypeScript\nReact, Vue.js, Next.js\nNode.js, Firebase, Supabase\nTailwind, Bootstrap\nSEO, Google Analytics\n\nĐảm bảo website hiện đại, tốc độ nhanh!',
+      'seo': '🔍 Dịch vụ SEO của VietWebPro:\n• Tối ưu On-page SEO\n• Meta tags, Schema markup\n• Tốc độ tải trang nhanh\n• Mobile-friendly\n• Tích hợp Google Analytics\n\nGiúp website lên top Google!'
     };
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+
+    function vwpLocalReply(text) {
+      const lower = text.toLowerCase();
+      for (const [key, val] of Object.entries(VWP_KB)) {
+        if (lower.includes(key)) return val;
+      }
+      if (lower.includes('xin chào') || lower.includes('hello') || lower.includes('hi') || lower.includes('chào'))
+        return 'Xin chào! 😊 Tôi có thể giúp bạn tư vấn về:\n• Bảng giá thiết kế website\n• Các dịch vụ web\n• Xem mẫu demo\n• Thông tin liên hệ\n\nBạn quan tâm điều gì?';
+      if (lower.includes('cảm ơn') || lower.includes('thank'))
+        return 'Cảm ơn bạn! 🙏 Nếu cần thêm thông tin, đừng ngại hỏi nhé.\nHoặc gọi ngay 0355 025 126 để được tư vấn chi tiết!';
+      return 'Cảm ơn bạn đã quan tâm! 😊\nĐể được tư vấn chi tiết nhất:\n📱 Gọi/Zalo: 0355 025 126\n✉️ Email: info@vietwebpro.com\n\nHoặc hỏi tôi về: bảng giá, dịch vụ, demo, liên hệ, SEO, công nghệ.';
+    }
+
+    // 9Router API - gọi trực tiếp từ JavaScript (không cần PHP)
+    const VWP_9ROUTER = 'http://localhost:20128/v1/chat/completions';
+    const VWP_API_KEY = 'sk-480d5cbb0b101aea-4h65rz-ef120388';
+    const VWP_SYSTEM = 'Ban la VietBot tro ly AI cua VietWebPro, dich vu thiet ke website chuyen nghiep. Dia chi Gia Lai, Viet Nam. Hotline 0355 025 126 va 0977 684 687. Zalo 0355025126. Email info@vietwebpro.com. Website vietwebpro.com. Cac goi dich vu: Goi Co Ban tu 3 trieu, Goi Nang Cao tu 5 trieu, Goi Premium tu 10 trieu. Tra loi tieng Viet ngan gon than thien.';
+
+    async function vwpFetchBotResponse(text) {
+      try {
+        const response = await fetch(VWP_9ROUTER, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + VWP_API_KEY
+          },
+          body: JSON.stringify({
+            model: 'if/kimi-k2-thinking',
+            messages: [
+              { role: 'system', content: VWP_SYSTEM },
+              { role: 'user', content: text }
+            ],
+            max_tokens: 500
+          })
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.choices && data.choices[0]) {
+            const msg = data.choices[0].message;
+            let reply = msg.content;
+            if (!reply && msg.reasoning) {
+              const lines = msg.reasoning.split('\n').filter(l => l.trim());
+              reply = lines.length > 2 ? lines.slice(-3).join('\n') : msg.reasoning;
+            }
+            if (reply && reply.trim()) {
+              vwpRemoveTyping();
+              vwpAddMsg(reply.trim(), 'bot');
+              return;
+            }
+          }
+        }
+        throw new Error('API error');
+      } catch (e) {
+        console.error('VietBot:', e);
+        vwpRemoveTyping();
+        vwpAddMsg(vwpLocalReply(text), 'bot');
+      }
+    }
+
+    function vwpBotReply(text) { vwpAddMsg(vwpLocalReply(text), 'bot') }
   </script>
 </body>
 
