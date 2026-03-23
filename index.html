@@ -1733,12 +1733,19 @@
       return 'Cảm ơn bạn đã quan tâm! 😊\nĐể được tư vấn chi tiết nhất:\n📱 Gọi/Zalo: 0355 025 126\n✉️ Email: info@vietwebpro.com\n\nHoặc hỏi tôi về: bảng giá, dịch vụ, demo, liên hệ, SEO, công nghệ.';
     }
 
-    // 9Router API - gọi trực tiếp từ JavaScript (không cần PHP)
+    // 9Router API - chỉ hoạt động khi chạy local (không lộ key trên web)
     const VWP_9ROUTER = 'http://localhost:20128/v1/chat/completions';
-    const VWP_API_KEY = 'sk-480d5cbb0b101aea-4h65rz-ef120388';
+    const VWP_API_KEY = localStorage.getItem('vwp_bot_key') || '';
+    const VWP_IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
     const VWP_SYSTEM = 'Ban la VietBot tro ly AI cua VietWebPro, dich vu thiet ke website chuyen nghiep. Dia chi Gia Lai, Viet Nam. Hotline 0355 025 126 va 0977 684 687. Zalo 0355025126. Email info@vietwebpro.com. Website vietwebpro.com. Cac goi dich vu: Goi Co Ban tu 3 trieu, Goi Nang Cao tu 5 trieu, Goi Premium tu 10 trieu. Tra loi tieng Viet ngan gon than thien.';
 
     async function vwpFetchBotResponse(text) {
+      // Chỉ gọi API khi chạy local + có key
+      if (!VWP_IS_LOCAL || !VWP_API_KEY) {
+        vwpRemoveTyping();
+        vwpAddMsg(vwpLocalReply(text), 'bot');
+        return;
+      }
       try {
         const response = await fetch(VWP_9ROUTER, {
           method: 'POST',
