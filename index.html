@@ -8,7 +8,16 @@
     content="Dịch vụ thiết kế website chuyên nghiệp - Landing page, thương mại điện tử, portfolio, nhà hàng, bất động sản. Giao diện đẹp, tốc độ nhanh, chuẩn SEO.">
   <meta name="keywords" content="thiết kế website, làm website, dịch vụ thiết kế web, thiết kế web Gia Lai, VietWebPro">
   <title>VietWebPro | Dịch Vụ Thiết Kế Website Chuyên Nghiệp</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=3">
+  <style>
+    /* Critical mobile menu fix - inline to bypass cache */
+    @media(max-width:968px){
+      .nav-links{display:none!important;position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;background:#0A0A1A!important;flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;z-index:999999!important}
+      .nav-links.active{display:flex!important}
+      .mobile-toggle{z-index:9999999!important}
+    }
+    body.menu-open .floating-cta,body.menu-open section,body.menu-open footer,body.menu-open .page-banner,body.menu-open .page-header{visibility:hidden!important}
+  </style>
   <link rel="icon" href="images/favicon.svg">
   <!-- Open Graph -->
   <meta property="og:title" content="VietWebPro | Thiết Kế Website Chuyên Nghiệp Từ 3 Triệu">
@@ -1374,8 +1383,8 @@
       </svg></a>
   </div>
 
-  <script src="js/main.js"></script>
-  <script src="js/effects.js"></script>
+  <script src="js/main.js?v=3"></script>
+  <script src="js/effects.js?v=3"></script>
 
 </body>
 
