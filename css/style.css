@@ -1288,3 +1288,8 @@ body.menu-open .page-header {
     display: none;
   }
 }
+@media (max-width: 768px) {
+  .pricing-card {
+    padding: var(--space-xl) var(--space-lg);
+  }
+}
