@@ -1107,6 +1107,15 @@ ol {
   }
 }
 
+/* Mobile menu open: hide everything behind overlay */
+body.menu-open .floating-cta,
+body.menu-open section,
+body.menu-open footer,
+body.menu-open .page-banner,
+body.menu-open .page-header {
+  visibility: hidden !important;
+}
+
 @media (max-width: 640px) {
   .container {
     padding: 0 var(--space-md);

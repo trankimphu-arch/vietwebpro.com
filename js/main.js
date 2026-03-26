@@ -37,13 +37,16 @@ function initMobileMenu() {
     toggle.addEventListener('click', () => {
         toggle.classList.toggle('active');
         navLinks.classList.toggle('active');
-        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        const isOpen = navLinks.classList.contains('active');
+        document.body.classList.toggle('menu-open', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
     navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             toggle.classList.remove('active');
             navLinks.classList.remove('active');
+            document.body.classList.remove('menu-open');
             document.body.style.overflow = '';
         });
     });
