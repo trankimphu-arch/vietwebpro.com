@@ -8,6 +8,15 @@
         content="Bảng giá thiết kế website VietWebPro 2026 — So sánh chi tiết các gói dịch vụ. Giá từ 3 triệu, linh hoạt thương lượng.">
     <title>Bảng Giá Dịch Vụ | VietWebPro</title>
     <link rel="stylesheet" href="css/style.css?v=3">
+  <style>
+    /* Critical mobile menu fix - inline to bypass cache */
+    @media(max-width:968px){
+      .nav-links{display:none!important;position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;background:#0A0A1A!important;flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;z-index:999999!important}
+      .nav-links.active{display:flex!important}
+      .mobile-toggle{z-index:9999999!important}
+    }
+    body.menu-open .floating-cta,body.menu-open section,body.menu-open footer,body.menu-open .page-banner,body.menu-open .page-header{visibility:hidden!important}
+  </style>
     <link rel="icon" href="images/favicon.svg">
     <style>
         .page-header {
