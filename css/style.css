@@ -1043,12 +1043,12 @@ ol {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(10, 10, 26, 0.98);
+    background: #0A0A1A;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: var(--space-xl);
-    z-index: 9998;
+    z-index: 99999;
   }
 
   .nav-links.active {
@@ -1066,7 +1066,7 @@ ol {
 
   .mobile-toggle {
     display: flex !important;
-    z-index: 9999;
+    z-index: 999999;
   }
 
   .mobile-toggle.active span:nth-child(1) {
