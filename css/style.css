@@ -1037,7 +1037,7 @@ ol {
 
 @media (max-width: 968px) {
   .nav-links {
-    display: none;
+    display: none !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -1052,24 +1052,21 @@ ol {
   }
 
   .nav-links.active {
-    display: flex;
+    display: flex !important;
   }
 
   .nav-links a {
     font-size: 1.3rem;
+    color: #fff;
+  }
+
+  .nav-links a::after {
+    display: none;
   }
 
   .mobile-toggle {
     display: flex !important;
     z-index: 1001;
-  }
-
-  .nav-links {
-    display: none !important;
-  }
-
-  .nav-links.active {
-    display: flex !important;
   }
 
   .mobile-toggle.active span:nth-child(1) {
