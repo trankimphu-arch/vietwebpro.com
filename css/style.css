@@ -1048,7 +1048,7 @@ ol {
     justify-content: center;
     align-items: center;
     gap: var(--space-xl);
-    z-index: 999;
+    z-index: 9998;
   }
 
   .nav-links.active {
@@ -1066,7 +1066,7 @@ ol {
 
   .mobile-toggle {
     display: flex !important;
-    z-index: 1001;
+    z-index: 9999;
   }
 
   .mobile-toggle.active span:nth-child(1) {
