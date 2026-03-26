@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Bảng giá thiết kế website VietWebPro 2026 — So sánh chi tiết các gói dịch vụ. Giá từ 3 triệu, linh hoạt thương lượng.">
+    <title>Bảng Giá Dịch Vụ | VietWebPro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.svg">
+    <style>
+        .page-header {
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(108, 92, 231, .12) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none
+        }
+
+        .page-header h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 900;
+            margin-bottom: .75rem;
+            position: relative
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 550px;
+            margin: 0 auto;
+            position: relative
+        }
+
+        /* Pricing Cards Grid */
+        .pricing-section {
+            padding: 2rem 0 4rem
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            align-items: start
+        }
+
+        .price-card {
+            background: rgba(18, 18, 42, .6);
+            border: 1px solid rgba(108, 92, 231, .12);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            position: relative;
+            transition: .3s;
+            display: flex;
+            flex-direction: column
+        }
+
+        .price-card:hover {
+            border-color: rgba(108, 92, 231, .3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(108, 92, 231, .1)
+        }
+
+        .price-card.featured {
+            border-color: var(--primary);
+            background: linear-gradient(145deg, rgba(108, 92, 231, .12), rgba(0, 206, 201, .04));
+            transform: scale(1.03)
+        }
+
+        .price-card.featured:hover {
+            transform: scale(1.03) translateY(-4px)
+        }
+
+        .card-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+            padding: .35rem 1.2rem;
+            border-radius: 999px;
+            font-size: .72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            white-space: nowrap
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: .75rem
+        }
+
+        .card-name {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: .5rem
+        }
+
+        .card-price {
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: .25rem
+        }
+
+        .card-price .unit {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-muted)
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: .9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            flex: 1
+        }
+
+        .card-features li {
+            padding: .5rem 0;
+            font-size: .9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: .6rem;
+            line-height: 1.5
+        }
+
+        .card-features li .check {
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px
+        }
+
+        .card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem
+        }
+
+        .card-actions .btn {
+            width: 100%;
+            justify-content: center;
+            font-size: .9rem
+        }
+
+        .msg-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+            width: 100%;
+            padding: .7rem;
+            border-radius: var(--radius-full);
+            background: rgba(10, 124, 255, .12);
+            border: 1px solid rgba(10, 124, 255, .25);
+            color: #66b2ff;
+            font-weight: 600;
+            font-size: .85rem;
+            transition: .3s;
+            text-decoration: none
+        }
+
+        .msg-btn:hover {
+            background: rgba(10, 124, 255, .2)
+        }
+
+        /* Comparison Table */
+        .compare-section {
+            padding: 4rem 0
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: 16px;
+            border: 1px solid rgba(108, 92, 231, .12)
+        }
+
+        .compare-table thead th {
+            background: rgba(108, 92, 231, .08);
+            padding: 1.2rem 1rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: .95rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(108, 92, 231, .12)
+        }
+
+        .compare-table thead th:first-child {
+            text-align: left;
+            padding-left: 1.5rem
+        }
+
+        .compare-table thead th.hl {
+            background: rgba(108, 92, 231, .15);
+            color: var(--primary-light)
+        }
+
+        .compare-table tbody td {
+            padding: .85rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, .04);
+            font-size: .9rem;
+            color: var(--text-secondary)
+        }
+
+        .compare-table tbody td:first-child {
+            text-align: left;
+            padding-left: 1.5rem;
+            font-weight: 500;
+            color: var(--text-primary)
+        }
+
+        .compare-table tbody td.hl {
+            background: rgba(108, 92, 231, .04)
+        }
+
+        .compare-table tbody tr:hover td {
+            background: rgba(108, 92, 231, .06)
+        }
+
+        .compare-table tbody tr:hover td.hl {
+            background: rgba(108, 92, 231, .1)
+        }
+
+        .compare-table .yes {
+            color: var(--accent);
+            font-weight: 700
+        }
+
+        .compare-table .no {
+            color: var(--text-muted)
+        }
+
+        /* Add-ons */
+        .addons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem
+        }
+
+        .addon-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: .85rem 1.2rem;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 12px;
+            transition: .2s
+        }
+
+        .addon-item:hover {
+            border-color: rgba(108, 92, 231, .2);
+            background: rgba(108, 92, 231, .04)
+        }
+
+        .addon-item span {
+            color: var(--text-secondary);
+            font-size: .9rem
+        }
+
+        .addon-item strong {
+            color: var(--primary-light);
+            font-size: .9rem;
+            white-space: nowrap;
+            margin-left: 1rem
+        }
+
+        /* CTA */
+        .cta-box {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(108, 92, 231, .1), rgba(0, 206, 201, .05));
+            border: 1px solid rgba(108, 92, 231, .15);
+            border-radius: 24px;
+            padding: 3.5rem 2rem;
+            margin-top: 4rem
+        }
+
+        .cta-box h2 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: .75rem
+        }
+
+        .cta-box p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        @media(max-width:968px) {
+            .price-grid {
+                grid-template-columns: 1fr
+            }
+
+            .price-card.featured {
+                transform: none
+            }
+
+            .price-card.featured:hover {
+                transform: translateY(-4px)
+            }
+
+            .compare-table {
+                display: block;
+                overflow-x: auto
+            }
+
+            .compare-table table {
+                min-width: 700px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logo.png" alt="VietWebPro" style="height:32px;border-radius:6px">
+                <span>VietWebPro</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="about.html">Giới Thiệu</a>
+                <a href="services.html">Dịch Vụ</a>
+                <a href="portfolio.html">Dự Án</a>
+                <a href="pricing.html">Báo Giá</a>
+                <a href="blog.html">Blog</a>
+                <a href="faq.html">FAQ</a>
+                <a href="contact.html" class="nav-cta">Liên Hệ</a>
+                <a href="en/index.html"
+                    style="background:rgba(108,92,231,.2);border:1px solid var(--primary);color:var(--primary-light);padding:.4rem .8rem;border-radius:var(--radius-full);font-weight:700;font-size:.8rem;letter-spacing:.05em">EN</a>
+            </div>
+            <div class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <section class="page-header">
+        <h1>Bảng Giá Dịch Vụ 2026</h1>
+        <p>So sánh chi tiết các gói dịch vụ — linh hoạt thương lượng theo yêu cầu của bạn</p>
+    </section>
+
+    <!-- PRICING CARDS -->
+    <section class="pricing-section">
+        <div class="container">
+            <div class="price-grid">
+
+                <!-- GÓI CƠ BẢN -->
+                <div class="price-card">
+                    <div class="card-icon">🚀</div>
+                    <div class="card-name">Cơ Bản</div>
+                    <div class="card-price">3.000.000<span class="unit">đ</span></div>
+                    <p class="card-desc">Landing page / website giới thiệu cho cá nhân, freelancer, startup</p>
+                    <ul class="card-features">
+                        <li><span class="check">✓</span> 3-5 trang nội dung</li>
+                        <li><span class="check">✓</span> Thiết kế UI/UX theo brand</li>
+                        <li><span class="check">✓</span> Responsive mọi thiết bị</li>
+                        <li><span class="check">✓</span> Animation mượt mà</li>
+                        <li><span class="check">✓</span> Chuẩn SEO (meta, sitemap, schema)</li>
+                        <li><span class="check">✓</span> SSL miễn phí (HTTPS)</li>
+                        <li><span class="check">✓</span> Form liên hệ + Google Maps</li>
+                        <li><span class="check">✓</span> CMS quản trị nội dung</li>
+                        <li><span class="check">✓</span> Tích hợp Zalo, Facebook chat</li>
+                        <li><span class="check">✓</span> Tốc độ tải &lt; 3s</li>
+                        <li><span class="check">✓</span> Bàn giao: <strong>5-7 ngày</strong></li>
+                        <li><span class="check">✓</span> Hỗ trợ sau bàn giao: <strong>30 ngày</strong></li>
+                    </ul>
+                    <div class="card-actions">
+                        <a href="https://zalo.me/0355025126" target="_blank" class="btn btn-outline">💬 Nhắn Zalo
+                            thương lượng</a>
+                        <a href="https://m.me/61578533046307" target="_blank" class="msg-btn">📘 Nhắn Messenger</a>
+                    </div>
+                </div>
+
+                <!-- GÓI CHUYÊN NGHIỆP -->
+                <div class="price-card featured">
+                    <div class="card-badge">⭐ Phổ biến nhất</div>
+                    <div class="card-icon">💼</div>
+                    <div class="card-name">Chuyên Nghiệp</div>
+                    <div class="card-price">15.000.000<span class="unit">đ</span></div>
+                    <p class="card-desc">Website đầy đủ cho doanh nghiệp vừa & nhỏ</p>
+                    <ul class="card-features">
+                        <li><span class="check">✓</span> 5-10 trang nội dung</li>
+                        <li><span class="check">✓</span> Thiết kế UI/UX custom theo brand</li>
+                        <li><span class="check">✓</span> Responsive + Animation cao cấp</li>
+                        <li><span class="check">✓</span> SEO nâng cao (schema, rich snippet)</li>
+                        <li><span class="check">✓</span> Google Analytics + Search Console</li>
+                        <li><span class="check">✓</span> CMS quản trị nội dung</li>
+                        <li><span class="check">✓</span> Tích hợp Zalo, Facebook chat</li>
+                        <li><span class="check">✓</span> Google Maps + Form liên hệ nâng cao</li>
+                        <li><span class="check">✓</span> Blog / Tin tức tích hợp</li>
+                        <li><span class="check">✓</span> Tốc độ tải &lt; 2s</li>
+                        <li><span class="check">✓</span> Bàn giao: <strong>10-15 ngày</strong></li>
+                        <li><span class="check">✓</span> Hỗ trợ sau bàn giao: <strong>90 ngày</strong></li>
+                        <li><span class="check">✓</span> 3 lần chỉnh sửa miễn phí</li>
+                    </ul>
+                    <div class="card-actions">
+                        <a href="https://zalo.me/0355025126" target="_blank" class="btn btn-primary">💬 Nhắn Zalo
+                            thương lượng</a>
+                        <a href="https://m.me/61578533046307" target="_blank" class="msg-btn">📘 Nhắn Messenger</a>
+                    </div>
+                </div>
+
+                <!-- GÓI DOANH NGHIỆP -->
+                <div class="price-card">
+                    <div class="card-icon">👑</div>
+                    <div class="card-name">Doanh Nghiệp</div>
+                    <div class="card-price">35.000.000<span class="unit">đ+</span></div>
+                    <p class="card-desc">Giải pháp toàn diện, không giới hạn cho doanh nghiệp lớn</p>
+                    <ul class="card-features">
+                        <li><span class="check">✓</span> Không giới hạn số trang</li>
+                        <li><span class="check">✓</span> E-commerce + Booking system</li>
+                        <li><span class="check">✓</span> Tích hợp VNPay, MoMo, ZaloPay</li>
+                        <li><span class="check">✓</span> Quản lý đơn hàng & tồn kho</li>
+                        <li><span class="check">✓</span> Thiết kế theo brand guideline</li>
+                        <li><span class="check">✓</span> Tích hợp API & CRM tùy chỉnh</li>
+                        <li><span class="check">✓</span> Đa ngôn ngữ (VI/EN/KR/JP...)</li>
+                        <li><span class="check">✓</span> Admin dashboard nâng cao</li>
+                        <li><span class="check">✓</span> Tối ưu PageSpeed 90+</li>
+                        <li><span class="check">✓</span> Bảo mật nâng cao (WAF, backup)</li>
+                        <li><span class="check">✓</span> Hosting & tên miền 1 năm miễn phí</li>
+                        <li><span class="check">✓</span> Bàn giao: <strong>20-40 ngày</strong></li>
+                        <li><span class="check">✓</span> Hỗ trợ sau bàn giao: <strong>12 tháng</strong></li>
+                        <li><span class="check">✓</span> Bảo trì & cập nhật định kỳ</li>
+                    </ul>
+                    <div class="card-actions">
+                        <a href="https://zalo.me/0355025126" target="_blank" class="btn btn-outline">💬 Nhắn Zalo
+                            thương lượng</a>
+                        <a href="https://m.me/61578533046307" target="_blank" class="msg-btn">📘 Nhắn Messenger</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="compare-section">
+        <div class="container">
+            <h2 class="section-title reveal">So Sánh Chi Tiết</h2>
+            <p class="section-subtitle reveal">Xem tất cả tính năng của từng gói dịch vụ</p>
+
+            <div style="overflow-x:auto;border-radius:16px;margin-top:2rem">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th style="min-width:220px">Tính năng</th>
+                            <th>🚀 Cơ Bản<br><small style="color:var(--text-muted)">3 triệu</small></th>
+                            <th class="hl">💼 Chuyên Nghiệp<br><small style="color:var(--accent)">15 triệu</small></th>
+                            <th>👑 Doanh Nghiệp<br><small style="color:var(--text-muted)">35 triệu+</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Số trang nội dung</td>
+                            <td>3-5 trang</td>
+                            <td class="hl">5-10 trang</td>
+                            <td>Không giới hạn</td>
+                        </tr>
+                        <tr>
+                            <td>Thiết kế UI/UX</td>
+                            <td class="yes">✓ Theo brand</td>
+                            <td class="hl yes">✓ Custom cao cấp</td>
+                            <td class="yes">✓ Brand guideline</td>
+                        </tr>
+                        <tr>
+                            <td>Responsive mọi thiết bị</td>
+                            <td class="yes">✓</td>
+                            <td class="hl yes">✓</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Animation & hiệu ứng</td>
+                            <td>Cơ bản</td>
+                            <td class="hl yes">✓ Cao cấp</td>
+                            <td class="yes">✓ Premium</td>
+                        </tr>
+                        <tr>
+                            <td>SEO tối ưu</td>
+                            <td>Meta, sitemap</td>
+                            <td class="hl yes">✓ Schema, rich snippet</td>
+                            <td class="yes">✓ Full SEO</td>
+                        </tr>
+                        <tr>
+                            <td>SSL (HTTPS)</td>
+                            <td class="yes">✓</td>
+                            <td class="hl yes">✓</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Form liên hệ</td>
+                            <td class="yes">✓</td>
+                            <td class="hl yes">✓ Nâng cao</td>
+                            <td class="yes">✓ Nâng cao</td>
+                        </tr>
+                        <tr>
+                            <td>Google Maps</td>
+                            <td class="yes">✓</td>
+                            <td class="hl yes">✓</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>CMS quản trị</td>
+                            <td class="yes">✓</td>
+                            <td class="hl yes">✓</td>
+                            <td class="yes">✓ Nâng cao</td>
+                        </tr>
+                        <tr>
+                            <td>Zalo / Facebook chat</td>
+                            <td class="yes">✓</td>
+                            <td class="hl yes">✓</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Google Analytics</td>
+                            <td class="no">—</td>
+                            <td class="hl yes">✓</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Blog / Tin tức</td>
+                            <td class="no">—</td>
+                            <td class="hl yes">✓</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>E-commerce / Thanh toán</td>
+                            <td class="no">—</td>
+                            <td class="no">—</td>
+                            <td class="yes">✓ VNPay, MoMo, ZaloPay</td>
+                        </tr>
+                        <tr>
+                            <td>Quản lý đơn hàng & tồn kho</td>
+                            <td class="no">—</td>
+                            <td class="no">—</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Tích hợp API & CRM</td>
+                            <td class="no">—</td>
+                            <td class="no">—</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Đa ngôn ngữ</td>
+                            <td class="no">—</td>
+                            <td class="no">—</td>
+                            <td class="yes">✓ VI/EN/KR/JP...</td>
+                        </tr>
+                        <tr>
+                            <td>Admin dashboard</td>
+                            <td class="no">—</td>
+                            <td class="no">—</td>
+                            <td class="yes">✓ Nâng cao</td>
+                        </tr>
+                        <tr>
+                            <td>Bảo mật nâng cao</td>
+                            <td class="no">—</td>
+                            <td class="no">—</td>
+                            <td class="yes">✓ WAF, backup</td>
+                        </tr>
+                        <tr>
+                            <td>Hosting & tên miền miễn phí</td>
+                            <td class="no">—</td>
+                            <td class="no">—</td>
+                            <td class="yes">✓ 1 năm</td>
+                        </tr>
+                        <tr>
+                            <td>Tốc độ tải trang</td>
+                            <td>&lt; 3s</td>
+                            <td class="hl">&lt; 2s</td>
+                            <td>PageSpeed 90+</td>
+                        </tr>
+                        <tr>
+                            <td>Thời gian bàn giao</td>
+                            <td>5-7 ngày</td>
+                            <td class="hl">10-15 ngày</td>
+                            <td>20-40 ngày</td>
+                        </tr>
+                        <tr>
+                            <td>Hỗ trợ sau bàn giao</td>
+                            <td>30 ngày</td>
+                            <td class="hl"><strong>90 ngày</strong></td>
+                            <td><strong>12 tháng</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Chỉnh sửa miễn phí</td>
+                            <td class="no">—</td>
+                            <td class="hl yes">3 lần</td>
+                            <td class="yes">Không giới hạn</td>
+                        </tr>
+                        <tr>
+                            <td>Bảo trì định kỳ</td>
+                            <td class="no">—</td>
+                            <td class="no">—</td>
+                            <td class="yes">✓</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Dịch vụ bổ sung -->
+            <div class="reveal" style="margin-top:3rem">
+                <h3 style="text-align:center;font-size:1.3rem;margin-bottom:.5rem">📋 Dịch Vụ Bổ Sung</h3>
+                <p class="section-subtitle" style="margin-bottom:0">Có thể thêm vào bất kỳ gói nào</p>
+                <div class="addons-grid">
+                    <div class="addon-item"><span>Viết nội dung SEO (1 bài)</span><strong>500.000đ</strong></div>
+                    <div class="addon-item"><span>Thiết kế logo thương hiệu</span><strong>2.000.000đ</strong></div>
+                    <div class="addon-item"><span>Chạy quảng cáo Google Ads</span><strong>3.000.000đ/th</strong></div>
+                    <div class="addon-item"><span>Chạy quảng cáo Facebook</span><strong>2.500.000đ/th</strong></div>
+                    <div class="addon-item"><span>Bảo trì website (hàng tháng)</span><strong>1.000.000đ/th</strong></div>
+                    <div class="addon-item"><span>Thêm trang mới (1 trang)</span><strong>800.000đ</strong></div>
+                    <div class="addon-item"><span>Tích hợp chatbot AI</span><strong>5.000.000đ</strong></div>
+                    <div class="addon-item"><span>Hosting & Domain (1 năm)</span><strong>1.500.000đ/năm</strong></div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-box reveal">
+                <h2>Sẵn Sàng Bắt Đầu?</h2>
+                <p>Giá trên chỉ mang tính tham khảo. Mỗi dự án có yêu cầu khác nhau — hãy nhắn tin để chúng tôi tư
+                    vấn và báo giá chính xác nhất.</p>
+                <div class="cta-buttons">
+                    <a href="https://zalo.me/0355025126" target="_blank" class="btn btn-primary">💬 Chat Zalo Ngay</a>
+                    <a href="https://m.me/61578533046307" target="_blank" class="btn btn-outline">📘 Nhắn Facebook</a>
+                    <a href="tel:0355025126" class="btn btn-outline">📞 Gọi: 0355 025 126</a>
+                </div>
+                <p style="margin-top:1.5rem;color:var(--text-muted);font-size:.85rem">
+                    <strong>Cam kết:</strong> Không phát sinh chi phí • Thanh toán theo tiến độ • Hoàn tiền nếu không
+                    hài lòng
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="nav-logo">
+                        <img src="images/logo.png" alt="VietWebPro" style="height:32px;border-radius:6px">
+                        <span>VietWebPro</span>
+                    </div>
+                    <p>Biến ý tưởng thành website chuyên nghiệp.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Trang</h4><a href="about.html">Giới thiệu</a><a href="services.html">Dịch vụ</a><a
+                        href="portfolio.html">Dự án</a><a href="blog.html">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Mẫu Website</h4><a target="_blank" href="demos/business/index.html">Doanh nghiệp</a><a
+                        target="_blank" href="demos/ecommerce/index.html">E-commerce</a><a target="_blank"
+                        href="demos/portfolio/index.html">Portfolio</a><a target="_blank"
+                        href="demos/restaurant/index.html">Nhà hàng</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Liên Hệ</h4><a href="mailto:info@vietwebpro.com">info@vietwebpro.com</a><a
+                        href="tel:0355025126">0355 025 126 - 0977 684 687</a><a href="contact.html">Gửi yêu cầu</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>© 2026 VietWebPro. All rights reserved.</span>
+                <div class="footer-social"><a href="https://zalo.me/0355025126" target="_blank">💬</a><a
+                        href="https://www.facebook.com/profile.php?id=61578533046307" target="_blank">📘</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Contact -->
+    <div class="floating-cta">
+        <a href="https://m.me/61578533046307" target="_blank" class="fc-messenger"><span class="fc-tooltip">Nhắn
+                Messenger</span><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff">
+                <path
+                    d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.2 5.42 3.15 7.2V22l2.96-1.63c.84.23 1.72.36 2.64.36h.25c5.64 0 10-4.13 10-9.7S17.64 2 12 2zm1.05 13.04l-2.55-2.73L5.62 15l5.38-5.71 2.55 2.73L18.38 9l-5.33 6.04z" />
+            </svg></a>
+        <a href="https://zalo.me/0355025126" target="_blank" class="fc-zalo"><span class="fc-tooltip">Chat
+                Zalo</span><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff">
+                <text x="3" y="19" font-size="18" font-weight="900" font-family="Arial,sans-serif">Z</text>
+            </svg></a>
+        <a href="tel:0977684687" class="fc-phone"><span class="fc-tooltip">Gọi 0977 684 687</span><svg width="24"
+                height="24" viewBox="0 0 24 24" fill="#fff">
+                <path
+                    d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.21 2.2z" />
+            </svg></a>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
